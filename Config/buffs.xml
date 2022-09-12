@@ -79,7 +79,7 @@
 	<buff name="enZombieSpawner" hidden="true">
 		<stack_type value="replace"/>
 		<duration value="0"/>
-		<update_rate value="20"/>
+		<update_rate value="10"/>
 		<effect_group>          
 			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_01">
 				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="50"/>
