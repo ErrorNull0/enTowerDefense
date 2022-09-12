@@ -1,0 +1,227 @@
+<ErrorNull>
+
+
+<!-- remove Death XP Penalty Protection -->
+<remove xpath="/buffs/buff[@name='buffStatusCheck01']/effect_group/triggered_effect[@buff='buffNewbieCoat']" />
+
+
+<append xpath="/buffs">
+
+	<buff name="enInitializeCvars" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="1"/>
+		<effect_group>			
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enFirstTimer" operation="set" value="60"/>
+			<!--<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enBossTimer" operation="set" value="20"/>-->
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enScore" operation="set" value="0"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enZombiesKilled" operation="set" value="0"/>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enFirstCountdown" />
+		</effect_group>            
+	</buff>
+
+	<!-- provide initial countdown for players to prepare before zombie spawning begins -->
+	<buff name="enFirstCountdown" icon="ui_game_symbol_clock" icon_color="255,255,255" icon_blink="true">
+		<stack_type value="replace"/>
+		<duration value="0"/>
+		<update_rate value="1"/>
+		<display_value value="enFirstTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>          
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enFirstTimer" operation="subtract" value="1"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="RemoveBuff" buff="enFirstCountdown">
+				<requirement name="CVarCompare" cvar="enFirstTimer" operation="LTE" value="0"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffRemove" action="AddBuff" buff="enTowerDefenseStart" />
+		</effect_group>  		
+	</buff>
+	
+	<buff name="enTowerDefenseStart" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="1"/>
+		<effect_group>					
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enShowZombiesKilled" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enShowScore" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enRadiationZone" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBossCountdown" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enZombieSpawner" />
+		</effect_group>            
+	</buff>
+	
+	<buff name="enTowerDefenseRespawn" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="1"/>
+		<effect_group>			
+			<!--<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enBossTimer" operation="set" value="20"/>-->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enShowZombiesKilled" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enShowScore" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enRadiationZone" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBossCountdown" />
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enZombieSpawner" />
+		</effect_group>            
+	</buff>
+	
+	<!-- track zombie kills and show score -->
+	<buff name="enShowScore" icon="ui_game_symbol_trophy" icon_color="255,255,255">
+		<stack_type value="ignore"/>
+		<duration value="0"/>
+		<update_rate value="1"/>
+		<display_value value="enScore"/>          
+	</buff>
+	
+	<!-- track zombie kills and show score -->
+	<buff name="enShowZombiesKilled" icon="ui_game_symbol_marksmanship" icon_color="255,255,255">
+		<stack_type value="ignore"/>
+		<duration value="0"/>
+		<update_rate value="1"/>
+		<display_value value="enZombiesKilled"/>          
+	</buff>
+	
+	<buff name="enZombieSpawner" hidden="true">
+		<stack_type value="replace"/>
+		<duration value="0"/>
+		<update_rate value="20"/>
+		<effect_group>          
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_01">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="50"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_02">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="50"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="100"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_03">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="100"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="150"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_04">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="150"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="200"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_05">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="200"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="250"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_06">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="250"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="300"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_07">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="300"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="400"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_08">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="400"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="500"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_09">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="500"/>
+			</triggered_effect>
+		
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_01">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="50"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_02">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="50"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="100"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_03">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="100"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="150"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_04">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="150"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="200"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_05">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="200"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="250"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_06">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="250"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="300"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_07">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="300"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="400"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_08">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="400"/>
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="500"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_09">
+				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="GTE" value="500"/>
+			</triggered_effect>
+		</effect_group>  		
+	</buff>
+	
+	<!--
+	<buff name="enBossCountdown" icon="ui_game_symbol_clock" icon_color="255,255,255">
+		<stack_type value="replace"/>
+		<duration value="0"/>
+		<update_rate value="1"/>
+		<display_value value="enBossTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>          
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enBossTimer" operation="subtract" value="1"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enBossTimer" operation="set" value="20">
+				<requirement name="CVarCompare" cvar="enBossTimer" operation="LTE" value="0"/>
+			</triggered_effect>
+		</effect_group>  		
+	</buff>
+	-->
+	
+	<buff name="enRadiationZone" hidden="true">
+		<stack_type value="replace"/>
+		<duration value="0"/>
+		<update_rate value="1"/>
+		<effect_group>          
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enIrradiatePlayer" />
+			<requirement name="InBiome" biome="08"/>
+		</effect_group>  		
+	</buff>
+
+	<!-- slow player and show negative screen effects when stepping into wasteland boundary -->
+	<buff name="enIrradiatePlayer" hidden="true">
+		<stack_type value="replace"/>
+		<duration value="2"/>
+		<effect_group>
+			<passive_effect name="RunSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
+				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
+			<passive_effect name="WalkSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
+				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
+			<passive_effect name="CrouchSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
+				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
+			<passive_effect name="JumpStrength" operation="perc_subtract" value="0.4,.1" duration="0,3">
+				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1.2" fade="1" effect_name="Radiation"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="1" effect_name="Blur"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="1" effect_name="Drunk"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Blur"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Radiation"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Drunk"/>
+		</effect_group>
+	</buff>
+
+
+	<!-- ***** DEATH PENALTY ***** -->
+	<buff name="enBuffDeathPenalty"  hidden="true">
+		<stack_type value="ignore"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="$enDeathPenalty" operation="add" value="0.1"/>	
+			<passive_effect name="HealthMax" operation="perc_subtract" value="@$enDeathPenalty"/>
+		</effect_group>
+	</buff>
+
+
+
+
+
+
+</append>
+
+
+
+
+
+
+
+</ErrorNull>

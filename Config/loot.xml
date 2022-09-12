@@ -1,0 +1,219 @@
+<ErrorNull>
+	
+<append xpath="/lootcontainers">
+
+
+<lootqualitytemplates>
+	<lootqualitytemplate name="enQualTemplate">
+		<qualitytemplate level="0,999999" default_quality="1">
+			<loot quality="1" prob="1"/>
+			<loot quality="2" prob="1"/>
+			<loot quality="3" prob="1"/>
+			<loot quality="4" prob="1"/>
+			<loot quality="5" prob="1"/>
+			<loot quality="6" prob="1"/>
+		</qualitytemplate>
+	</lootqualitytemplate>
+</lootqualitytemplates>
+
+
+<lootgroup name="enWeapons" count="1" loot_quality_template="enQualTemplate">
+	<item name="gunHandgunT0PipePistol" prob="1.0"/>
+	<item name="gunHandgunT1Pistol" prob="0.8"/>
+	<item name="gunHandgunT3SMG5" prob="0.2"/>
+	<item name="gunShotgunT0PipeShotgun" prob="1.0"/>
+	<item name="gunShotgunT1DoubleBarrel" prob="0.8"/>
+	<item name="gunShotgunT3AutoShotgun" prob="0.2"/>
+	<item name="gunMGT0PipeMachineGun" prob="1.0"/>
+	<item name="gunMGT1AK47" prob="0.6"/>
+	<item name="gunMGT3M60" prob="0.2"/>
+	<item name="meleeWpnClubT0WoodenClub" prob="1.0"/>
+	<item name="meleeWpnClubT1BaseballBat" prob="0.8"/>
+	<item name="meleeWpnClubT3SteelClub" prob="0.6"/>
+	<item name="meleeWpnBladeT1HuntingKnife" prob="0.8"/>
+	<item name="meleeWpnBladeT3Machete" prob="0.6"/>
+	<item name="meleeWpnSpearT1IronSpear" prob="0.8"/>
+	<item name="meleeWpnSpearT3SteelSpear" prob="0.6"/>
+	<item name="gunExplosivesT3RocketLauncher" prob="0.2"/>
+</lootgroup>
+
+<lootgroup name="enAmmo" count="1">
+	<item name="ammo9mmBulletBall" 		count="80"/>
+	<item name="ammo762mmBulletBall" 	count="60"/>
+	<item name="ammoShotgunShell" 		count="40"/>
+	<item name="ammoRocketFrag" 		count="10"/>
+</lootgroup>
+
+<lootgroup name="enExplosives" 				prob="1.0" count="1">	
+	<item name="thrownAmmoPipeBomb" 		prob="1.0" count="20"/>
+	<item name="thrownAmmoMolotovCocktail" 	prob="1.0" count="15"/>
+	<item name="thrownGrenade" 				prob="1.0" count="10"/>
+	<item name="thrownGrenadeContact" 		prob="1.0" count="5"/>
+	<item name="resourceRepairKit" 			prob="1.0" count="1"/>
+</lootgroup>
+
+<lootgroup name="enArmor" count="1" loot_quality_template="enQualTemplate">
+	<item name="armorClothHat" prob="1.0" mods="dye" mod_chance="0"/>
+	<item name="armorClothGloves" prob="1.0" mods="dye" mod_chance="0"/>
+	<item name="armorClothJacket" prob="1.0" mods="dye" mod_chance="0"/>
+	<item name="armorClothPants" prob="1.0" mods="dye" mod_chance="0"/>
+	<item name="armorClothBoots" prob="1.0" mods="dye" mod_chance="0"/>
+	<item name="armorLeatherHood" prob="0.8" mods="dye" mod_chance="0"/>
+	<item name="armorLeatherGloves" prob="0.8" mods="dye" mod_chance="0"/>
+	<item name="armorLeatherChest" prob="0.8" mods="dye" mod_chance="0"/>
+	<item name="armorLeatherPants" prob="0.8" mods="dye" mod_chance="0"/>
+	<item name="armorLeatherBoots" prob="0.8" mods="dye" mod_chance="0"/>
+	<item name="armorScrapHelmet" prob="0.6" mods="dye" mod_chance="0"/>
+	<item name="armorScrapGloves" prob="0.6" mods="dye" mod_chance="0"/>
+	<item name="armorScrapChest" prob="0.6" mods="dye" mod_chance="0"/>
+	<item name="armorScrapLegs" prob="0.6" mods="dye" mod_chance="0"/>
+	<item name="armorScrapBoots" prob="0.6" mods="dye" mod_chance="0"/>
+	<item name="armorIronHelmet" prob="0.4" mods="dye" mod_chance="0"/>
+	<item name="armorIronGloves" prob="0.4" mods="dye" mod_chance="0"/>
+	<item name="armorIronChest" prob="0.4" mods="dye" mod_chance="0"/>
+	<item name="armorIronLegs" prob="0.4" mods="dye" mod_chance="0"/>
+	<item name="armorIronBoots" prob="0.4" mods="dye" mod_chance="0"/>
+	<item name="armorMilitaryHelmet" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorMilitaryGloves" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorMilitaryVest" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorMilitaryLegs" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorMilitaryBoots" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorSteelHelmet" prob="0.2" mods="dye" mod_chance="0"/>
+	<item name="armorSteelGloves" prob="0.2" mods="dye" mod_chance="0"/>
+	<item name="armorSteelChest" prob="0.2" mods="dye" mod_chance="0"/>
+	<item name="armorSteelLegs" prob="0.2" mods="dye" mod_chance="0"/>
+	<item name="armorSteelBoots" prob="0.2" mods="dye" mod_chance="0"/>
+	<item name="armorSwatHelmet" prob="0.3" mods="dye" mod_chance="0"/>
+	<item name="armorFootballHelmet" prob="0.3" mods="dye" mod_chance="0"/>
+</lootgroup>
+
+<lootgroup name="enBlocks" 			count="1">
+	<item name="awningMaster" 		prob="1.0"	count="40"/>
+	<item name="woodMaster" 		prob="0.9"	count="35"/>
+	<item name="cobblestoneMaster"	prob="0.8"	count="30"/>
+	<item name="concreteMaster" 	prob="0.6"	count="25"/>
+	<item name="steelMaster" 		prob="0.5"	count="20"/>	
+	<item name="cntStorageChest" 	prob="0.3"	count="1"/>	
+	<item name="cntStorageGenericSignedInsecure" 	prob="0.2"	count="1"/>	
+</lootgroup>
+
+<lootgroup name="enMeds" 				count="1">
+	<item name="medicalBandage" 		prob="1.0"	count="1"/>
+	<item name="medicalAloeCream" 		prob="1.0"	count="1"/>
+	<item name="medicalFirstAidBandage"	prob="0.8"	count="1"/>
+	<item name="medicalSplint" 			prob="0.6"	count="1"/>	
+	<item name="foodHoney" 				prob="0.4"	count="1"/>	
+	<item name="medicalFirstAidKit" 	prob="0.3"	count="1"/>
+	<item name="enStemCells" 			prob="0.3"	count="1"/>
+</lootgroup>
+
+<lootgroup name="enBoosters" count="1">
+	<item name="drugAtomJunkies"/>
+	<item name="drugOhShitzDrops"/>
+	<item name="drugSkullCrushers"/>
+	<item name="drinkJarBeer"/>
+	<item name="drinkJarGrandpasMoonshine"/>
+	<item name="drinkJarGrandpasLearningElixir"/>
+	<item name="foodHoney"/>
+	<item name="drugHerbalAntibiotics"/>
+	<item name="drugAntibiotics"/>
+</lootgroup>
+
+<lootgroup name="enFood" count="1">
+	<item name="foodCharredMeat"/>
+	<item name="foodCanBeef"/>
+	<item name="foodCanCatfood"/>
+	<item name="foodCanChicken"/>
+	<item name="foodCanChili"/>
+	<item name="foodCanDogfood"/>
+	<item name="foodCanSham"/>
+	<item name="foodCanLamb"/>
+	<item name="foodCanMiso"/>
+	<item name="foodCanPasta"/>
+	<item name="foodCanPeas"/>
+	<item name="foodCanSalmon"/>
+	<item name="foodCanSoup"/>
+	<item name="foodCanStock"/>
+	<item name="foodCanTuna"/>
+	<item name="foodCanPears"/>
+	<item name="foodBoiledMeat"/>
+	<item name="foodGrilledMeat"/>
+	<item name="foodBaconAndEggs"/>
+	<item name="foodBlueberryPie"/>
+	<item name="foodVegetableStew"/>
+	<item name="foodMeatStew" />
+	<item name="foodHoboStew"/>
+	<item name="foodChiliDog"/>
+	<item name="foodFishTacos"/>
+	<item name="foodPumpkinPie"/>
+	<item name="foodPumpkinCheesecake"/>
+	<item name="foodPumpkinBread"/>
+	<item name="foodTunaFishGravyToast"/>
+	<item name="foodSteakAndPotato"/>
+	<item name="foodMeatStew" />
+	<item name="foodShamChowder"/>
+	<item name="foodSpaghetti"/>
+	<item name="foodGumboStew"/>
+	<item name="foodShepardsPie"/>
+</lootgroup>
+
+<lootgroup name="enDrink" count="1">
+	<item name="drinkJarPureMineralWater"/>
+	<item name="drinkJarBoiledWater"/>
+	<item name="drinkJarRedTea"/>
+	<item name="drinkJarYuccaJuice"/>
+	<item name="drinkYuccaJuiceSmoothie"/>
+	<item name="drinkCanMegaCrush"/>
+	<item name="drinkJarCoffee"/>
+	<item name="drinkJarBlackStrapCoffee"/>
+</lootgroup>
+
+<lootgroup name="enClothing" count="1">
+	<item name="apparelToughGuySunglasses" loot_prob_template="high" mods="dye" mod_chance="0"/>
+	<item name="apparelNerdGlasses"	loot_prob_template="high" mods="dye" mod_chance="0"/>
+	<item name="apparelSkiGoggles" loot_prob_template="high" mods="dye" mod_chance="0"/>
+	<item name="apparelRunningShoesHP" loot_prob_template="veryLow" mods="dye" mod_chance="0"/>
+</lootgroup>
+
+<lootgroup name="enMods" count="1">
+	<item name="modMeleeClubBurningShaft"/>
+	<item name="modMeleeClubMetalSpikes"/>
+	<item name="modMeleeClubMetalChain"/>
+	<item name="modMeleeErgonomicGrip"/>
+	<item name="modMeleeFortifyingGrip"/>
+	<item name="modMeleeSerratedBlade"/>
+	<item name="modArmorBandolier"/>
+	<item name="modArmorDoubleStoragePocket"/>
+	<item name="modArmorPlatingBasic"/>
+	<item name="modArmorPlatingReinforced"/>
+	<item name="modArmorStoragePocket"/>
+	<item name="modArmorTripleStoragePocket"/>
+	<item name="modGunDrumMagazineExtender"/>
+	<item name="modGunMagazineExtender"/>
+	<item name="modGunChoke"/>
+	<item name="modGunMeleeRadRemover"/>
+</lootgroup>
+
+<lootgroup name="enLootGroup" count="2">
+	<item group="enBlocks" loot_prob_template="guaranteed"/>
+	<item group="enMeds"  loot_prob_template="high"/>
+	<item group="enWeapons" loot_prob_template="high"/>
+	<item group="enAmmo" loot_prob_template="high"/>
+	<item group="enFood"  loot_prob_template="medHigh"/>
+	<item group="enDrink"  loot_prob_template="medHigh"/>
+	<item group="enBoosters"  loot_prob_template="medHigh"/>
+	<item group="enArmor" loot_prob_template="medHigh"/>
+	<item group="enExplosives" loot_prob_template="medHigh"/>
+	<item group="enClothing" loot_prob_template="med"/>
+	<item group="enMods" loot_prob_template="med"/>
+</lootgroup>
+
+<lootcontainer name="enLootBag" count="1" size="6,3" destroy_on_close="false" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="1" loot_quality_template="enQualTemplate">
+	<item group="enLootGroup"/>
+</lootcontainer>
+
+
+
+</append>
+
+</ErrorNull>

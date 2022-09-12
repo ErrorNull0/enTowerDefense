@@ -1,0 +1,41 @@
+<ErrorNull>
+
+<append xpath="/items">
+
+	<!-- restores 10 max health -->
+	<item name="enStemCells">
+		<property name="Tags" value="medical"/>
+		<property name="DisplayType" value="medicalPainkillers"/>
+		<property name="HoldType" value="16"/>
+		<property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+		<property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+		<property name="CustomIcon" value="drugPainkillers"/>
+		<property name="CustomIconTint" value="FF8888"/>
+		<property name="Material" value="Morganic"/>
+		<property name="EconomicValue" value="15000"/>
+		<property name="SellableToTrader" value="false"/>
+		<property name="Stacknumber" value="10"/>
+		<property name="Group" value="Science,Medical"/>
+		<property class="Action0">
+			<property name="Class" value="Eat"/>
+			<property name="Delay" value="1.0"/>
+			<property name="Use_time" value="..."/>
+			<property name="Sound_start" value="player_painkillers"/>
+			<requirement name="NotHasBuff" buff="buffDrugPainkillers"/>
+		</property>
+		<effect_group tiered="false">
+			<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="$enDeathPenalty" operation="subtract" value="0.05">
+				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="GT" value="0"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="$enDeathPenalty" operation="set" value="0">
+				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="LT" value="0"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfPrimaryActionEnd" action="RemoveBuff" buff="enBuffDeathPenalty">
+				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="LTE" value="0"/>
+			</triggered_effect>
+		</effect_group>
+	</item>	
+
+</append>
+
+</ErrorNull>

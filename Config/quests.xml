@@ -1,0 +1,9 @@
+<ErrorNull>
+<!--
+<remove xpath="/quests/quest[@id='quest_BasicSurvival1']/action[@type='ShowTip']"/>
+<remove xpath="/quests/quest[@id='quest_BasicSurvival1']/reward[@type='Quest']"/>
+-->
+<!--<remove xpath="/quests/quest"/>-->
+
+
+</ErrorNull>

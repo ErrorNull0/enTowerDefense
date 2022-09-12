@@ -1,0 +1,4 @@
+Key,File,Type,UsedInMainMenu,NoTranslate,english,Context / Alternate
+
+enTowerDefenseMessage_title,Journal Tip,,,,ErrorNulls Tower Defense,,
+enTowerDefenseMessage,Journal Tip,,,,"Welcome!\n\nYou have 60 seconds before zombies spawn. Use this time to place your bedroll and equip your gear. Try to create a defensive structure before nightfall while staying clear of the wasteland. Can you survive through the night?\n\nGOOD LUCK!",,
