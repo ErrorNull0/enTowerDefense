@@ -79,7 +79,7 @@
 	<buff name="enZombieSpawner" hidden="true">
 		<stack_type value="replace"/>
 		<duration value="0"/>
-		<update_rate value="10"/>
+		<update_rate value="20"/>
 		<effect_group>          
 			<triggered_effect trigger="onSelfBuffStart" action="CallGameEvent" event="zombie_group_01">
 				<requirement name="CVarCompare" cvar="enZombiesKilled" operation="LT" value="50"/>
@@ -212,9 +212,54 @@
 	</buff>
 
 
+	<!-- make zombies invincible and dance for a certain duration -->
+	<buff name="enZombieDance"  icon="ui_game_symbol_clock" icon_color="150,0,255" icon_blink="true">
+		<stack_type value="replace"/>
+		<duration value="60"/>
+		<update_rate value="1"/>
+		<display_value value="enDanceTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>
+			<!-- reset timer if dancebomb is set off again before current dance timer is done -->
+			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enDanceTimer" operation="set" value="60"/>
 
+			<!-- disable zombie spawner for duration of the dancing -->
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enZombieSpawner" />
 
+			<!-- set dance duration timer -->
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enDanceTimer" operation="set" value="60"/>
 
+			<!-- start dancing animations for zombie(s) -->
+			<triggered_effect trigger="onSelfBuffStart" action="SetDancing" enabled="true" />
+
+			<!-- zombies are invincible while dancing -->
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="cold,heat,electrical">
+				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200">
+				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200" tags="coredamageresist">
+				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="heat,electrical">
+				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
+			<passive_effect name="BuffResistance" operation="base_add" value="200" tags="buffInjuryKnockdown01,buffInjuryKnockdown02,buffBurningMolotov,buffBurningFlamingArrow,buffBurningElement,buffBurningEnvironmentHack">
+				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
+
+			<!-- decrement dancing timer -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enDanceTimer" operation="subtract" value="1"/>
+
+			<!-- when dance duration is over, stop dancing animation and restart zombie spawner -->
+			<triggered_effect trigger="onSelfBuffRemove" action="SetDancing" enabled="false" />
+			<triggered_effect trigger="onSelfBuffRemove" action="AddBuff" buff="enZombieSpawner" />
+		</effect_group>
+		
+		<!-- play dancing music while zombies are dancing -->
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="twitch_dance_off" play_in_head="true" loop="true" toggle_dms="true" />
+			<triggered_effect trigger="onSelfBuffRemove" action="StopSound" sound="twitch_dance_off" play_in_head="true" loop="true" toggle_dms="true"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="PlaySound" sound="twitch_record_scratch" play_in_head="true" />
+			<triggered_effect trigger="onSelfLeaveGame" action="StopSound" sound="twitch_dance_off" play_in_head="true" loop="true"/>
+		</effect_group>
+	</buff>
 
 </append>
 

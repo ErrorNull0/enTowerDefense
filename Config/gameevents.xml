@@ -29,10 +29,6 @@
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
 	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
-	</action>
 </action_sequence>
 
 <!-- adding bigger zombies, and basic animals -->
@@ -46,10 +42,6 @@
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -65,27 +57,19 @@
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
 	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
-	</action>
 </action_sequence>
 
-<!-- adding fatcop, wights, lions, radiated vultures, demolitioin, and zombie bears -->
+<!-- adding fatcop, wights, radiated vultures, demolitioin, and zombie bears -->
 <action_sequence name="zombie_group_04">
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieScreamer,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear" param1="zombiename" />
+		<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieScreamer,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear" param1="zombiename" />
 		<property name="spawn_count" value="1" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -94,16 +78,12 @@
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieScreamer,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
+		<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieScreamer,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
 		<property name="spawn_count" value="1" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -112,16 +92,12 @@
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
+		<property name="entity_names" value="zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
 		<property name="spawn_count" value="1" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -130,16 +106,12 @@
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
+		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
 		<property name="spawn_count" value="1" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -148,16 +120,12 @@
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
+		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
 		<property name="spawn_count" value="2" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 
@@ -166,16 +134,12 @@
 	<property name="allow_user_trigger" value="false" />
 	<property name="category" value="twitch_actions" />
 	<action class="SpawnEntity">
-		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalMountainLion,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
+		<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieScreamerFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,animalZombieBear,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated,zombieScreamerRadiated" param1="zombiename" />
 		<property name="spawn_count" value="3" param1="spawncount" />
 		<property name="min_distance" value="20" />
 		<property name="max_distance" value="40" />
 		<property name="air_spawn" value="true" />
 		<property name="attack_target" value="true" />
-	</action>
-	<action class="PlaySound">
-		<property name="sound" value="quest_restore_power_start" />
-		<property name="phase" value="1" />
 	</action>
 </action_sequence>
 

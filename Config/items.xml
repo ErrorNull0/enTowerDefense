@@ -36,6 +36,46 @@
 		</effect_group>
 	</item>	
 
+	
+	<item name="enDanceBomb">
+		<property name="Tags" value="enSnowWeapon"/>
+		<property name="ItemTypeIcon" value="star"/>
+		<property name="CustomIcon" value="thrownAmmoPipeBomb"/>
+		<property name="CustomIconTint" value="230,160,255"/>
+		<property name="DescriptionKey" value="enDanceBombDesc"/>
+		<property name="Group" value="Ammo/Weapons"/>
+		<property name="Meshfile" value="#Other/Items?Weapons/Ranged/PipeBomb/PipeBombPrefab.prefab"/>
+		<property name="HoldType" value="25"/>
+		<property name="DropScale" value="2.5"/>
+		<property name="TintColor" value="230,160,255"/>
+		<property name="Material" value="Mmetal"/>
+		<property name="Class" value="ItemClassTimeBomb"/>
+		<property name="ExplodeOnHit" value="true"/>
+		<property name="FuseTime" value="20000"/>
+		<property name="Explosion.ParticleIndex" value="12"/>
+        <property name="Explosion.RadiusBlocks" value="0"/>
+        <property name="Explosion.RadiusEntities" value="250"/>
+		<property name="Explosion.BlastPower" value="1"/> <!-- (int,100) how far ragdolls and such are flung -->
+		<property name="Stacknumber" value="20"/>
+		<property name="ThrowableDecoy" value="true"/>
+		<property name="EconomicValue" value="0"/>
+		<property name="SellableToTrader" value="false"/>
+		<property name="DistractionTags" value="zombie,requires_contact"/>
+		<property class="Action0">
+			<property name="Class" value="ThrowAway"/>
+			<property name="Delay" value="1.2"/>
+			<property name="Throw_strength_default" value="10"/>
+			<property name="Throw_strength_max" value="40"/>
+			<property name="Max_strain_time" value="1.25"/>
+			<property name="Sound_start" value="swoosh"/>
+		</property>
+		<effect_group name="enSnowPellet" tiered="false">
+			<passive_effect name="ModSlots" operation="base_set" value="0"/>
+			<passive_effect name="EntityDamage" operation="base_set" value="3"/>
+			<triggered_effect trigger="onSelfExplosionDamagedOther" action="AddBuff" target="other" buff="enZombieDance"/>
+		</effect_group>
+	</item>
+	
 </append>
 
 </ErrorNull>

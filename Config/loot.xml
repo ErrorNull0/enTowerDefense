@@ -50,6 +50,7 @@
 	<item name="thrownGrenade" 				prob="1.0" count="10"/>
 	<item name="thrownGrenadeContact" 		prob="1.0" count="5"/>
 	<item name="resourceRepairKit" 			prob="1.0" count="1"/>
+	<item name="enDanceBomb" 				prob="0.3" count="1"/>
 </lootgroup>
 
 <lootgroup name="enArmor" count="1" loot_quality_template="enQualTemplate">
@@ -103,8 +104,8 @@
 	<item name="medicalFirstAidBandage"	prob="0.8"	count="1"/>
 	<item name="medicalSplint" 			prob="0.6"	count="1"/>	
 	<item name="foodHoney" 				prob="0.4"	count="1"/>	
-	<item name="medicalFirstAidKit" 	prob="0.3"	count="1"/>
-	<item name="enStemCells" 			prob="0.3"	count="1"/>
+	<item name="medicalFirstAidKit" 	prob="0.4"	count="1"/>
+	<item name="enStemCells" 			prob="0.4"	count="1"/>
 </lootgroup>
 
 <lootgroup name="enBoosters" count="1">
