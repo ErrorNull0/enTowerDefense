@@ -1,11 +1,14 @@
 <ErrorNull>
 
-<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='EconomicValue']/@value">250</set>
-<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='EconomicValue']/@value">100</set>
-<set xpath="/items/item[@name='drugPainkillers']/property[@name='EconomicValue']/@value">150</set>
-<set xpath="/items/item[@name='medicalAloeCream']/property[@name='EconomicValue']/@value">30</set>
-<set xpath="/items/item[@name='resourceSewingKit']/property[@name='EconomicValue']/@value">50</set>
-<set xpath="/items/item[@name='medicalSplint']/property[@name='EconomicValue']/@value">50</set>
+<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='EconomicValue']/@value">500</set> <!-- default: 200 -->
+<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='EconomicValue']/@value">100</set> <!-- default: 15 -->
+<set xpath="/items/item[@name='drugPainkillers']/property[@name='EconomicValue']/@value">350</set> <!-- default: 80 -->
+<set xpath="/items/item[@name='medicalAloeCream']/property[@name='EconomicValue']/@value">50</set> <!-- default: 10 -->
+<set xpath="/items/item[@name='resourceSewingKit']/property[@name='EconomicValue']/@value">70</set> <!-- default: 16 -->
+<set xpath="/items/item[@name='medicalSplint']/property[@name='EconomicValue']/@value">50</set> <!-- default: 10 -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='EconomicValue']/@value">200</set> <!-- default: 41 -->
+<set xpath="/items/item[@name='thrownGrenadeContact']/property[@name='EconomicValue']/@value">300</set> <!-- default: 41 -->
+
 
 <append xpath="/items">
 

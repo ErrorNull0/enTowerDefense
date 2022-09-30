@@ -3,6 +3,11 @@
 <!-- disable toolbelttip when new blocks are picked up -->
 <remove xpath="/blocks/block/property[@name='PickupJournalEntry']"/>
 
+<set xpath="/blocks/block[@name='steelMaster']/property[@name='EconomicValue']/@value">200</set> <!-- default: 160 -->
+<set xpath="/blocks/block[@name='concreteNoUpgradeMaster']/property[@name='EconomicValue']/@value">100</set> <!-- default: 50 -->
+<set xpath="/blocks/block[@name='cobblestoneMaster']/property[@name='EconomicValue']/@value">50</set> <!-- default: 14 -->
+<set xpath="/blocks/block[@name='woodNoUpgradeMaster']/property[@name='EconomicValue']/@value">15</set> <!-- default: 10 -->
+
 <append xpath="/blocks">
 
 	<block name="enVendingMachine"> 
