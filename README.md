@@ -6,7 +6,7 @@ Requirements:
 
 Be sure to download and use the 2k-TowerDefenseMap donwloadable here - https://github.com/ErrorNull0/7D2D-Maps . Do NOT use any other mods with enTowerDefense... not even enZombies.
 
-Turn off zombie spawning. This mod spawns zombies using its own mechanism. 
+Turn off zombie spawning. This mod spawns zombies using its own mechanism. Also, turn off air drops.
 
 Go into the gameevents.xml file... Modify the "enAction_GiveCoins" code. For single player set added_item_counts to 60-90 and for multiplayer set to 20-30. Modify the "enAction_GiveCoins_boss" code. For single player set added_item_counts to 300-450 and for multiplayer set to 100-150.
 
