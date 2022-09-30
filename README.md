@@ -1,9 +1,6 @@
 # enTowerDefense
 
-Fight off an endless horde of zombies within a small grassy arena encircled by untraversable wasteland. 
-There is no crafting or repairing, and builing only consists of basic cube blocks.
-All items and gear are purchase from vending machines. Zombie kills give you coins.
-Build what you can during daylight, and try to survive the night!
+Fight off an endless horde of zombies within a small grassy arena encircled by untraversable wasteland. There is no crafting or repairing, and builing only consists of basic cube blocks. Zombie kills give you coins, and all items and gear are purchased from vending machines. Build what you can during daylight, and try to survive the night! Your personal zombie kills (green zombie face icon) and score (yellow trophy icon) are tracked on-screen. You are not meant to survive for more than several nights. If you do, congratulations and send me a screenshot!
 
 Requirements: 
 
