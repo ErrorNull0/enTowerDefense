@@ -4,6 +4,13 @@
 
 
 <lootqualitytemplates>
+
+	<lootqualitytemplate name="enBasicTemplate">
+		<qualitytemplate level="0,999999" default_quality="1">
+			<loot quality="1" prob="1"/>
+		</qualitytemplate>
+	</lootqualitytemplate>
+	
 	<lootqualitytemplate name="enQualTemplate">
 		<qualitytemplate level="0,999999" default_quality="1">
 			<loot quality="1" prob="1"/>
@@ -14,8 +21,11 @@
 			<loot quality="6" prob="1"/>
 		</qualitytemplate>
 	</lootqualitytemplate>
+
 </lootqualitytemplates>
 
+
+<!-- 
 
 <lootgroup name="enWeapons" count="1" loot_quality_template="enQualTemplate">
 	<item name="gunHandgunT0PipePistol" prob="1.0"/>
@@ -45,12 +55,12 @@
 </lootgroup>
 
 <lootgroup name="enExplosives" 				prob="1.0" count="1">	
+	<item name="resourceRepairKit" 			prob="1.2" count="1"/>
 	<item name="thrownAmmoPipeBomb" 		prob="1.0" count="20"/>
 	<item name="thrownAmmoMolotovCocktail" 	prob="1.0" count="15"/>
 	<item name="thrownGrenade" 				prob="1.0" count="10"/>
 	<item name="thrownGrenadeContact" 		prob="1.0" count="5"/>
-	<item name="resourceRepairKit" 			prob="1.0" count="1"/>
-	<item name="enDanceBomb" 				prob="0.3" count="1"/>
+	<item name="enDanceBomb" 				prob="0.5" count="1"/>
 </lootgroup>
 
 <lootgroup name="enArmor" count="1" loot_quality_template="enQualTemplate">
@@ -89,13 +99,10 @@
 </lootgroup>
 
 <lootgroup name="enBlocks" 			count="1">
-	<item name="awningMaster" 		prob="1.0"	count="40"/>
-	<item name="woodMaster" 		prob="0.9"	count="35"/>
-	<item name="cobblestoneMaster"	prob="0.8"	count="30"/>
-	<item name="concreteMaster" 	prob="0.6"	count="25"/>
+	<item name="woodMaster" 		prob="1.0"	count="50"/>
+	<item name="cobblestoneMaster"	prob="0.8"	count="40"/>
+	<item name="concreteMaster" 	prob="0.6"	count="30"/>
 	<item name="steelMaster" 		prob="0.5"	count="20"/>	
-	<item name="cntStorageChest" 	prob="0.3"	count="1"/>	
-	<item name="cntStorageGenericSignedInsecure" 	prob="0.2"	count="1"/>	
 </lootgroup>
 
 <lootgroup name="enMeds" 				count="1">
@@ -103,9 +110,9 @@
 	<item name="medicalAloeCream" 		prob="1.0"	count="1"/>
 	<item name="medicalFirstAidBandage"	prob="0.8"	count="1"/>
 	<item name="medicalSplint" 			prob="0.6"	count="1"/>	
+	<item name="medicalFirstAidKit" 	prob="0.5"	count="1"/>
+	<item name="enStemCells" 			prob="0.5"	count="1"/>
 	<item name="foodHoney" 				prob="0.4"	count="1"/>	
-	<item name="medicalFirstAidKit" 	prob="0.4"	count="1"/>
-	<item name="enStemCells" 			prob="0.4"	count="1"/>
 </lootgroup>
 
 <lootgroup name="enBoosters" count="1">
@@ -195,6 +202,7 @@
 	<item name="modGunMeleeRadRemover"/>
 </lootgroup>
 
+
 <lootgroup name="enLootGroup" count="2">
 	<item group="enBlocks" loot_prob_template="guaranteed"/>
 	<item group="enMeds"  loot_prob_template="high"/>
@@ -209,10 +217,28 @@
 	<item group="enMods" loot_prob_template="med"/>
 </lootgroup>
 
+-->
+
+<!--
 <lootcontainer name="enLootBag" count="1" size="6,3" destroy_on_close="false" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="1" loot_quality_template="enQualTemplate">
 	<item group="enLootGroup"/>
 </lootcontainer>
+-->
 
+<lootgroup name="enStarterCrateItems" count="all" loot_quality_template="enBasicTemplate">
+	
+	<item name="meleeWpnClubT1BaseballBat"/>
+	<item name="steelMaster" count="30"/>
+	<item name="bedrollBlockVariantHelper" count="10"/>
+	<item name="enVendingMachine" count="3"/>
+	<item name="enRedPill"/>
+	
+</lootgroup>
+
+
+<lootcontainer name="enStarterCrateItems" count="1" size="6,2" destroy_on_close="true" sound_open="SupplyDrops/open_supply_crate" sound_close="SupplyDrops/close_supply_crate" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enStarterCrateItems"/>
+</lootcontainer>
 
 
 </append>

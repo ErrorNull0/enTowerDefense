@@ -5,4 +5,17 @@ enTowerDefenseMessage,Journal Tip,,,,"Welcome!\n\nYou have 60 seconds before zom
 
 enStemCells,items,Medical,,,Stem Cells,,
 enDanceBomb,items,Gun,,,Dance Bomb,,
+
 enDanceBombDesc,items,Gun,,,"Make zombies overcome with dancing fever with a smooth soundtrack! Their obscene movements make them invincible to attacks. Take this time to flee or catch your breath!\n\nNot effective on animals.",,
+
+enRedPill,items,Medical,,,The Red Pill,,
+enRedPillDesc,items,Medical,,,"IMPORTANT! Party up all members first - then take this red pill to begin!\n\nGOOD LUCK!",,
+
+enTeleporter,vehicles,item,,,Teleporter,,
+enTeleporterDesc,vehicles,item,,,"Teleports you to a random location 10-15 meters away. Do not use this near radiation zones!",,
+
+item_BlackPill,items,Medical,,,The Black Pill,,
+item_BlackPillDesc,items,Medical,,,"Spawns zombies for testing.",,
+
+enTowerDefenseStarter,twitch,Actions,,,Starter Crate,,
+enTowerDefenseStarterDesc,twitch,Actions,,,Starter Crate,,

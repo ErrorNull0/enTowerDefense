@@ -1,0 +1,31 @@
+<ErrorNull>
+
+<!-- disable toolbelttip when new blocks are picked up -->
+<remove xpath="/blocks/block/property[@name='PickupJournalEntry']"/>
+
+<append xpath="/blocks">
+
+	<block name="enVendingMachine"> 
+		<property name="CreativeMode" value="Player"/>
+		<property name="Class" value="VendingMachine"/>
+		<property name="TraderID" value="77"/>
+		<property name="DescriptionKey" value="cntVendingMachineGroupDesc"/>
+		<property name="CustomIcon" value="cntVendingMachine2Broken"/>
+		<property name="Material" value="Mmetal_medium"/>
+		<property name="MaxDamage" value="15000"/>
+		<property name="StabilitySupport" value="true"/>
+		<property name="Shape" value="ModelEntity"/>
+		<property name="Path" value="solid"/>
+		<property name="Model" value="Entities/Crafting/vending_machinePrefab"/>
+		<property name="Place" value="TowardsPlacerInverted"/>
+		<property name="MultiBlockDim" value="1,2,1"/>
+		<property name="ImposterExchange" value="imposterBlock" param1="143"/>
+		<property name="ImposterDontBlock" value="true"/>
+		<property name="Stacknumber" value="100"/>
+		<property name="EconomicValue" value="2000"/>
+		<drop event="Fall" name="enVendingMachine" count="1" prob="1" stick_chance="1"/>
+	</block>
+
+</append>
+
+</ErrorNull>

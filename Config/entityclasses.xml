@@ -1,12 +1,8 @@
 <ErrorNull>
 	
-<!-- initiates perpetual zombie spawning -->
-<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@trigger='onSelfEnteredGame']/@buff">buffStatusCheck01,buffStatusCheck02,enInitializeCvars</set>
-
 <!-- give starting item -->
-<set xpath="/entity_classes/entity_class[@name='playerMale']/property[contains(@name,'ItemsOnEnterGame')]/@value">bedrollBlockVariantHelper,apparelArmyPants,apparelArmyShirt,apparelWornBoots</set>
-
-
+<set xpath="/entity_classes/entity_class[@name='playerMale']/property[contains(@name,'ItemsOnEnterGame')]/@value">apparelArmyShirt,apparelArmyPants,apparelWornBoots</set>
+	
 <!-- tags onSelfRespawn property for easier modification -->
 <setattribute xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@trigger='onSelfRespawn']" name="id">respawn</setattribute>
 
@@ -26,28 +22,228 @@
 <!-- remove XP deficit from death -->
 <set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/passive_effect[@name='ExpDeficitPerDeathPercentage'][@value='.25']/@value">0</set>
 
-
-
 <!-- remove vanilla buffs to prevent stats restore after death respawn. also re-run necessary tower defense buffs after respawn. -->
-<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@id='respawn']/@buff">buffStatusCheck01,buffStatusCheck02,enTowerDefenseRespawn</set>
+<!--<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@id='respawn']/@buff">buffStatusCheck01,buffStatusCheck02,enTowerDefenseRespawn</set>-->
+<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@id='respawn']/@buff">buffStatusCheck01,buffStatusCheck02</set>
 
 
-<!-- how many seconds before zombie corpse despawns -->
-<set xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/property[@name='TimeStayAfterDeath']/@value">5</set>
+<!-- higher level enemies -->
+<append xpath="/entity_classes">
 
-<!-- increment score when zombie is killed -->
-<append xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/effect_group" >
-	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enScore" operation="add" value="1"/>
-	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enZombiesKilled" operation="add" value="1"/>
+	<entity_class name="HellShocker" extends="animalZombieVultureRadiated">
+		<property name="Tags" value="entity,animal,zombie,hostile,radiated"/>
+		<property name="Radiated" value=""/>
+		<property name="SizeScale" value="2.5"/>	
+		<property name="SightRange" value="180"/>
+		<property name="SurfaceCategory" value="metal"/>	
+		<property name="Mesh" value="Animals/Vulture/animalVultureStandardRagdoll"/>
+		<property name="SoundRandom" value=""/>
+		<property name="SoundAlert" value="drone_enemy_sense"/>
+		<property name="SoundHurt" value=""/>
+		<property name="SoundDeath" value="drone_shutdown"/>
+		<property name="SoundAttack" value=""/>
+		<property name="SoundSense" value="drone_enemy_sense"/>
+		<property name="SoundGiveUp" value=""/>	
+		<property name="ReplaceMaterial0" value="particleeffects/materials/waterfallslope"/> 	
+		<property name="TimeStayAfterDeath" value="11"/>	
+		<property name="MoveSpeed" value=".8"/>
+		<property name="MoveSpeedAggro" value="1.7, 1.9"/>
+		<property name="MaxTurnSpeed" value="150"/>
+		<property name="HandItem" value="meleeHandHellShocker"/>
+		<property name="ExperienceGain" value="1000"/> <!-- XP grunt radiated -->
+		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<property name="DeadBodyHitPoints" value="750"/>
+		<effect_group name="Base Effects">
+		<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="HellShockerDeco"/>	
+			<passive_effect name="HealthMax" operation="base_set" value="700"/>
+			<passive_effect name="HealthMax" operation="perc_set" value="1"/> <!-- Zombie HP scale -->
+			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/> <!-- Feral damage -->
+		</effect_group>
+	</entity_class>
+	
+	<entity_class name="zombieGunner" extends="zombieTemplateMale">
+		<property name="Tags" value="entity,zombie,walker,boss"/>
+		<property name="Mesh" value="#Entities/Zombies?Prefabs/ZDemolition.prefab"/>
+		<property name="ReplaceMaterial0" value="entities/electrical/materials/flamethrowertrap"/>	
+		<property name="ReplaceMaterial1" value="particleeffects/materials/p_spark_electricity"/>
+		<property name="WalkType" value="7"/>
+		<property name="RightHandJointName" value="RightHand"/>	
+		<property name="Mass" value="380"/>	
+		<property name="Weight" value="220"/>	
+		<property name="AITask-1" value="BreakBlock"/>
+		<property name="AITask-2" value="RangedAttackTarget" data="itemType=1;cooldown=4;duration=25"/>
+		<property name="AITask-3" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
+		<property name="AITask-4" value="ApproachSpot"/>
+		<property name="AITask-5" value="Look"/>
+		<property name="AITask-6" value="Wander"/>
+		<property name="AITask-7" value=""/>	
+		<property name="StompsSpikes" value="true"/>	
+		<property name="SoundRandom" value="demolitionzroam"/>
+		<property name="SoundAlert" value="demolitionzalert"/>
+		<property name="SoundAttack" value="demolitionzattack"/>
+		<property name="SoundHurt" value="demolitionzpain"/>
+		<property name="SoundDeath" value="demolitionzdeath"/>
+		<property name="SoundSense" value="demolitionzsense"/>
+		<property name="SoundFootstepModifier" value="bear_footstep"/>	
+		<property name="PainResistPerHit" value="1"/>
+		<property name="LegCrawlerThreshold" value="0"/>
+		<property name="LegCrippleThreshold" value="0"/>
+		<property name="KnockdownProneDamageThreshold" value="0"/>
+		<property name="KnockdownProneStunDuration" value="0"/>
+		<property name="KnockdownProneRefillRate" value="0"/>
+		<property name="KnockdownKneelDamageThreshold" value="0"/>
+		<property name="KnockdownKneelStunDuration" value="0"/>
+		<property name="KnockdownKneelRefillRate" value="0"/>			
+		<property name="HandItem" value="meleeHandZombieGunner"/>
+		<property name="ExperienceGain" value="12700"/> 	
+		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<effect_group name="Base Effects">	
+			<passive_effect name="HealthMax" operation="base_set" value="1699"/>
+			<passive_effect name="HealthMax" operation="perc_set" value="1"/> 
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="54"/>
+			<passive_effect name="HealthChangeOT" operation="base_set" value="1.4"/> <!-- Boss regen, 1% -->
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="GunnerPrefab"/>		
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>		
+		</effect_group>
+	</entity_class>
+
+	<entity_class name="animalKaboomPhoenix" extends="animalZombieVultureRadiated">
+		<property name="Tags" value="entity,animal,zombie,hostile,radiated,boss"/>
+		<property name="Radiated" value=""/>
+		<property name="RightHandJointName" value="Mouth"/>		
+		<property name="SizeScale" value="3"/>
+		<property name="SightRange" value="180"/>	
+		<property name="ReplaceMaterial0" value="entities/resources/materials/oreleadboulder"/>			
+		<property name="MoveSpeed" value="1"/>
+		<property name="MoveSpeedAggro" value="1.6, 2.1"/>
+		<property name="MaxTurnSpeed" value="150"/>
+		<property name="HandItem" value="meleeHandAnimalKaboomPhoenix"/>	
+		<property name="ExperienceGain" value="15000"/> 
+		<property name="DeadBodyHitPoints" value="350"/>
+		<effect_group name="Base Effects">								
+			<passive_effect name="HealthMax" operation="base_set" value="2100"/>
+			<passive_effect name="HealthMax" operation="perc_set" value="1"/> 
+			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/> <!-- Feral damage -->
+		</effect_group>
+	</entity_class>
+
+	<entity_class name="zombieScorcher" extends="zombieSoldier">
+		<property name="SizeScale" value="1.2"/>
+		<property name="Tags" value="entity,zombie,walker,boss,scorcher"/>
+		<property name="Mesh" value="#Entities/Zombies?Prefabs/ZDemolition.prefab"/>
+		<property name="Class" value="EntityZombieCop"/>
+		<property name="Mass" value="300"/>
+		<property name="RightHandJointName" value="RightShoulder"/>
+		<property name="AITask-1" value="BreakBlock"/>
+		<property name="AITask-2" value="RangedAttackTarget" data="itemType=1;cooldown=4;duration=5"/>
+		<property name="AITask-3" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
+		<property name="AITask-4" value="ApproachSpot"/>
+		<property name="AITask-5" value="Look"/>
+		<property name="AITask-6" value="Wander"/>
+		<property name="AITask-7" value=""/><!-- Marks end, so we don't inheirit -->
+		<property name="DismemberMultiplierHead" value="0"/><property name="DismemberMultiplierArms" value=".7"/><property name="DismemberMultiplierLegs" value=".7"/><!-- Feral -->
+		<property name="LegCrawlerThreshold" value="0"/>
+		<property name="LegCrippleThreshold" value="0"/>
+		<property name="KnockdownProneDamageThreshold" value="0"/>
+		<property name="KnockdownKneelDamageThreshold" value="0"/>
+		<property name="SoundRandom" value="demolitionzroam"/>
+		<property name="SoundAlert" value="demolitionzalert"/>
+		<property name="SoundAttack" value="demolitionzattack"/>
+		<property name="SoundHurt" value="demolitionzpain"/>
+		<property name="SoundDeath" value="demolitionzdeath"/>
+		<property name="SoundSense" value="demolitionzsense"/>
+		<property name="SoundFootstepModifier" value="bear_footstep"/>
+		<property name="HandItem" value="meleeHandScorcher"/>
+		<property name="JumpMaxDistance" value="1, 2"/>
+		<property name="PainResistPerHit" value="1"/>
+		<property name="StompsSpikes" value="true"/>
+		<property name="ExplodeHealthThreshold" value="0"/> <!-- Disable Health explosion -->
+		<property name="ExperienceGain" value="1750"/>
+		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<effect_group name="Base Effects">
+			<passive_effect name="HealthMax" operation="base_set" value="2200"/>
+			<passive_effect name="HealthMax" operation="perc_set" value="1"/>
+			<passive_effect name="DamageModifier" operation="perc_set" value="1" tags="head"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="60"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="ScorcherDeco"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
+		</effect_group>
+	</entity_class>
+
 </append>
 
-<!-- all zombies always provide loot drop -->
-<set xpath="/entity_classes/entity_class/property[@name='LootDropProb']/@value">0.33</set>
+
+<!-- how many seconds before zombie and animal corpse despawns -->
+<set xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/property[@name='TimeStayAfterDeath']/@value">3</set>
+<set xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/property[@name='TimeStayAfterDeath']/@value">3</set>
+
+<!-- give points and coins when zombies are killed -->
+<append xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/effect_group" >
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_UpdateKillCount"/>	
+		
+	<!-- reward for ALL zombie types -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1"/>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins"/>
+	
+	<!-- additional reward for FatCops -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
+		<requirement name="EntityTagCompare" tags="zombieCop"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="zombieCop"/></triggered_effect>
+	
+	<!-- additional reward for FERAL types -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
+		<requirement name="EntityTagCompare" tags="feral"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="feral"/></triggered_effect>
+	
+	<!-- additional reward for RADITATED types -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
+		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
+	
+	<!-- additional reward for DEMOLITIONs -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="4">
+		<requirement name="EntityTagCompare" tags="boss"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins_boss">
+		<requirement name="EntityTagCompare" tags="boss"/></triggered_effect>
+
+</append>
+
+<!-- give points and coins when animals are killed -->
+<append xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/effect_group" >
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_UpdateKillCount"/>
+	
+	<!-- reward for ALL animal types -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1"/>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins"/>
+	
+	<!-- additional reward for zombie dogs -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
+		<requirement name="EntityTagCompare" tags="dog"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="dog"/></triggered_effect>
+		
+	<!-- additional reward for RADITATED types -->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
+		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
+	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
+</append>
+
+
+<!-- loot drop probability for all zombies -->
+<set xpath="/entity_classes/entity_class/property[@name='LootDropProb']/@value">0.0</set>
 
 <!-- define custom loot drop bag -->
+<!--
 <set xpath="/entity_classes/entity_class/property[@name='LootDropEntityClass']/@value">enLootClass</set>
+-->
 
 <append xpath="/entity_classes">
+	<!-- loot bags from zombies -->
+	<!--
 	<entity_class name="enLootClass">	
 		<property name="HideInSpawnMenu" value="true"/>
 		<property name="Mesh" value="#Other/Items?Misc/sack_droppedprefab.prefab"/>
@@ -60,6 +256,20 @@
 		<property name="LootListOnDeath" value="enLootBag"/>
 		<property name="Faction" value="none"/>
 	</entity_class>
+	-->
+	
+	<!-- Starter supply crate that spawns at the begining of the session -->
+	<entity_class name="enTowerDefenseStarter" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?crate_store_ShotgunPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enStarterCrateItems"/>
+	</entity_class>
 </append>
+
+
+
+
+
+
 
 </ErrorNull>

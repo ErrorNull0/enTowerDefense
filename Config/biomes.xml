@@ -17,7 +17,7 @@
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'cnt')]/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'tree')]/@prob">0.0001</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@name,'rock')]/@prob">0</set>
-<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeDeadPineLeaf']/@prob">0.01</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeDeadPineLeaf']/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeTallGrassDiagonal']/@prob">0.1</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeShortGrass']/@prob">0.3</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeStump']/@prob">0</set>
