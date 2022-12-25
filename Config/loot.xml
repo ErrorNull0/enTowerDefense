@@ -25,220 +25,482 @@
 </lootqualitytemplates>
 
 
-<!-- 
-
-<lootgroup name="enWeapons" count="1" loot_quality_template="enQualTemplate">
-	<item name="gunHandgunT0PipePistol" prob="1.0"/>
-	<item name="gunHandgunT1Pistol" prob="0.8"/>
-	<item name="gunHandgunT3SMG5" prob="0.2"/>
-	<item name="gunShotgunT0PipeShotgun" prob="1.0"/>
-	<item name="gunShotgunT1DoubleBarrel" prob="0.8"/>
-	<item name="gunShotgunT3AutoShotgun" prob="0.2"/>
-	<item name="gunMGT0PipeMachineGun" prob="1.0"/>
-	<item name="gunMGT1AK47" prob="0.6"/>
-	<item name="gunMGT3M60" prob="0.2"/>
-	<item name="meleeWpnClubT0WoodenClub" prob="1.0"/>
-	<item name="meleeWpnClubT1BaseballBat" prob="0.8"/>
-	<item name="meleeWpnClubT3SteelClub" prob="0.6"/>
-	<item name="meleeWpnBladeT1HuntingKnife" prob="0.8"/>
-	<item name="meleeWpnBladeT3Machete" prob="0.6"/>
-	<item name="meleeWpnSpearT1IronSpear" prob="0.8"/>
-	<item name="meleeWpnSpearT3SteelSpear" prob="0.6"/>
-	<item name="gunExplosivesT3RocketLauncher" prob="0.2"/>
-</lootgroup>
-
-<lootgroup name="enAmmo" count="1">
-	<item name="ammo9mmBulletBall" 		count="80"/>
-	<item name="ammo762mmBulletBall" 	count="60"/>
-	<item name="ammoShotgunShell" 		count="40"/>
-	<item name="ammoRocketFrag" 		count="10"/>
-</lootgroup>
-
-<lootgroup name="enExplosives" 				prob="1.0" count="1">	
-	<item name="resourceRepairKit" 			prob="1.2" count="1"/>
-	<item name="thrownAmmoPipeBomb" 		prob="1.0" count="20"/>
-	<item name="thrownAmmoMolotovCocktail" 	prob="1.0" count="15"/>
-	<item name="thrownGrenade" 				prob="1.0" count="10"/>
-	<item name="thrownGrenadeContact" 		prob="1.0" count="5"/>
-	<item name="enDanceBomb" 				prob="0.5" count="1"/>
-</lootgroup>
-
-<lootgroup name="enArmor" count="1" loot_quality_template="enQualTemplate">
-	<item name="armorClothHat" prob="1.0" mods="dye" mod_chance="0"/>
-	<item name="armorClothGloves" prob="1.0" mods="dye" mod_chance="0"/>
-	<item name="armorClothJacket" prob="1.0" mods="dye" mod_chance="0"/>
-	<item name="armorClothPants" prob="1.0" mods="dye" mod_chance="0"/>
-	<item name="armorClothBoots" prob="1.0" mods="dye" mod_chance="0"/>
-	<item name="armorLeatherHood" prob="0.8" mods="dye" mod_chance="0"/>
-	<item name="armorLeatherGloves" prob="0.8" mods="dye" mod_chance="0"/>
-	<item name="armorLeatherChest" prob="0.8" mods="dye" mod_chance="0"/>
-	<item name="armorLeatherPants" prob="0.8" mods="dye" mod_chance="0"/>
-	<item name="armorLeatherBoots" prob="0.8" mods="dye" mod_chance="0"/>
-	<item name="armorScrapHelmet" prob="0.6" mods="dye" mod_chance="0"/>
-	<item name="armorScrapGloves" prob="0.6" mods="dye" mod_chance="0"/>
-	<item name="armorScrapChest" prob="0.6" mods="dye" mod_chance="0"/>
-	<item name="armorScrapLegs" prob="0.6" mods="dye" mod_chance="0"/>
-	<item name="armorScrapBoots" prob="0.6" mods="dye" mod_chance="0"/>
-	<item name="armorIronHelmet" prob="0.4" mods="dye" mod_chance="0"/>
-	<item name="armorIronGloves" prob="0.4" mods="dye" mod_chance="0"/>
-	<item name="armorIronChest" prob="0.4" mods="dye" mod_chance="0"/>
-	<item name="armorIronLegs" prob="0.4" mods="dye" mod_chance="0"/>
-	<item name="armorIronBoots" prob="0.4" mods="dye" mod_chance="0"/>
-	<item name="armorMilitaryHelmet" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorMilitaryGloves" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorMilitaryVest" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorMilitaryLegs" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorMilitaryBoots" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorSteelHelmet" prob="0.2" mods="dye" mod_chance="0"/>
-	<item name="armorSteelGloves" prob="0.2" mods="dye" mod_chance="0"/>
-	<item name="armorSteelChest" prob="0.2" mods="dye" mod_chance="0"/>
-	<item name="armorSteelLegs" prob="0.2" mods="dye" mod_chance="0"/>
-	<item name="armorSteelBoots" prob="0.2" mods="dye" mod_chance="0"/>
-	<item name="armorSwatHelmet" prob="0.3" mods="dye" mod_chance="0"/>
-	<item name="armorFootballHelmet" prob="0.3" mods="dye" mod_chance="0"/>
-</lootgroup>
-
-<lootgroup name="enBlocks" 			count="1">
-	<item name="woodMaster" 		prob="1.0"	count="50"/>
-	<item name="cobblestoneMaster"	prob="0.8"	count="40"/>
-	<item name="concreteMaster" 	prob="0.6"	count="30"/>
-	<item name="steelMaster" 		prob="0.5"	count="20"/>	
-</lootgroup>
-
-<lootgroup name="enMeds" 				count="1">
-	<item name="medicalBandage" 		prob="1.0"	count="1"/>
-	<item name="medicalAloeCream" 		prob="1.0"	count="1"/>
-	<item name="medicalFirstAidBandage"	prob="0.8"	count="1"/>
-	<item name="medicalSplint" 			prob="0.6"	count="1"/>	
-	<item name="medicalFirstAidKit" 	prob="0.5"	count="1"/>
-	<item name="enStemCells" 			prob="0.5"	count="1"/>
-	<item name="foodHoney" 				prob="0.4"	count="1"/>	
-</lootgroup>
-
-<lootgroup name="enBoosters" count="1">
-	<item name="drugAtomJunkies"/>
-	<item name="drugOhShitzDrops"/>
-	<item name="drugSkullCrushers"/>
-	<item name="drinkJarBeer"/>
-	<item name="drinkJarGrandpasMoonshine"/>
-	<item name="drinkJarGrandpasLearningElixir"/>
-	<item name="foodHoney"/>
-	<item name="drugHerbalAntibiotics"/>
-	<item name="drugAntibiotics"/>
-</lootgroup>
-
-<lootgroup name="enFood" count="1">
-	<item name="foodCharredMeat"/>
-	<item name="foodCanBeef"/>
-	<item name="foodCanCatfood"/>
-	<item name="foodCanChicken"/>
-	<item name="foodCanChili"/>
-	<item name="foodCanDogfood"/>
-	<item name="foodCanSham"/>
-	<item name="foodCanLamb"/>
-	<item name="foodCanMiso"/>
-	<item name="foodCanPasta"/>
-	<item name="foodCanPeas"/>
-	<item name="foodCanSalmon"/>
-	<item name="foodCanSoup"/>
-	<item name="foodCanStock"/>
-	<item name="foodCanTuna"/>
-	<item name="foodCanPears"/>
-	<item name="foodBoiledMeat"/>
-	<item name="foodGrilledMeat"/>
-	<item name="foodBaconAndEggs"/>
-	<item name="foodBlueberryPie"/>
-	<item name="foodVegetableStew"/>
-	<item name="foodMeatStew" />
-	<item name="foodHoboStew"/>
-	<item name="foodChiliDog"/>
-	<item name="foodFishTacos"/>
-	<item name="foodPumpkinPie"/>
-	<item name="foodPumpkinCheesecake"/>
-	<item name="foodPumpkinBread"/>
-	<item name="foodTunaFishGravyToast"/>
-	<item name="foodSteakAndPotato"/>
-	<item name="foodMeatStew" />
-	<item name="foodShamChowder"/>
-	<item name="foodSpaghetti"/>
-	<item name="foodGumboStew"/>
-	<item name="foodShepardsPie"/>
-</lootgroup>
-
-<lootgroup name="enDrink" count="1">
-	<item name="drinkJarPureMineralWater"/>
-	<item name="drinkJarBoiledWater"/>
-	<item name="drinkJarRedTea"/>
-	<item name="drinkJarYuccaJuice"/>
-	<item name="drinkYuccaJuiceSmoothie"/>
-	<item name="drinkCanMegaCrush"/>
-	<item name="drinkJarCoffee"/>
-	<item name="drinkJarBlackStrapCoffee"/>
-</lootgroup>
-
-<lootgroup name="enClothing" count="1">
-	<item name="apparelToughGuySunglasses" loot_prob_template="high" mods="dye" mod_chance="0"/>
-	<item name="apparelNerdGlasses"	loot_prob_template="high" mods="dye" mod_chance="0"/>
-	<item name="apparelSkiGoggles" loot_prob_template="high" mods="dye" mod_chance="0"/>
-	<item name="apparelRunningShoesHP" loot_prob_template="veryLow" mods="dye" mod_chance="0"/>
-</lootgroup>
-
-<lootgroup name="enMods" count="1">
-	<item name="modMeleeClubBurningShaft"/>
-	<item name="modMeleeClubMetalSpikes"/>
-	<item name="modMeleeClubMetalChain"/>
-	<item name="modMeleeErgonomicGrip"/>
-	<item name="modMeleeFortifyingGrip"/>
-	<item name="modMeleeSerratedBlade"/>
-	<item name="modArmorBandolier"/>
-	<item name="modArmorDoubleStoragePocket"/>
-	<item name="modArmorPlatingBasic"/>
-	<item name="modArmorPlatingReinforced"/>
-	<item name="modArmorStoragePocket"/>
-	<item name="modArmorTripleStoragePocket"/>
-	<item name="modGunDrumMagazineExtender"/>
-	<item name="modGunMagazineExtender"/>
-	<item name="modGunChoke"/>
-	<item name="modGunMeleeRadRemover"/>
-</lootgroup>
-
-
-<lootgroup name="enLootGroup" count="2">
-	<item group="enBlocks" loot_prob_template="guaranteed"/>
-	<item group="enMeds"  loot_prob_template="high"/>
-	<item group="enWeapons" loot_prob_template="high"/>
-	<item group="enAmmo" loot_prob_template="high"/>
-	<item group="enFood"  loot_prob_template="medHigh"/>
-	<item group="enDrink"  loot_prob_template="medHigh"/>
-	<item group="enBoosters"  loot_prob_template="medHigh"/>
-	<item group="enArmor" loot_prob_template="medHigh"/>
-	<item group="enExplosives" loot_prob_template="medHigh"/>
-	<item group="enClothing" loot_prob_template="med"/>
-	<item group="enMods" loot_prob_template="med"/>
-</lootgroup>
-
--->
-
-<!--
-<lootcontainer name="enLootBag" count="1" size="6,3" destroy_on_close="false" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="1" loot_quality_template="enQualTemplate">
-	<item group="enLootGroup"/>
-</lootcontainer>
--->
-
 <lootgroup name="enStarterCrateItems" count="all" loot_quality_template="enBasicTemplate">
-	
+	<item name="meleeWpnClubT0WoodenClub"/>
 	<item name="meleeWpnClubT1BaseballBat"/>
-	<item name="steelMaster" count="30"/>
-	<item name="bedrollBlockVariantHelper" count="10"/>
-	<item name="enVendingMachine" count="3"/>
+	<item name="gunHandgunT0PipePistol"/>
+	<item name="ammo9mmBulletBall" count="60"/>
+	<item name="woodMaster" count="80"/>
+	<item name="enVendingMachine" count="5"/>
+    <item name="medicalFirstAidBandage" count="5"/>
 	<item name="enRedPill"/>
-	
 </lootgroup>
 
+<lootgroup name="enStarterClothesItems" count="all">
+	<item name="modDyeRed" count="99"/>
+	<item name="modDyeGreen" count="99"/>
+	<item name="modDyeBlack" count="99"/>
+	<item name="modDyeBlue" count="99"/>
+	<item name="modDyeBrown" count="99"/>
+	<item name="modDyePink" count="99"/>
+	<item name="modDyePurple" count="99"/>
+	<item name="modDyeYellow" count="99"/>
+    <item name="apparelFlannelShirt"/>
+    <item name="apparelArmyShirt"/>
+    <item name="apparelArmyPants"/>
+    <item name="apparelShades"/>
+    <item name="apparelToughGuySunglasses"/>
+    <item name="apparelNerdGlasses"/>
+    <item name="apparelSkiGoggles"/>
+</lootgroup>
 
-<lootcontainer name="enStarterCrateItems" count="1" size="6,2" destroy_on_close="true" sound_open="SupplyDrops/open_supply_crate" sound_close="SupplyDrops/close_supply_crate" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+<lootgroup name="enRewardCrateItems01" count="1">
+	<item name="enShotSpeed"  				count="1"/>
+	<item name="enShotEnergy"  				count="1"/>
+	<item name="enShotAdrenaline"  			count="1"/>
+	<item name="enShotFocus" 				count="1"/>
+	<item name="ammo9mmBulletBall" 			count="140"/>
+	<item name="ammo762mmBulletBall"		count="140"/>
+	<item name="ammoShotgunShell" 			count="140"/>
+	<item name="enDanceBomb" 				count="2"/>
+    <item name="thrownAmmoPipeBomb" 		count="4"/>
+	<item name="thrownGrenadeContact" 		count="2"/>
+	<item name="medicalFirstAidBandage" 	count="3"/>
+	<item name="medicalFirstAidKit" 		count="1"/>
+	<item name="drinkJarPureMineralWater"	count="1"/>
+	<item name="casinoCoin"					count="500"/>
+	<item name="cobblestoneMaster" 			count="50"/>
+	<item name="concreteMaster" 			count="22"/>
+	<item name="steelMaster" 				count="6"/>
+	<item name="resourceRepairKit" 			count="1"/>
+</lootgroup>	
+<lootgroup name="enRewardCrateItems02" count="1">
+	<item name="enShotSpeed"  				count="1"/>
+	<item name="enShotEnergy"  				count="1"/>
+	<item name="enShotAdrenaline"  			count="1"/>
+	<item name="enShotFocus" 				count="1"/>
+	<item name="ammo9mmBulletBall" 			count="160"/>
+	<item name="ammo762mmBulletBall"		count="160"/>
+	<item name="ammoShotgunShell" 			count="160"/>
+	<item name="enDanceBomb" 				count="3"/>
+    <item name="thrownAmmoPipeBomb" 		count="6"/>
+	<item name="thrownGrenadeContact" 		count="3"/>
+	<item name="medicalFirstAidBandage" 	count="3"/>
+	<item name="medicalFirstAidKit" 		count="1"/>
+	<item name="drinkJarPureMineralWater"	count="1"/>
+	<item name="casinoCoin"					count="750"/>
+	<item name="cobblestoneMaster" 			count="60"/>
+	<item name="concreteMaster" 			count="28"/>
+	<item name="steelMaster" 				count="9"/>
+	<item name="resourceRepairKit" 			count="1"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems03" count="1">
+	<item name="enShotSpeed"  				count="2"/>
+	<item name="enShotEnergy"  				count="2"/>
+	<item name="enShotAdrenaline"  			count="2"/>
+	<item name="enShotFocus" 				count="2"/>
+	<item name="ammo9mmBulletBall" 			count="180"/>
+	<item name="ammo762mmBulletBall"		count="180"/>
+	<item name="ammoShotgunShell" 			count="180"/>
+    <item name="enDanceBomb" 				count="4"/>
+	<item name="thrownAmmoPipeBomb" 		count="8"/>
+	<item name="thrownGrenadeContact" 		count="4"/>
+	<item name="medicalFirstAidBandage" 	count="4"/>
+	<item name="medicalFirstAidKit" 		count="1"/>
+	<item name="drinkJarPureMineralWater"	count="2"/>
+	<item name="casinoCoin"					count="1000"/>
+	<item name="cobblestoneMaster" 			count="70"/>
+	<item name="concreteMaster" 			count="34"/>
+	<item name="steelMaster" 				count="12"/>
+	<item name="resourceRepairKit" 			count="2"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems04" count="1">
+	<item name="enShotSpeed"  				count="2"/>
+	<item name="enShotEnergy"  				count="2"/>
+	<item name="enShotAdrenaline"  			count="2"/>
+	<item name="enShotFocus" 				count="2"/>
+	<item name="ammo9mmBulletBall" 			count="200"/>
+	<item name="ammo762mmBulletBall"		count="200"/>
+	<item name="ammoShotgunShell" 			count="200"/>
+    <item name="enDanceBomb" 				count="5"/>
+	<item name="thrownAmmoPipeBomb" 		count="10"/>
+	<item name="thrownGrenadeContact" 		count="5"/>
+	<item name="medicalFirstAidBandage" 	count="4"/>
+	<item name="medicalFirstAidKit" 		count="2"/>
+	<item name="drinkJarPureMineralWater"	count="2"/>
+	<item name="casinoCoin"					count="1250"/>
+	<item name="cobblestoneMaster" 			count="80"/>
+	<item name="concreteMaster" 			count="40"/>
+	<item name="steelMaster" 				count="15"/>
+	<item name="resourceRepairKit" 			count="2"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems05" count="1">
+	<item name="enShotSpeed"  				count="3"/>
+	<item name="enShotEnergy"  				count="3"/>
+	<item name="enShotAdrenaline"  			count="3"/>
+	<item name="enShotFocus" 				count="3"/>
+	<item name="ammo9mmBulletBall" 			count="220"/>
+	<item name="ammo762mmBulletBall"		count="220"/>
+	<item name="ammoShotgunShell" 			count="220"/>
+    <item name="enDanceBomb" 				count="6"/>
+	<item name="thrownAmmoPipeBomb" 		count="12"/>
+	<item name="thrownGrenadeContact" 		count="6"/>
+	<item name="medicalFirstAidBandage" 	count="5"/>
+	<item name="medicalFirstAidKit" 		count="2"/>
+	<item name="drinkJarPureMineralWater"	count="3"/>
+	<item name="casinoCoin"					count="1500"/>
+	<item name="cobblestoneMaster" 			count="90"/>
+	<item name="concreteMaster" 			count="46"/>
+	<item name="steelMaster" 				count="18"/>
+	<item name="resourceRepairKit" 			count="3"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems06" count="1">
+	<item name="enShotSpeed"  				count="3"/>
+	<item name="enShotEnergy"  				count="3"/>
+	<item name="enShotAdrenaline"  			count="3"/>
+	<item name="enShotFocus" 				count="3"/>
+	<item name="ammo9mmBulletBall" 			count="240"/>
+	<item name="ammo762mmBulletBall"		count="240"/>
+	<item name="ammoShotgunShell" 			count="240"/>
+    <item name="enDanceBomb" 				count="7"/>
+	<item name="thrownAmmoPipeBomb" 		count="14"/>
+	<item name="thrownGrenadeContact" 		count="7"/>
+	<item name="medicalFirstAidBandage" 	count="5"/>
+	<item name="medicalFirstAidKit" 		count="2"/>
+	<item name="drinkJarPureMineralWater"	count="3"/>
+	<item name="casinoCoin"					count="1750"/>
+	<item name="cobblestoneMaster" 			count="100"/>
+	<item name="concreteMaster" 			count="52"/>
+	<item name="steelMaster" 				count="21"/>
+	<item name="resourceRepairKit" 			count="3"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems07" count="1">
+	<item name="enShotSpeed"  				count="4"/>
+	<item name="enShotEnergy"  				count="4"/>
+	<item name="enShotAdrenaline"  			count="4"/>
+	<item name="enShotFocus" 				count="4"/>
+	<item name="ammo9mmBulletBall" 			count="260"/>
+	<item name="ammo762mmBulletBall"		count="260"/>
+	<item name="ammoShotgunShell" 			count="260"/>
+    <item name="enDanceBomb" 				count="8"/>
+	<item name="thrownAmmoPipeBomb" 		count="16"/>
+	<item name="thrownGrenadeContact" 		count="8"/>
+	<item name="medicalFirstAidBandage" 	count="6"/>
+	<item name="medicalFirstAidKit" 		count="3"/>
+	<item name="drinkJarPureMineralWater"	count="4"/>
+	<item name="casinoCoin"					count="2000"/>
+	<item name="cobblestoneMaster" 			count="110"/>
+	<item name="concreteMaster" 			count="58"/>
+	<item name="steelMaster" 				count="24"/>
+	<item name="resourceRepairKit" 			count="4"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems08" count="1">
+	<item name="enShotSpeed"  				count="4"/>
+	<item name="enShotEnergy"  				count="4"/>
+	<item name="enShotAdrenaline"  			count="4"/>
+	<item name="enShotFocus" 				count="4"/>
+	<item name="ammo9mmBulletBall" 			count="280"/>
+	<item name="ammo762mmBulletBall"		count="280"/>
+	<item name="ammoShotgunShell" 			count="280"/>
+    <item name="enDanceBomb" 				count="9"/>
+	<item name="thrownAmmoPipeBomb" 		count="18"/>
+	<item name="thrownGrenadeContact" 		count="9"/>
+	<item name="medicalFirstAidBandage" 	count="6"/>
+	<item name="medicalFirstAidKit" 		count="3"/>
+	<item name="drinkJarPureMineralWater"	count="4"/>
+	<item name="casinoCoin"					count="2250"/>
+	<item name="cobblestoneMaster" 			count="120"/>
+	<item name="concreteMaster" 			count="64"/>
+	<item name="steelMaster" 				count="27"/>
+	<item name="resourceRepairKit" 			count="4"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems09" count="1">
+	<item name="enShotSpeed"  				count="5"/>
+	<item name="enShotEnergy"  				count="5"/>
+	<item name="enShotAdrenaline"  			count="5"/>
+	<item name="enShotFocus" 				count="5"/>
+	<item name="ammo9mmBulletBall" 			count="300"/>
+	<item name="ammo762mmBulletBall"		count="300"/>
+	<item name="ammoShotgunShell" 			count="300"/>
+    <item name="enDanceBomb" 				count="10"/>
+	<item name="thrownAmmoPipeBomb" 		count="20"/>
+	<item name="thrownGrenadeContact" 		count="10"/>
+	<item name="medicalFirstAidBandage" 	count="7"/>
+	<item name="medicalFirstAidKit" 		count="3"/>
+	<item name="drinkJarPureMineralWater"	count="5"/>
+	<item name="casinoCoin"					count="2500"/>
+	<item name="cobblestoneMaster" 			count="130"/>
+	<item name="concreteMaster" 			count="70"/>
+	<item name="steelMaster" 				count="30"/>
+	<item name="resourceRepairKit" 			count="5"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems10" count="1">
+	<item name="enShotSpeed"  				count="5"/>
+	<item name="enShotEnergy"  				count="5"/>
+	<item name="enShotAdrenaline"  			count="5"/>
+	<item name="enShotFocus" 				count="5"/>
+	<item name="ammo9mmBulletBall" 			count="320"/>
+	<item name="ammo762mmBulletBall"		count="320"/>
+	<item name="ammoShotgunShell" 			count="320"/>
+	<item name="enDanceBomb" 				count="11"/>
+    <item name="thrownAmmoPipeBomb" 		count="22"/>
+	<item name="thrownGrenadeContact" 		count="11"/>
+	<item name="medicalFirstAidBandage" 	count="7"/>
+	<item name="medicalFirstAidKit" 		count="4"/>
+	<item name="drinkJarPureMineralWater"	count="5"/>
+	<item name="casinoCoin"					count="2750"/>
+	<item name="cobblestoneMaster" 			count="140"/>
+	<item name="concreteMaster" 			count="76"/>
+	<item name="steelMaster" 				count="33"/>
+	<item name="resourceRepairKit" 			count="5"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems11" count="1">
+	<item name="enShotSpeed"  				count="6"/>
+	<item name="enShotEnergy"  				count="6"/>
+	<item name="enShotAdrenaline"  			count="6"/>
+	<item name="enShotFocus" 				count="6"/>
+	<item name="ammo9mmBulletBall" 			count="340"/>
+	<item name="ammo762mmBulletBall"		count="340"/>
+	<item name="ammoShotgunShell" 			count="340"/>
+	<item name="enDanceBomb" 				count="12"/>
+    <item name="thrownAmmoPipeBomb" 		count="24"/>
+	<item name="thrownGrenadeContact" 		count="12"/>
+	<item name="medicalFirstAidBandage" 	count="8"/>
+	<item name="medicalFirstAidKit" 		count="4"/>
+	<item name="drinkJarPureMineralWater"	count="6"/>
+	<item name="casinoCoin"					count="3000"/>
+	<item name="cobblestoneMaster" 			count="150"/>
+	<item name="concreteMaster" 			count="82"/>
+	<item name="steelMaster" 				count="36"/>
+	<item name="resourceRepairKit" 			count="6"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems12" count="1">
+	<item name="enShotSpeed"  				count="6"/>
+	<item name="enShotEnergy"  				count="6"/>
+	<item name="enShotAdrenaline"  			count="6"/>
+	<item name="enShotFocus" 				count="6"/>
+	<item name="ammo9mmBulletBall" 			count="360"/>
+	<item name="ammo762mmBulletBall"		count="360"/>
+	<item name="ammoShotgunShell" 			count="360"/>
+	<item name="enDanceBomb" 				count="13"/>
+    <item name="thrownAmmoPipeBomb" 		count="26"/>
+	<item name="thrownGrenadeContact" 		count="13"/>
+	<item name="medicalFirstAidBandage" 	count="8"/>
+	<item name="medicalFirstAidKit" 		count="4"/>
+	<item name="drinkJarPureMineralWater"	count="6"/>
+	<item name="casinoCoin"					count="3250"/>
+	<item name="cobblestoneMaster" 			count="160"/>
+	<item name="concreteMaster" 			count="88"/>
+	<item name="steelMaster" 				count="39"/>
+	<item name="resourceRepairKit" 			count="6"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems13" count="1">
+	<item name="enShotSpeed"  				count="7"/>
+	<item name="enShotEnergy"  				count="7"/>
+	<item name="enShotAdrenaline"  			count="7"/>
+	<item name="enShotFocus" 				count="7"/>
+	<item name="ammo9mmBulletBall" 			count="380"/>
+	<item name="ammo762mmBulletBall"		count="380"/>
+	<item name="ammoShotgunShell" 			count="380"/>
+    <item name="enDanceBomb" 				count="14"/>
+	<item name="thrownAmmoPipeBomb" 		count="28"/>
+	<item name="thrownGrenadeContact" 		count="14"/>
+	<item name="medicalFirstAidBandage" 	count="9"/>
+	<item name="medicalFirstAidKit" 		count="5"/>
+	<item name="drinkJarPureMineralWater"	count="7"/>
+	<item name="casinoCoin"					count="3500"/>
+	<item name="cobblestoneMaster" 			count="170"/>
+	<item name="concreteMaster" 			count="94"/>
+	<item name="steelMaster" 				count="42"/>
+	<item name="resourceRepairKit" 			count="7"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems14" count="1">
+	<item name="enShotSpeed"  				count="7"/>
+	<item name="enShotEnergy"  				count="7"/>
+	<item name="enShotAdrenaline"  			count="7"/>
+	<item name="enShotFocus" 				count="7"/>
+	<item name="enDanceBomb" 				count="15"/>
+	<item name="ammo9mmBulletBall" 			count="400"/>
+	<item name="ammo762mmBulletBall"		count="400"/>
+	<item name="ammoShotgunShell" 			count="400"/>
+	<item name="thrownAmmoPipeBomb" 		count="30"/>
+	<item name="thrownGrenadeContact" 		count="15"/>
+	<item name="medicalFirstAidBandage" 	count="9"/>
+	<item name="medicalFirstAidKit" 		count="5"/>
+	<item name="drinkJarPureMineralWater"	count="7"/>
+	<item name="casinoCoin"					count="3750"/>
+	<item name="cobblestoneMaster" 			count="180"/>
+	<item name="concreteMaster" 			count="100"/>
+	<item name="steelMaster" 				count="45"/>
+	<item name="resourceRepairKit" 			count="7"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems15" count="1">
+	<item name="enShotSpeed"  				count="8"/>
+	<item name="enShotEnergy"  				count="8"/>
+	<item name="enShotAdrenaline"  			count="8"/>
+	<item name="enShotFocus" 				count="8"/>
+	<item name="enDanceBomb" 				count="16"/>
+	<item name="ammo9mmBulletBall" 			count="420"/>
+	<item name="ammo762mmBulletBall"		count="420"/>
+	<item name="ammoShotgunShell" 			count="420"/>
+	<item name="thrownAmmoPipeBomb" 		count="32"/>
+	<item name="thrownGrenadeContact" 		count="16"/>
+	<item name="medicalFirstAidBandage" 	count="10"/>
+	<item name="medicalFirstAidKit" 		count="5"/>
+	<item name="drinkJarPureMineralWater"	count="8"/>
+	<item name="casinoCoin"					count="4000"/>
+	<item name="cobblestoneMaster" 			count="190"/>
+	<item name="concreteMaster" 			count="106"/>
+	<item name="steelMaster" 				count="48"/>
+	<item name="resourceRepairKit" 			count="8"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems16" count="1">
+	<item name="enShotSpeed"  				count="8"/>
+	<item name="enShotEnergy"  				count="8"/>
+	<item name="enShotAdrenaline"  			count="8"/>
+	<item name="enShotFocus" 				count="8"/>
+	<item name="ammo9mmBulletBall" 			count="440"/>
+	<item name="ammo762mmBulletBall"		count="440"/>
+	<item name="ammoShotgunShell" 			count="440"/>
+    <item name="enDanceBomb" 				count="17"/>
+	<item name="thrownAmmoPipeBomb" 		count="34"/>
+	<item name="thrownGrenadeContact" 		count="17"/>
+	<item name="medicalFirstAidBandage" 	count="10"/>
+	<item name="medicalFirstAidKit" 		count="6"/>
+	<item name="drinkJarPureMineralWater"	count="8"/>
+	<item name="casinoCoin"					count="4250"/>
+	<item name="cobblestoneMaster" 			count="200"/>
+	<item name="concreteMaster" 			count="112"/>
+	<item name="steelMaster" 				count="51"/>
+	<item name="resourceRepairKit" 			count="8"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems17" count="1">
+	<item name="enShotSpeed"  				count="9"/>
+	<item name="enShotEnergy"  				count="9"/>
+	<item name="enShotAdrenaline"  			count="9"/>
+	<item name="enShotFocus" 				count="9"/>
+	<item name="ammo9mmBulletBall" 			count="460"/>
+	<item name="ammo762mmBulletBall"		count="460"/>
+	<item name="ammoShotgunShell" 			count="460"/>
+    <item name="enDanceBomb" 				count="18"/>
+	<item name="thrownAmmoPipeBomb" 		count="36"/>
+	<item name="thrownGrenadeContact" 		count="18"/>
+	<item name="medicalFirstAidBandage" 	count="11"/>
+	<item name="medicalFirstAidKit" 		count="6"/>
+	<item name="drinkJarPureMineralWater"	count="9"/>
+	<item name="casinoCoin"					count="4500"/>
+	<item name="cobblestoneMaster" 			count="210"/>
+	<item name="concreteMaster" 			count="118"/>
+	<item name="steelMaster" 				count="54"/>
+	<item name="resourceRepairKit" 			count="9"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems18" count="1">
+	<item name="enShotSpeed"  				count="9"/>
+	<item name="enShotEnergy"  				count="9"/>
+	<item name="enShotAdrenaline"  			count="9"/>
+	<item name="enShotFocus" 				count="9"/>
+	<item name="ammo9mmBulletBall" 			count="480"/>
+	<item name="ammo762mmBulletBall"		count="480"/>
+	<item name="ammoShotgunShell" 			count="480"/>
+    <item name="enDanceBomb" 				count="19"/>
+	<item name="thrownAmmoPipeBomb" 		count="38"/>
+	<item name="thrownGrenadeContact" 		count="19"/>
+	<item name="medicalFirstAidBandage" 	count="11"/>
+	<item name="medicalFirstAidKit" 		count="6"/>
+	<item name="drinkJarPureMineralWater"	count="9"/>
+	<item name="casinoCoin"					count="4750"/>
+	<item name="cobblestoneMaster" 			count="220"/>
+	<item name="concreteMaster" 			count="124"/>
+	<item name="steelMaster" 				count="57"/>
+	<item name="resourceRepairKit" 			count="9"/>
+</lootgroup>
+<lootgroup name="enRewardCrateItems19" count="1">
+	<item name="enShotSpeed"  				count="10"/>
+	<item name="enShotEnergy"  				count="10"/>
+	<item name="enShotAdrenaline"  			count="10"/>
+	<item name="enShotFocus" 				count="10"/>
+	<item name="ammo9mmBulletBall" 			count="500"/>
+	<item name="ammo762mmBulletBall"		count="500"/>
+	<item name="ammoShotgunShell" 			count="500"/>
+    <item name="enDanceBomb" 				count="20"/>
+	<item name="thrownAmmoPipeBomb" 		count="40"/>
+	<item name="thrownGrenadeContact" 		count="20"/>
+	<item name="medicalFirstAidBandage" 	count="12"/>
+	<item name="medicalFirstAidKit" 		count="7"/>
+	<item name="drinkJarPureMineralWater"	count="10"/>
+	<item name="casinoCoin"					count="5000"/>
+	<item name="cobblestoneMaster" 			count="230"/>
+	<item name="concreteMaster" 			count="130"/>
+	<item name="steelMaster" 				count="60"/>
+	<item name="resourceRepairKit" 			count="10"/>
+</lootgroup>
+	
+<lootcontainer name="enStarterCrateItems" count="1" size="8,3" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
 	<item group="enStarterCrateItems"/>
 </lootcontainer>
+
+<lootcontainer name="enStarterClothesItems" count="1" size="8,4" destroy_on_close="true" sound_open="SupplyDrops/open_supply_crate" sound_close="SupplyDrops/close_supply_crate" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enStarterClothesItems"/>
+</lootcontainer>
+
+<lootcontainer name="enRewardCrateItems01" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems01"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems02" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems02"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems03" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems03"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems04" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems04"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems05" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems05"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems06" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems06"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems07" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems07"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems08" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems08"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems09" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems09"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems10" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems10"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems11" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems11"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems12" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems12"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems13" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems13"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems14" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems14"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems15" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems15"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems16" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems16"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems17" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems17"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems18" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems18"/>
+</lootcontainer>
+<lootcontainer name="enRewardCrateItems19" count="1" size="6,1" destroy_on_close="true" sound_open="UseActions/open_backpack" sound_close="UseActions/close_backpack" open_time="0.25" loot_quality_template="enBasicTemplate" ignore_loot_abundance="true">
+	<item group="enRewardCrateItems19"/>
+</lootcontainer>
+
 
 
 </append>

@@ -3,13 +3,16 @@
 <!-- disable toolbelttip when new blocks are picked up -->
 <remove xpath="/blocks/block/property[@name='PickupJournalEntry']"/>
 
+<!-- increase the price of blocks used in tower defense game -->
 <set xpath="/blocks/block[@name='steelMaster']/property[@name='EconomicValue']/@value">200</set> <!-- default: 160 -->
-<set xpath="/blocks/block[@name='concreteNoUpgradeMaster']/property[@name='EconomicValue']/@value">100</set> <!-- default: 50 -->
-<set xpath="/blocks/block[@name='cobblestoneMaster']/property[@name='EconomicValue']/@value">50</set> <!-- default: 14 -->
-<set xpath="/blocks/block[@name='woodNoUpgradeMaster']/property[@name='EconomicValue']/@value">15</set> <!-- default: 10 -->
+<set xpath="/blocks/block[@name='concreteNoUpgradeMaster']/property[@name='EconomicValue']/@value">150</set> <!-- default: 50 -->
+<set xpath="/blocks/block[@name='cobblestoneMaster']/property[@name='EconomicValue']/@value">40</set> <!-- default: 14 -->
+<set xpath="/blocks/block[@name='woodNoUpgradeMaster']/property[@name='EconomicValue']/@value">10</set> <!-- default: 10 -->
+<set xpath="/blocks/block[@name='cntStorageGeneric']/property[@name='EconomicValue']/@value">500</set> <!-- default: 6 -->
 
 <append xpath="/blocks">
 
+    <!-- initially given to players and where all items are purchased -->
 	<block name="enVendingMachine"> 
 		<property name="CreativeMode" value="Player"/>
 		<property name="Class" value="VendingMachine"/>
@@ -17,7 +20,7 @@
 		<property name="DescriptionKey" value="cntVendingMachineGroupDesc"/>
 		<property name="CustomIcon" value="cntVendingMachine2Broken"/>
 		<property name="Material" value="Mmetal_medium"/>
-		<property name="MaxDamage" value="15000"/>
+		<property name="MaxDamage" value="99999"/>
 		<property name="StabilitySupport" value="true"/>
 		<property name="Shape" value="ModelEntity"/>
 		<property name="Path" value="solid"/>
@@ -27,10 +30,34 @@
 		<property name="ImposterExchange" value="imposterBlock" param1="143"/>
 		<property name="ImposterDontBlock" value="true"/>
 		<property name="Stacknumber" value="100"/>
-		<property name="EconomicValue" value="2000"/>
+		<property name="DowngradeBlock" value="enVendingMachine"/>
 		<drop event="Fall" name="enVendingMachine" count="1" prob="1" stick_chance="1"/>
 	</block>
 
+	<!-- industructable conctrete blocks that the battle arena is constructed from -->
+	<block name="enConcrete" shapes="All">
+		<property name="Group" value="Building,advBuilding"/>
+		<property name="DescriptionKey" value="concreteGroupDesc"/>
+		<property name="Material" value="Mconcrete_shapes"/>
+		<property name="Texture" value="8"/>
+		<property name="UiBackgroundTexture" value="8"/>
+		<property name="FilterTags" value="MC_Shapes"/>
+		<property name="SortOrder1" value="0009"/>
+		<property name="MaxDamage" value="99999"/>
+		<property name="Collide" value="movement,melee"/>
+	</block>
+	
 </append>
+
+<!-- instant death when stepping outside of the battle arena -->
+<append xpath="/blocks/block[@name='terrForestGround']">
+	<property name="Class" value="TrunkTip"/>
+	<property name="BlockTag" value="Spike"/>
+	<property name="Damage" value="1000"/>
+	<property name="Damage_received" value="1"/>
+	<property name="MaxDamage" value="99999"/>
+</append>
+
+
 
 </ErrorNull>

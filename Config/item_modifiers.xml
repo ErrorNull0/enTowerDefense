@@ -1,0 +1,26 @@
+<ErrorNull>
+
+<!-- tweaking cost of mods sold in vending machine -->
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeClubBurningShaft']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeClubMetalSpikes']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeClubMetalChain']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeErgonomicGrip']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeFortifyingGrip']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modMeleeSerratedBlade']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modArmorBandolier']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modArmorPlatingReinforced']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunDrumMagazineExtender']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunMagazineExtender']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunChoke']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunMeleeRadRemover']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modArmorHelmetLight']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunScopeSmall']"><property name="EconomicValue" value="3000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunScopeMedium']"><property name="EconomicValue" value="4000"/></append>
+<append xpath="/item_modifiers/item_modifier[@name='modGunForegrip']"><property name="EconomicValue" value="3000"/></append>
+
+<!-- allow dyes to be stackable -->
+<append xpath="/item_modifiers/item_modifier[contains(@name,'modDye')]">
+	<property name="Stacknumber" value="99"/>
+</append>
+
+</ErrorNull>

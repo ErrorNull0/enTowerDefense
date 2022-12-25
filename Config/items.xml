@@ -1,661 +1,1355 @@
 <ErrorNull>
 
-<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='EconomicValue']/@value">500</set> <!-- default: 200 -->
-<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='EconomicValue']/@value">100</set> <!-- default: 15 -->
-<set xpath="/items/item[@name='drugPainkillers']/property[@name='EconomicValue']/@value">350</set> <!-- default: 80 -->
-<set xpath="/items/item[@name='medicalAloeCream']/property[@name='EconomicValue']/@value">50</set> <!-- default: 10 -->
-<set xpath="/items/item[@name='resourceSewingKit']/property[@name='EconomicValue']/@value">70</set> <!-- default: 16 -->
-<set xpath="/items/item[@name='medicalSplint']/property[@name='EconomicValue']/@value">50</set> <!-- default: 10 -->
-<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='EconomicValue']/@value">200</set> <!-- default: 41 -->
-<set xpath="/items/item[@name='thrownGrenadeContact']/property[@name='EconomicValue']/@value">300</set> <!-- default: 41 -->
+<!-- tweaking cost of certain items sold in vending machine -->
+<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='EconomicValue']/@value">1000</set> <!-- default: 200 -->
+<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='EconomicValue']/@value">150</set> <!-- default: 15 -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='EconomicValue']/@value">150</set> <!-- default: 41 -->
+<set xpath="/items/item[@name='thrownGrenadeContact']/property[@name='EconomicValue']/@value">500</set> <!-- default: 41 -->
+<set xpath="/items/item[@name='ammo9mmBulletBall']/property[@name='EconomicValue']/@value">7</set> <!-- default: 9 -->
+<set xpath="/items/item[@name='ammo762mmBulletBall']/property[@name='EconomicValue']/@value">9</set> <!-- default: 11 -->
+<set xpath="/items/item[@name='ammoShotgunShell']/property[@name='EconomicValue']/@value">9</set> <!-- default: 11 -->
+<set xpath="/items/item[@name='ammoShotgunSlug']/property[@name='EconomicValue']/@value">18</set> <!-- default: 20 -->
+<set xpath="/items/item[@name='resourceRepairKit']/property[@name='EconomicValue']/@value">250</set> <!-- default: 186 -->
 
+<!-- ensure these items only shown in 'medical' item group in vending machines -->
+<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='Group']/@value">Medical</set>
+<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='Group']/@value">Medical</set>
+<set xpath="/items/item[@name='drinkJarPureMineralWater']/property[@name='Group']/@value">Medical</set>
+
+<!-- tweak pipe bomb properties -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='Explosion.RadiusEntities']/@value">5</set> <!-- default: 4 -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='StickPercent']/@value">0.8</set> <!-- default: 0.5 -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/effect_group/passive_effect[@name='EntityDamage']/@value">280</set> <!-- default: 253 -->
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/effect_group/display_value[@name='dExRadius']/@value">5</set> <!-- default: 4 -->
+
+<!-- tweak contact grenade properties -->
+<set xpath="/items/item[@name='thrownGrenadeContact']/effect_group/passive_effect[@name='EntityDamage']/@value">280</set> <!-- default: 341 -->
+<set xpath="/items/item[@name='thrownGrenadeContact']/effect_group/passive_effect[@name='BlockDamage']/@value">20</set> <!-- default: 10 -->
+
+<!-- increase stack size of items -->
+<set xpath="/items/item[@name='ammo9mmBulletBall']/property[@name='Stacknumber']/@value">500</set>
+<set xpath="/items/item[@name='ammo762mmBulletBall']/property[@name='Stacknumber']/@value">500</set>
+<set xpath="/items/item[@name='ammoShotgunShell']/property[@name='Stacknumber']/@value">500</set>
+<set xpath="/items/item[@name='ammoShotgunSlug']/property[@name='Stacknumber']/@value">500</set>
+
+<set xpath="/items/item[@name='thrownAmmoPipeBomb']/property[@name='Stacknumber']/@value">50</set>
+<set xpath="/items/item[@name='thrownGrenadeContact']/property[@name='Stacknumber']/@value">50</set>
+<set xpath="/items/item[@name='medicalFirstAidBandage']/property[@name='Stacknumber']/@value">25</set>
+<set xpath="/items/item[@name='medicalFirstAidKit']/property[@name='Stacknumber']/@value">25</set>
+<set xpath="/items/item[@name='drinkJarPureMineralWater']/property[@name='Stacknumber']/@value">25</set>
+<set xpath="/items/item[@name='casinoCoin']/property[@name='Stacknumber']/@value">99999</set>
+
+
+<!-- tweak wood club properties to be 50% stronger -->
+<set xpath="/items/item[@name='meleeWpnClubT0WoodenClub']/effect_group[@name='meleeWpnClubT0WoodenClub']/passive_effect[@name='EntityDamage' and @operation='base_set']/@value">20.7</set> <!-- default 13.8 -->
+<set xpath="/items/item[@name='meleeWpnClubT0WoodenClub']/effect_group[@name='meleeWpnClubT0WoodenClub']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">0.15,0.75</set> <!-- default 0.1,0.5 -->
+<set xpath="/items/item[@name='meleeWpnClubT0WoodenClub']/effect_group[@name='meleeWpnClubT0WoodenClub']/passive_effect[@name='ModPowerBonus' and @operation='perc_add']/@value">0.15</set> <!-- default 0.10 -->
+<set xpath="/items/item[@name='meleeWpnClubT0WoodenClub']/effect_group[@name='Power Attack']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">1.5</set> <!-- default 1 -->
+
+<!-- tweak baseball bat properties to be 50% stronger -->
+<set xpath="/items/item[@name='meleeWpnClubT1BaseballBat']/effect_group[@name='meleeWpnClubT1BaseballBat']/passive_effect[@name='EntityDamage' and @operation='base_set']/@value">26.1</set> <!-- default 17.4 -->
+<set xpath="/items/item[@name='meleeWpnClubT1BaseballBat']/effect_group[@name='meleeWpnClubT1BaseballBat']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">0.15,0.75</set> <!-- default 0.1,0.5 -->
+<set xpath="/items/item[@name='meleeWpnClubT1BaseballBat']/effect_group[@name='meleeWpnClubT1BaseballBat']/passive_effect[@name='ModPowerBonus' and @operation='perc_add']/@value">0.15</set> <!-- default 0.10 -->
+<set xpath="/items/item[@name='meleeWpnClubT1BaseballBat']/effect_group[@name='Power Attack']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">1.5</set> <!-- default 1 -->
+
+<!-- tweak steel club properties to be 50% stronger -->
+<set xpath="/items/item[@name='meleeWpnClubT3SteelClub']/effect_group[@name='meleeWpnClubT3SteelClub']/passive_effect[@name='EntityDamage' and @operation='base_set']/@value">39.3</set> <!-- default 26.2 -->
+<set xpath="/items/item[@name='meleeWpnClubT3SteelClub']/effect_group[@name='meleeWpnClubT3SteelClub']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">0.15,0.75</set> <!-- default 0.1,0.5 -->
+<set xpath="/items/item[@name='meleeWpnClubT3SteelClub']/effect_group[@name='meleeWpnClubT3SteelClub']/passive_effect[@name='ModPowerBonus' and @operation='perc_add']/@value">0.15</set> <!-- default 0.10 -->
+<set xpath="/items/item[@name='meleeWpnClubT3SteelClub']/effect_group[@name='Power Attack']/passive_effect[@name='EntityDamage' and @operation='perc_add']/@value">1.5</set> <!-- default 1 -->
+
+
+<!-- prevent player from using first aid bandage and first aid kit when knocked out -->
+<append xpath="/items/item[@name='medicalFirstAidBandage']/effect_group">
+    <requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+</append>
+<append xpath="/items/item[@name='medicalFirstAidKit']/effect_group">
+    <requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+</append>
+
+
+<!-- disable toolbelt message popup when doing power attack with bone knives, clubs, and batons -->
+<remove xpath="/items/item/effect_group/triggered_effect[@action='AddJournalEntry']"/>
+
+<!-- disable toolbelt message popup when interacting with certain items for the first time -->
+<remove xpath="/items/item/property[@name='PickupJournalEntry']"/>
 
 <append xpath="/items">
 
-	<!-- restores 10 max health -->
-	<item name="enStemCells">
-		<property name="Tags" value="medical"/>
-		<property name="DisplayType" value="medicalPainkillers"/>
-		<property name="HoldType" value="16"/>
-		<property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
-		<property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
-		<property name="CustomIcon" value="drugPainkillers"/>
-		<property name="CustomIconTint" value="FF8888"/>
-		<property name="Material" value="Morganic"/>
-		<property name="EconomicValue" value="10000"/>
-		<property name="SellableToTrader" value="false"/>
-		<property name="Stacknumber" value="10"/>
-		<property name="Group" value="Science,Medical"/>
-		<property class="Action0">
-			<property name="Class" value="Eat"/>
-			<property name="Delay" value="1.0"/>
-			<property name="Use_time" value="..."/>
-			<property name="Sound_start" value="player_painkillers"/>
-			<requirement name="NotHasBuff" buff="buffDrugPainkillers"/>
-		</property>
-		<effect_group tiered="false">
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="$enDeathPenalty" operation="subtract" value="0.05">
-				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="GT" value="0"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="$enDeathPenalty" operation="set" value="0">
-				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="LT" value="0"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="RemoveBuff" buff="enBuffDeathPenalty">
-				<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="LTE" value="0"/>
-			</triggered_effect>
-		</effect_group>
-	</item>	
-
-	
-	<item name="enDanceBomb">
-		<property name="Tags" value="enSnowWeapon"/>
-		<property name="ItemTypeIcon" value="star"/>
-		<property name="CustomIcon" value="thrownAmmoPipeBomb"/>
-		<property name="CustomIconTint" value="230,160,255"/>
-		<property name="DescriptionKey" value="enDanceBombDesc"/>
-		<property name="Group" value="Ammo/Weapons"/>
-		<property name="Meshfile" value="#Other/Items?Weapons/Ranged/PipeBomb/PipeBombPrefab.prefab"/>
-		<property name="HoldType" value="25"/>
-		<property name="DropScale" value="2.5"/>
-		<property name="TintColor" value="230,160,255"/>
-		<property name="Material" value="Mmetal"/>
-		<property name="Class" value="ItemClassTimeBomb"/>
-		<property name="ExplodeOnHit" value="true"/>
-		<property name="FuseTime" value="20000"/>
-		<property name="Explosion.ParticleIndex" value="12"/>
+    <!-- ***************************************** -->
+    <!-- ********** SPECIAL CONSUMABLES ********** -->
+    <!-- ***************************************** -->
+    
+    <item name="enRedPill">
+        <property name="Tags" value="enRedPill"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugAntibiotics"/>
+        <property name="CustomIconTint" value="FF0000"/>
+        <property name="Material" value="Morganic"/>
+        <property name="EconomicValue" value="1"/>
+        <property name="SellableToTrader" value="false"/>
+        <property name="Stacknumber" value="10"/>
+        <property class="Action0">            
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_painkillers"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="RemoveBuff" buff="enBuffTimeHold"/>
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyScreenEffect" intensity="0" fade="2" effect_name="Greyscale"/>
+        </effect_group>
+    </item>    
+    
+    <item name="enBluePill">
+        <property name="Tags" value="enRedPill"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugAntibiotics"/>
+        <property name="CustomIconTint" value="0000FF"/>
+        <property name="Material" value="Morganic"/>
+        <property name="EconomicValue" value="1"/>
+        <property name="SellableToTrader" value="false"/>
+        <property name="Stacknumber" value="10"/>
+        <property class="Action0">            
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_painkillers"/>
+        </property>
+        <effect_group tiered="false">
+            <requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffTimeHold"/>
+        </effect_group>
+    </item>
+    
+    <item name="enDanceBomb">
+        <property name="Tags" value="ammo,weapon,attPerception,perkDemolitionsExpert"/>
+        <property name="ItemTypeIcon" value="star"/>
+        <property name="DisplayType" value="ammoGrenade"/>
+        <property name="Class" value="ItemClassTimeBomb"/>
+        <property name="CustomIcon" value="thrownAmmoPipeBomb"/>
+        <property name="CustomIconTint" value="230,160,255"/>
+        <property name="DescriptionKey" value="enDanceBombDesc"/>
+        <property name="Group" value="Ammo/Weapons"/>
+        <property name="Meshfile" value="#Other/Items?Weapons/Ranged/PipeBomb/PipeBombPrefab.prefab"/>
+        <property name="HoldType" value="25"/>
+        <property name="DropScale" value="2.5"/>
+        <property name="TintColor" value="230,160,255"/>
+        <property name="Material" value="Mmetal"/>
+        <property name="ExplodeOnHit" value="false"/>
+        <property name="FuseTime" value="4"/>
+        <property name="StickPercent" value=".8"/>
+        <property name="ActivationTransformToHide" value="Sparks"/>
+        <property name="Explosion.ParticleIndex" value="12"/>
         <property name="Explosion.RadiusBlocks" value="0"/>
-        <property name="Explosion.RadiusEntities" value="250"/>
-		<property name="Explosion.BlastPower" value="1"/> <!-- (int,100) how far ragdolls and such are flung -->
-		<property name="Stacknumber" value="20"/>
-		<property name="ThrowableDecoy" value="true"/>
-		<property name="EconomicValue" value="0"/>
-		<property name="SellableToTrader" value="false"/>
-		<property name="DistractionTags" value="zombie,requires_contact"/>
-		<property class="Action0">
-			<property name="Class" value="ThrowAway"/>
-			<property name="Delay" value="1.2"/>
-			<property name="Throw_strength_default" value="10"/>
-			<property name="Throw_strength_max" value="40"/>
-			<property name="Max_strain_time" value="1.25"/>
-			<property name="Sound_start" value="swoosh"/>
-		</property>
-		<effect_group name="enSnowPellet" tiered="false">
-			<passive_effect name="ModSlots" operation="base_set" value="0"/>
-			<passive_effect name="EntityDamage" operation="base_set" value="3"/>
-			<triggered_effect trigger="onSelfExplosionDamagedOther" action="AddBuff" target="other" buff="enZombieDance"/>
+        <property name="Explosion.RadiusEntities" value="7"/>
+        <property name="Explosion.BlastPower" value="1"/>
+        <property name="Stacknumber" value="20"/>
+        <property name="EconomicValue" value="0"/>
+        <property name="SellableToTrader" value="false"/>
+        <property name="DistractionTags" value="zombie,requires_contact"/>
+        <property class="Action0">
+            <property name="Class" value="ThrowAway"/>
+            <property name="Delay" value="1.2"/>
+            <property name="Throw_strength_default" value="10"/>
+            <property name="Throw_strength_max" value="40"/>
+            <property name="Max_strain_time" value="1.25"/>
+            <property name="Sound_start" value="swoosh"/>
+            <requirement name="CVarCompare" cvar="_underwater" operation="LT" value=".98"/>
+        </property>
+        <property name="ThrowableDecoy" value="true"/>
+        <property class="Action1">
+            <property name="Class" value="Activate"/>
+            <property name="Delay" value="1"/>
+        </property>
+        <effect_group name="enDanceBomb" tiered="false">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="EntityDamage" operation="base_set" value="100" tags="perkDemolitionsExpert"/>
+            <display_value name="dExRadius" value="7"/>
+            <display_value name="dFuseTime" value="4"/>
+            <triggered_effect trigger="onSelfExplosionDamagedOther" action="AddBuff" target="other" buff="enBuffZombieDance"/>
+        </effect_group>
+    </item>
+    
+    <item name="enShotSpeed">
+        <property name="Tags" value="medical"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="DescriptionKey" value="enShotSpeedDesc"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="00AA00"/>
+        <property name="TintColor" value="0,128,0"/>
+        <property name="Material" value="Morganic"/>
+        <property name="Stacknumber" value="999"/>
+            <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffShotSpeed"/>
+        </effect_group>
+    </item>
+    
+    <item name="enShotEnergy">
+        <property name="Tags" value="medical"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="DescriptionKey" value="enShotEnergyDesc"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="0000AA"/>
+        <property name="TintColor" value="0,0,128"/>
+        <property name="Material" value="Morganic"/>
+        <property name="Stacknumber" value="999"/>
+            <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffShotEnergy"/>
+        </effect_group>
+    </item>
+
+    <item name="enShotAdrenaline">
+        <property name="Tags" value="medical"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="DescriptionKey" value="enShotAdrenalineDesc"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="FFFFFF"/>
+        <property name="TintColor" value="255,255,255"/>
+        <property name="Material" value="Morganic"/>
+        <property name="Stacknumber" value="999"/>
+            <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffShotAdrenaline"/>
+        </effect_group>
+    </item>
+    
+    <item name="enShotFocus">
+        <property name="Tags" value="medical"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="DescriptionKey" value="enShotFocusDesc"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="AA00AA"/>
+        <property name="TintColor" value="128,0,128"/>
+        <property name="Material" value="Morganic"/>
+        <property name="Stacknumber" value="999"/>
+            <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffShotFocus"/>
+        </effect_group>
+    </item>
+    
+    <item name="enShotResurrection">
+        <property name="Tags" value="testing"/>
+        <property name="HoldType" value="64"/>
+        <property name="Meshfile" value="#Other/Items?Health/bandage.fbx"/>
+        <property name="DescriptionKey" value="enShotResurrectionDesc"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="222222"/>
+        <property name="TintColor" value="16,16,16"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Stacknumber" value="10"/>
+        <property name="Weight" value="5"/>
+        <property name="EconomicValue" value="25000"/>
+        <property name="Group" value="Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="RemoveBuff" buff="enBuffSpectator"/>
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffKoCheck"/>
+        </effect_group>
+    </item>
+    
+
+    <!--
+    <item name="enTeleporter">
+        <property name="Tags" value="enTeleporter"/>
+        <property name="HoldType" value="16"/>
+        <property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugAntibiotics"/>
+        <property name="CustomIconTint" value="000000"/>
+        <property name="Material" value="Morganic"/>
+        <property name="EconomicValue" value="1"/>
+        <property name="SellableToTrader" value="false"/>
+        <property name="Stacknumber" value="100"/>
+        <property class="Action0">            
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="stunbaton_swinglight"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="CallGameEvent" event="enAction_teleportPlayer"/>
+        </effect_group>
+    </item>    
+    -->
+    
+    
+    
+    <!-- **************************************************** -->
+    <!-- ********** NEW STEALTH CLOTHING AND ARMOR ********** -->
+    <!-- **************************************************** -->    
+
+    <item name="enStealthHood">
+        <property name="Extends" value="armorClothMaster" param1="CustomIcon"/>
+        <property name="Tags" value="head,armor,armorHead,lightArmor,padded,canHaveCosmetic,lightArmorDeg"/>
+        <property name="DescriptionKey" value="enStealthArmorDesc"/>
+        <property name="CustomIcon" value="armorLeatherHood"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="armorLight"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="EconomicValue" value="700"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Head"/>
+        <effect_group name="stealth armor">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="ModPowerBonus"            operation="base_add" value="300"            tags="EconomicValue"/>
+            <passive_effect name="PhysicalDamageResist"     operation="base_add" value="0.6,3.6"        tier="1,6"/>
+            <passive_effect name="ElementalDamageResist"    operation="base_add" value="0.4,2.4"        tier="1,6" tags="heat,cold,electrical"/>
+            <passive_effect name="LightMultiplier"          operation="perc_add" value="-0.02,-0.12"    tier="1,6"/>
+            <passive_effect name="Mobility"                 operation="perc_add" value="0.01,0.06"      tier="1,6"/>
+            <passive_effect name="DegradationMax"           operation="base_set" value="80,200"         tier="1,6"/>
+            <passive_effect name="DegradationPerUse"        operation="base_set" value="1" tags="lightArmorDeg"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.010" tags="walking"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.009" tags="running"/>
+            <display_value name="dStaminaChangeOT"          value="0.1"/>
+            <passive_effect name="NoiseMultiplier"          operation="perc_add" value="-0.1"/>
+            <display_value name="dNoiseMultiplier"          value="-0.1"/>
+        </effect_group>
+        <property class="UMA">
+            <property name="Mesh" value="armor_leather_hood"/>
+            <property name="Overlay0" value="armor_leather_hood"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="2"/>
+            <property name="UISlot" value="Headgear"/>
+            <property name="Mask0" value="Head" param1="inner"/>
+            <property name="Mask1" value="Head" param1="outer"/>
+        </property>
+    </item>
+
+    <item name="enStealthMask">
+        <property name="Tags" value="head,clothing,canHaveCosmetic,noMods"/>
+        <property name="DescriptionKey" value="enStealthClothingDesc"/>
+        <property name="CustomIcon" value="apparelBandana"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="clothingGhillie"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="Stacknumber" value="1"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Weight" value="15"/>
+        <property name="EconomicValue" value="950"/>
+        <property name="DegradationBreaksAfter" value="false"/>
+        <property name="Encumbrance" value="0"/>
+        <property name="HoldType" value="45"/>
+        <property name="Meshfile" value="#Other/Items?Misc/sackPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Face"/>
+        <property class="UMA">
+            <property name="Mesh" value="gear_bandana"/>
+            <property name="Overlay0" value="gear_bandana"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="1"/>
+            <property name="UISlot" value="Face"/>
+            <property name="Mask0" value="Face" param1="base"/>
+        </property>
+        <effect_group tiered="false">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="HypothermalResist" operation="base_add" value="2,2"/>
+            <passive_effect name="HyperthermalResist" operation="base_add" value="2,2"/>
+            <passive_effect name="LightMultiplier" operation="perc_add" value="-0.05"/>
+            <display_value name="dLightMultiplier" value="-0.05"/>
+            <passive_effect name="NoiseMultiplier" operation="perc_add" value="-0.05"/>
+            <display_value name="dNoiseMultiplier" value="-0.05"/>
+        </effect_group>
+    </item>
+
+    <item name="enStealthShirt">
+        <property name="Tags" value="upperbody,chest,clothing,canHaveCosmetic"/>
+        <property name="DescriptionKey" value="enStealthClothingDesc"/>
+        <property name="CustomIcon" value="apparelSweatshirt"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="clothingGhillie"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="Stacknumber" value="1"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="DegradationBreaksAfter" value="false"/>
+        <property name="Weight" value="25"/>
+        <property name="EconomicValue" value="1450"/>
+        <property name="HoldType" value="45"/>
+        <property name="Meshfile" value="#Other/Items?Misc/sackPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Chest"/>
+        <property class="UMA">
+            <property name="Mesh" value="sweatshirt"/>
+            <property name="Overlay0" value="sweatshirt"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="0"/>
+            <property name="Mask0" value="chest" param1="inner"/>
+            <property name="UISlot" value="Shirt"/>
+        </property>
+        <effect_group tiered="false">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="HypothermalResist" operation="base_add" value="5,5"/>
+            <passive_effect name="HyperthermalResist" operation="base_add" value="5,5"/>
+            <passive_effect name="LightMultiplier" operation="perc_add" value="-0.08"/>
+            <display_value name="dLightMultiplier" value="-0.08"/>
+            <passive_effect name="NoiseMultiplier" operation="perc_add" value="-0.08"/>
+            <display_value name="dNoiseMultiplier" value="-0.08"/>
+        </effect_group>
+    </item>
+
+    <item name="enStealthChest">
+        <property name="Extends" value="armorClothMaster" param1="CustomIcon"/>
+        <property name="Tags" value="upperbody,chest,armor,armorChest,lightArmor,padded,canHaveCosmetic,lightArmorDeg"/>
+        <property name="DescriptionKey" value="enStealthArmorDesc"/>
+        <property name="CustomIcon" value="armorClothJacket"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="armorLight"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="EconomicValue" value="900"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Chest"/>
+        <effect_group name="stealth armor">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="ModPowerBonus"            operation="base_add" value="300"            tags="EconomicValue"/>
+            <passive_effect name="PhysicalDamageResist"     operation="base_add" value="0.7,4.2"        tier="1,6"/>
+            <passive_effect name="ElementalDamageResist"    operation="base_add" value="0.5,3.0"        tier="1,6" tags="heat,cold,electrical"/>
+            <passive_effect name="LightMultiplier"          operation="perc_add" value="-0.02,-0.12"    tier="1,6"/>
+            <passive_effect name="Mobility"                 operation="perc_add" value="0.01,0.06"      tier="1,6"/>
+            <passive_effect name="DegradationMax"           operation="base_set" value="86,236"         tier="1,6"/>
+            <passive_effect name="DegradationPerUse"        operation="base_set" value="1" tags="lightArmorDeg"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.020" tags="walking"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.018" tags="running"/>
+            <display_value name="dStaminaChangeOT"          value="0.2"/>
+            <passive_effect name="NoiseMultiplier"          operation="perc_add" value="-0.1"/>
+            <display_value name="dNoiseMultiplier"          value="-0.1"/>
+        </effect_group>
+        <property class="UMA">
+            <property name="Mesh" value="armor_cloth_chest"/>
+            <property name="Overlay0" value="armor_cloth_chest"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="2"/>
+            <property name="UISlot" value="ChestArmor"/>
+        </property>
+    </item>
+
+    <item name="enStealthGloves">
+        <property name="Extends" value="armorClothMaster" param1="CustomIcon"/>
+        <property name="Tags" value="upperbody,hands,armor,armorHands,lightArmor,padded,canHaveCosmetic,lightArmorDeg"/>
+        <property name="DescriptionKey" value="enStealthArmorDesc"/>
+        <property name="CustomIcon" value="armorLeatherGloves"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="armorLight"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="EconomicValue" value="700"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Hands"/>
+        <effect_group name="stealth armor">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="ModPowerBonus"            operation="base_add" value="300"            tags="EconomicValue"/>
+            <passive_effect name="PhysicalDamageResist"     operation="base_add" value="0.6,3.6"        tier="1,6"/>
+            <passive_effect name="ElementalDamageResist"    operation="base_add" value="0.4,2.4"        tier="1,6" tags="heat,cold,electrical"/>
+            <passive_effect name="LightMultiplier"          operation="perc_add" value="-0.02,-0.12"    tier="1,6"/>
+            <passive_effect name="Mobility"                 operation="perc_add" value="0.01,0.06"      tier="1,6"/>
+            <passive_effect name="DegradationMax"           operation="base_set" value="80,200"         tier="1,6"/>
+            <passive_effect name="DegradationPerUse"        operation="base_set" value="1" tags="lightArmorDeg"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.010" tags="walking"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.009" tags="running"/>
+            <display_value name="dStaminaChangeOT"          value="0.1"/>
+            <passive_effect name="NoiseMultiplier"          operation="perc_add" value="-0.1"/>
+            <display_value name="dNoiseMultiplier"          value="-0.1"/>
+        </effect_group>
+        <property class="UMA">
+            <property name="Mesh" value="armor_leather_gloves"/>
+            <property name="Overlay0" value="armor_leather_gloves"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="2"/>
+            <property name="UISlot" value="Gloves"/>
+            <property name="Mask0" value="Head" param1="inner"/>
+            <property name="Mask1" value="Head" param1="outer"/>
+        </property>
+    </item>
+    
+    <item name="enStealthPants">
+        <property name="Tags" value="lowerbody,legs,clothing,pocketMod,canHaveCosmetic"/>
+        <property name="DescriptionKey" value="enStealthClothingDesc"/>
+        <property name="CustomIcon" value="apparelArmyPants"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="clothingGhillie"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="Stacknumber" value="1"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="DegradationBreaksAfter" value="false"/>
+        <property name="Weight" value="30"/>
+        <property name="EconomicValue" value="1300"/>
+        <property name="HoldType" value="45"/>
+        <property name="Meshfile" value="#Other/Items?Misc/sackPrefab.prefab"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Legs"/>
+        <property class="UMA">
+            <property name="Mesh" value="clothes_army_pants"/>
+            <property name="Overlay0" value="clothes_army_pants"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="0"/>
+            <property name="Mask0" value="legs" param1="inner"/>
+            <property name="UISlot" value="Pants"/>
+        </property>
+        <effect_group tiered="false">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="HypothermalResist" operation="base_add" value="4,4"/>
+            <passive_effect name="HyperthermalResist" operation="base_add" value="4,4"/>
+            <passive_effect name="LightMultiplier" operation="perc_add" value="-0.07"/>
+            <display_value name="dLightMultiplier" value="-0.07"/>
+            <passive_effect name="NoiseMultiplier" operation="perc_add" value="-0.07"/>
+            <display_value name="dNoiseMultiplier" value="-0.07"/>
+        </effect_group>
+    </item>
+    
+    <item name="enStealthLegs">
+        <property name="Extends" value="armorClothMaster" param1="CustomIcon"/>
+        <property name="Tags" value="lowerbody,legs,armor,armorLegs,lightArmor,padded,canHaveCosmetic,lightArmorDeg"/>
+        <property name="DescriptionKey" value="enStealthArmorDesc"/>
+        <property name="CustomIcon" value="armorClothPants"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="armorLight"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="EconomicValue" value="800"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Legs"/>
+        <effect_group name="stealth armor">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="ModPowerBonus"            operation="base_add" value="300"            tags="EconomicValue"/>
+            <passive_effect name="PhysicalDamageResist"     operation="base_add" value="0.7,4.2"        tier="1,6"/>
+            <passive_effect name="ElementalDamageResist"    operation="base_add" value="0.5,3.0"        tier="1,6" tags="heat,cold,electrical"/>
+            <passive_effect name="LightMultiplier"          operation="perc_add" value="-0.02,-0.12"    tier="1,6"/>
+            <passive_effect name="Mobility"                 operation="perc_add" value="0.01,0.06"      tier="1,6"/>
+            <passive_effect name="DegradationMax"           operation="base_set" value="86,236"         tier="1,6"/>
+            <passive_effect name="DegradationPerUse"        operation="base_set" value="1" tags="lightArmorDeg"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.020" tags="walking"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.018" tags="running"/>
+            <display_value name="dStaminaChangeOT"          value="0.2"/>
+            <passive_effect name="NoiseMultiplier"          operation="perc_add" value="-0.1"/>
+            <display_value name="dNoiseMultiplier"          value="-0.1"/>
+        </effect_group>
+        <property class="UMA">
+            <property name="Mesh" value="armor_cloth_legs"/>
+            <property name="Overlay0" value="armor_cloth_legs"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="3"/>
+            <property name="UISlot" value="LegArmor"/>
+        </property>
+    </item>
+    
+    <item name="enStealthBoots">
+        <property name="Extends" value="armorClothMaster" param1="CustomIcon"/>
+        <property name="Tags" value="lowerbody,feet,armor,armorFeet,lightArmor,padded,canHaveCosmetic,lightArmorDeg"/>
+        <property name="DescriptionKey" value="enStealthArmorDesc"/>
+        <property name="CustomIcon" value="apparelGothBoots"/>
+        <property name="CustomIconTint" value="80,80,80"/>
+        <property name="DisplayType" value="armorLight"/>
+        <property name="RepairTools" value="resourceRepairKit"/>
+        <property name="EconomicValue" value="900"/>
+        <property name="Group" value="Clothing"/>
+        <property name="EquipSlot" value="Feet"/>
+        <effect_group name="stealth armor">
+            <passive_effect name="ModSlots" operation="base_set" value="0"/>
+            <passive_effect name="ModPowerBonus"            operation="base_add" value="300"            tags="EconomicValue"/>
+            <passive_effect name="PhysicalDamageResist"     operation="base_add" value="0.6,3.6"        tier="1,6"/>
+            <passive_effect name="ElementalDamageResist"    operation="base_add" value="0.4,2.4"        tier="1,6" tags="heat,cold,electrical"/>
+            <passive_effect name="LightMultiplier"          operation="perc_add" value="-0.02,-0.12"    tier="1,6"/>
+            <passive_effect name="Mobility"                 operation="perc_add" value="0.05,0.10"      tier="1,6"/>
+            <passive_effect name="DegradationMax"           operation="base_set" value="86,236"         tier="1,6"/>
+            <passive_effect name="DegradationPerUse"        operation="base_set" value="1" tags="lightArmorDeg"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.040" tags="walking"/>
+            <passive_effect name="StaminaChangeOT"          operation="perc_add" value="0.036" tags="running"/>
+            <display_value name="dStaminaChangeOT"          value="0.4"/>
+            <passive_effect name="NoiseMultiplier"          operation="perc_add" value="-0.1"/>
+            <display_value name="dNoiseMultiplier"          value="-0.1"/>
+        </effect_group>
+        <property class="UMA">
+            <property name="Mesh" value="goth_boots"/>
+            <property name="Overlay0" value="goth_boots"/>
+            <property name="Overlay0Tint" value="50,50,50"/>
+            <property name="Layer" value="0"/>
+            <property name="UISlot" value="Footwear"/>
+        </property>
+    </item>
+    
+    
+    <!-- ************************************************ -->
+    <!-- ********** NEW TOP-TIER MELEE WEAPONS ********** -->
+    <!-- ************************************************ -->  
+    
+    <item name="enMeatCleaver">
+        <property name="Extends" value="meleeWpnBladeT3Machete"/>
+        <property name="Tags" value="machete,melee,grunting,light,longShaft,perkFlurryOfBlows,weapon,meleeWeapon,attAgility,perkDeepCuts,perkTheHuntsman,canHaveCosmetic"/>
+        <property name="CustomIcon" value="meleeWpnBladeT3Machete"/>
+        <property name="CustomIconTint" value="170,0,120"/>
+        <property name="TintColor" value="130,0,130"/>
+        <property name="EconomicValue" value="2000"/>
+        <effect_group name="enMeatCleaver">
+            <passive_effect name="EntityDamage" operation="base_set" value="30.0" tags="perkDeepCuts"/> <!-- default: 19.8 -->
+            <passive_effect name="BlockDamage" operation="base_set" value="21" tags="perkDeepCuts"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="90" tags="perkDeepCuts,perkFlurryOfBlows"/> <!-- default: 55 -->
+            <passive_effect name="StaminaLoss" operation="base_set" value="15.0" tags="primary"/> <!-- default: 19.2 -->
+            <passive_effect name="DegradationMax" operation="base_set" value="300,700" tier="1,6" tags="perkDeepCuts"/> <!-- default: 288,673 -->
+            <passive_effect name="DegradationPerUse" operation="base_set" value="1" tags="perkDeepCuts"/>
+            <passive_effect name="MaxRange" operation="base_set" value="2.4" tags="perkDeepCuts"/>
+            <passive_effect name="BlockRange" operation="base_set" value="3.5" tags="perkDeepCuts"/>
+            <passive_effect name="ModSlots" operation="base_set" value="1,1,2,2,3,4" tier="1,2,3,4,5,6"/>
+            <passive_effect name="ModPowerBonus" operation="perc_add" value=".10" tags="EntityDamage,BlockDamage"/>
+            <passive_effect name="ModPowerBonus" operation="base_add" value="300" tags="EconomicValue"/>
+            <passive_effect name="EntityDamage" operation="perc_add" value="-.15,.15" tags="perkDeepCuts"/>
+            <passive_effect name="EntityDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkDeepCuts"/>
+            <passive_effect name="BlockDamage" operation="perc_add" value="-.15,.15" tags="perkDeepCuts"/>
+            <passive_effect name="BlockDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkDeepCuts"/>
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.8" tags="earth"/>
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.8" tags="stone"/>
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.8" tags="metal"/>
+            <passive_effect name="HarvestCount" operation="base_set" value="1" tags="butcherHarvest"/>
+            <passive_effect name="DismemberChance" operation="base_add" value="1" tags="primary"/>
+        </effect_group>
+        <effect_group name="Power Attack">
+            <passive_effect name="EntityDamage" operation="perc_add" value="1.0" tags="secondary"/> <!-- default: 1.0 -->
+            <passive_effect name="BlockDamage" operation="perc_add" value="1.0" tags="secondary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="23.0" tags="secondary"/> <!-- default: 32.7 -->
+            <passive_effect name="DismemberChance" operation="base_add" value="1" tags="secondary"/>
+        </effect_group>
+        <effect_group name="sneak damage bonus">
+            <requirement name="CVarCompare" cvar="_crouching" operation="Equals" value="1"/>
+            <requirement name="CVarCompare" cvar="_notAlerted" operation="GT" value="0" target="other"/>
+                <passive_effect name="DamageBonus" operation="base_add" value="4.5"/> <!-- defualt: 4 -->
+                <passive_effect name="EntityDamage" operation="perc_add" value="4.5" tags="perkDeepCuts"/> <!-- defualt: 4 -->
+                <display_value name="dEntityDamageSneak" value="4.5"/> <!-- defualt: 4 -->
+        </effect_group>
+    </item>
+    
+
+    <item name="enBoneBasher">
+        <property name="Extends" value="meleeWpnClubT3SteelClub"/>
+        <property name="Tags" value="blunt,club,melee,grunting,light,longShaft,perkFlurryOfBlows,weapon,meleeWeapon,attStrength,perkPummelPete,canHaveCosmetic"/>
+        <property name="CustomIcon" value="meleeWpnClubT3SteelClub"/>
+        <property name="CustomIconTint" value="170,0,120"/>
+        <property name="TintColor" value="130,0,100"/>
+        <property name="EconomicValue" value="2000"/>
+        <effect_group name="enBoneBasher">
+            <passive_effect name="EntityDamage" operation="base_set" value="80.0" tags="perkPummelPete"/> <!-- defualt: 26.2 -->
+            <passive_effect name="BlockDamage" operation="base_set" value="36.0" tags="perkPummelPete"/> <!-- defualt: 22.1 -->
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="55" tags="perkPummelPete,perkFlurryOfBlows"/> <!-- defualt: 52 -->
+            <passive_effect name="StaminaLoss" operation="base_set" value="18.0" tags="primary"/> <!-- defualt: 23.7 -->
+            <passive_effect name="DegradationMax" operation="base_set" value="350,750" tier="1,6" tags="perkPummelPete"/> <!-- defualt: 300,700 -->
+            <passive_effect name="DegradationPerUse" operation="base_set" value="1" tags="perkPummelPete"/>
+            <passive_effect name="MaxRange" operation="base_set" value="2.4" tags="perkPummelPete"/>
+            <passive_effect name="BlockRange" operation="base_set" value="3" tags="perkPummelPete"/>
+
+            <passive_effect name="ModSlots" operation="base_set" value="1,1,2,2,3,4" tier="1,2,3,4,5,6"/>
+            <passive_effect name="ModPowerBonus" operation="perc_add" value=".10" tags="EntityDamage,BlockDamage"/>
+            <passive_effect name="ModPowerBonus" operation="base_add" value="300" tags="EconomicValue"/>
+
+            <passive_effect name="EntityDamage" operation="perc_add" value="-.15,.15" tags="perkPummelPete"/>
+            <passive_effect name="EntityDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkPummelPete"/>
+            <passive_effect name="BlockDamage" operation="perc_add" value="-.15,.15" tags="perkPummelPete"/>
+            <passive_effect name="BlockDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkPummelPete"/>
+
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.5" tags="earth"/>
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.5" tags="stone"/>
+            <passive_effect name="DamageModifier" operation="perc_add" value="-.5" tags="metal"/>
+
+            <passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="allHarvest"/>
+            <passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="allToolsHarvest"/>
+            <passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="oreWoodHarvest"/>
+        </effect_group>
+        <effect_group name="Power Attack">
+            <passive_effect name="EntityDamage" operation="perc_add" value="1.0" tags="secondary"/> <!-- defualt: 1 -->
+            <passive_effect name="BlockDamage" operation="perc_add" value="1.0" tags="secondary"/> <!-- defualt: 1 -->
+            <passive_effect name="StaminaLoss" operation="base_set" value="34.0" tags="secondary"/> <!-- defualt: 40.3 -->
+        </effect_group>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfDamagedOther" action="AddBuff" target="other" buff="buffInjuryKnockdown01">
+                <requirement name="RandomRoll" seed_type="Random" target="self" min_max="0,100" operation="LTE" value="30"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfDamagedOther" action="AddBuff" target="other" buff="buffInjuryCrippled01">
+                <requirement name="RandomRoll" seed_type="Random" target="self" min_max="0,100" operation="LTE" value="30"/>
+            </triggered_effect>
 		</effect_group>
-	</item>
-	
-	
-	<item name="enRedPill">
-		<property name="Tags" value="enRedPill"/>
-		<property name="HoldType" value="16"/>
-		<property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
-		<property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
-		<property name="CustomIcon" value="drugAntibiotics"/>
-		<property name="CustomIconTint" value="FF0000"/>
-		<property name="Material" value="Morganic"/>
-		<property name="EconomicValue" value="1"/>
-		<property name="SellableToTrader" value="false"/>
-		<property name="Stacknumber" value="10"/>
-		<property class="Action0">			
-			<property name="Class" value="Eat"/>
-			<property name="Delay" value="1.0"/>
-			<property name="Use_time" value="..."/>
-			<property name="Sound_start" value="player_painkillers"/>
-		</property>
-		<effect_group tiered="false">
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffStartSession"/>
-		</effect_group>
-	</item>	
-	
-	<!-- for testing -->
-	<!--
-	<item name="item_BlackPill">
-		<property name="HoldType" value="16"/>
-		<property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
-		<property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
-		<property name="CustomIcon" value="drugAntibiotics"/>
-		<property name="CustomIconTint" value="000000"/>
-		<property name="Material" value="Morganic"/>
-		<property name="EconomicValue" value="1"/>
-		<property name="SellableToTrader" value="false"/>
-		<property name="Stacknumber" value="100"/>
-		<property class="Action0">			
-			<property name="Class" value="Eat"/>
-			<property name="Delay" value="1.0"/>
-			<property name="Use_time" value="..."/>
-			<property name="Sound_start" value="player_painkillers"/>
-		</property>
-		<effect_group tiered="false">
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="xxxxxx"/>
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="CallGameEvent" event="xxxxxxx"/>
-		</effect_group>
-	</item>	
-	-->
-	
-	<item name="enTeleporter">
-		<property name="HoldType" value="16"/>
-		<property name="Meshfile" value="#Other/Items?Health/painkillersPrefab.prefab"/>
-		<property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
-		<property name="CustomIcon" value="drugAntibiotics"/>
-		<property name="CustomIconTint" value="000000"/>
-		<property name="Material" value="Morganic"/>
-		<property name="EconomicValue" value="1"/>
-		<property name="SellableToTrader" value="false"/>
-		<property name="Stacknumber" value="100"/>
-		<property class="Action0">			
-			<property name="Class" value="Eat"/>
-			<property name="Delay" value="1.0"/>
-			<property name="Use_time" value="..."/>
-			<property name="Sound_start" value="stunbaton_swinglight"/>
-		</property>
-		<effect_group tiered="false">
-			<triggered_effect trigger="onSelfPrimaryActionEnd" action="CallGameEvent" event="enAction_teleportPlayer"/>
-		</effect_group>
-	</item>	
-	
-	
-	
-	
-	
-<item name="enRepulsor">
-	<property name="Tags" value="melee,grunting,light,perkFlurryOfBlows,weapon,meleeWeapon,attIntellect,perkElectrocutioner,canHaveCosmetic"/>
-	<property name="DisplayType" value="melee"/>
-	<property name="CustomIcon" value="meleeWpnBatonT2StunBaton"/>
-	<property name="CustomIconTint" value="6666FF"/>
-	<property name="TintColor" value="64,64,256"/>
-	<property name="HoldType" value="65"/>
-	<property name="Meshfile" value="#Other/Items?Weapons/Melee/TaserBaton/TaserBatonPrefab.prefab"/>
-	<property name="Material" value="MmeleeWpnBatonParts"/> <property name="Weight" value="4"/>
-	<!--<property name="RepairTools" value="resourceRepairKit"/>-->
-	<property name="DegradationBreaksAfter" value="false"/>
-	<property name="EconomicValue" value="350"/>
-	<property name="SoundJammed" value="ItemNeedsRepair"/>
-	<property name="SoundDestroy" value="wooddestroy1"/>
-	<property name="Group" value="Ammo/Weapons,Melee Weapons"/>
-	<property name="RepairExpMultiplier" value="5.5"/>
-	<!--<property name="UnlockedBy" value="perkElectrocutioner,meleeWpnBatonT2StunBatonSchematic"/>-->
-	<property name="ShowQuality" value="true"/>
+    </item>
+    
+    
+    
+    <!-- ********** FOR TESTING ONLY ********** -->
+    
+    <item name="enTestKo">
+        <property name="Tags" value="testing"/>
+        <property name="HoldType" value="64"/>
+        <property name="Meshfile" value="#Other/Items?Health/bandage.fbx"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="00AA00"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Stacknumber" value="10"/>
+        <property name="Weight" value="5"/>
+        <property name="EconomicValue" value="10000"/>
+        <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyStats" stat="Health" operation="subtract" value="120"/>
+        </effect_group>
+    </item>
+    
+    <item name="enTestKoOff">
+        <property name="Tags" value="testing"/>
+        <property name="HoldType" value="64"/>
+        <property name="Meshfile" value="#Other/Items?Health/bandage.fbx"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="AAFFAA"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Stacknumber" value="10"/>
+        <property name="Weight" value="5"/>
+        <property name="EconomicValue" value="10000"/>
+        <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyStats" stat="Health" operation="add" value="999"/>
+        </effect_group>
+    </item>
+    
+    <item name="enTestSpectate">
+        <property name="Tags" value="testing"/>
+        <property name="HoldType" value="64"/>
+        <property name="Meshfile" value="#Other/Items?Health/bandage.fbx"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="AA0000"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Stacknumber" value="10"/>
+        <property name="Weight" value="5"/>
+        <property name="EconomicValue" value="10000"/>
+        <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyStats" stat="Health" operation="subtract" value="999"/>
+        </effect_group>
+    </item>
+    
+    <item name="enTestSpectateOff">
+        <property name="Tags" value="testing"/>
+        <property name="HoldType" value="64"/>
+        <property name="Meshfile" value="#Other/Items?Health/bandage.fbx"/>
+        <property name="DropMeshfile" value="#Other/Items?Misc/sack_droppedPrefab.prefab"/>
+        <property name="CustomIcon" value="drugSteroids"/>
+        <property name="CustomIconTint" value="FFAAAA"/>
+        <property name="Material" value="Mcloth"/>
+        <property name="Stacknumber" value="10"/>
+        <property name="Weight" value="5"/>
+        <property name="EconomicValue" value="10000"/>
+        <property name="Group" value="Science,Medical"/>
+        <property class="Action0">
+            <property name="Class" value="Eat"/>
+            <property name="Delay" value="1.0"/>
+            <property name="Use_time" value="..."/>
+            <property name="Sound_start" value="player_firstAidKit"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="RemoveBuff" buff="enBuffSpectator"/>
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffKoCheck"/>
+        </effect_group>
+    </item>
+    
+    <!-- for testing: punch to go forward in time -->
+    <item name="enKnucklesForward">
+        <property name="Tags" value="testing"/>
+        <property name="Material" value="MleatherKnuckles"/>
+        <property name="Meshfile" value="#Other/Items?Weapons/Melee/KnuckleWraps/knuckleWrapsRight_Prefab.prefab"/>
+        <property name="CustomIcon" value="meleeWpnKnucklesT0LeatherKnuckles"/>
+        <property name="CustomIconTint" value="880088"/>
+        <property name="TintColor" value="150,0,150"/>
+        <property name="HoldType" value="70"/>
+        <property name="Canhold" value="true"/>
+        <property class="Action0">
+            <property name="Class" value="DynamicMelee"/>
+        </property>
+        <property class="Action1">
+            <property name="Class" value="DynamicMelee"/>
+            <property name="UsePowerAttackAnimation" value="true"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="CallGameEvent" event="enAction_timeForward1"/>
+            <triggered_effect trigger="onSelfSecondaryActionEnd" action="CallGameEvent" event="enAction_timeForward10"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="primary"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="secondary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="primary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="secondary"/>
+        </effect_group>
+    </item>
+    
+    <!-- for testing: punch to go backward in time -->
+    <item name="enKnucklesBackward">
+        <property name="Tags" value="testing"/>
+        <property name="Material" value="MleatherKnuckles"/>
+        <property name="Meshfile" value="#Other/Items?Weapons/Melee/KnuckleWraps/knuckleWrapsRight_Prefab.prefab"/>
+        <property name="CustomIcon" value="meleeWpnKnucklesT0LeatherKnuckles"/>
+        <property name="CustomIconTint" value="444444"/>
+        <property name="TintColor" value="0,0,0"/>
+        <property name="HoldType" value="70"/>
+        <property name="Canhold" value="true"/>
+        <property class="Action0">
+            <property name="Class" value="DynamicMelee"/>
+        </property>
+        <property class="Action1">
+            <property name="Class" value="DynamicMelee"/>
+            <property name="UsePowerAttackAnimation" value="true"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="CallGameEvent" event="enAction_timeBackward1"/>
+            <triggered_effect trigger="onSelfSecondaryActionEnd" action="CallGameEvent" event="enAction_timeBackward10"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="primary"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="secondary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="primary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="secondary"/>
+        </effect_group>
+    </item>
+    
+    <!-- primary punch ragdoll player, secondary punch to cause 5hp damage -->
+    <item name="enKnucklesGlitchBuster">
+        <property name="Tags" value="testing"/>
+        <property name="Material" value="MleatherKnuckles"/>
+        <property name="Meshfile" value="#Other/Items?Weapons/Melee/KnuckleWraps/knuckleWrapsRight_Prefab.prefab"/>
+        <property name="CustomIcon" value="meleeWpnKnucklesT0LeatherKnuckles"/>
+        <property name="CustomIconTint" value="880088"/>
+        <property name="TintColor" value="150,0,150"/>
+        <property name="HoldType" value="70"/>
+        <property name="Canhold" value="true"/>
+        <property class="Action0">
+            <property name="Class" value="DynamicMelee"/>
+        </property>
+        <property class="Action1">
+            <property name="Class" value="DynamicMelee"/>
+            <property name="UsePowerAttackAnimation" value="true"/>
+        </property>
+        <effect_group tiered="false">
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="AddBuff" buff="enBuffRegdollPlayer"/>
+            <triggered_effect trigger="onSelfSecondaryActionEnd" action="AddBuff" buff="enBuffHurtPlayer"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="primary"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="120" tags="secondary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="primary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="secondary"/>
+        </effect_group>
+    </item>
+    
+    <item name="enTestSounds">
+        <property name="Tags" value="testing"/>
+        <property name="Material" value="MleatherKnuckles"/>
+        <property name="Meshfile" value="#Other/Items?Weapons/Melee/Knuckles/knucklesRight_Prefab.prefab"/>
+        <property name="CustomIcon" value="meleeWpnKnucklesT1IronKnuckles"/>
+        <property name="CustomIconTint" value="FFFFFF"/>
+        <property name="TintColor" value="255,255,255"/>
+        <property name="HoldType" value="61"/>
+        <property name="Canhold" value="true"/>
+        <property class="Action0">
+            <property name="Class" value="DynamicMelee"/>
+        </property>
+        <property class="Action1">
+            <property name="Class" value="DynamicMelee"/>
+            <property name="UsePowerAttackAnimation" value="true"/>
+        </property>
+        <effect_group tiered="false">        
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="PlaySound" sound="horde_spawn"/>
+            <triggered_effect trigger="onSelfPrimaryActionEnd" action="PlaySound" sound="horde_spawn_warning"/>
+            <triggered_effect trigger="onSelfSecondaryActionEnd" action="PlaySound" sound="spawnInStinger"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="60" tags="primary"/>
+            <passive_effect name="AttacksPerMinute" operation="base_set" value="60" tags="secondary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="primary"/>
+            <passive_effect name="StaminaLoss" operation="base_set" value="0" tags="secondary"/>
+        </effect_group>
+    </item>
+    
+    
+    
+    
+    
+    
+        
+    
+    
 
-	<property class="Action0">
-		<property name="Class" value="DynamicMelee"/>
-		<property name="Damage_type" value="Slashing"/>
-		<property name="Sphere" value=".15"/>   <!-- limit to 0.15, else the sphere cast can overlap the target already -->
-		<property name="Sound_start" value="stunbaton_swinglight"/>
-
-		<property name="UseGrazingHits" value="true"/>
-		<property name="GrazeStart" value=".25"/>
-		<property name="GrazeEnd" value=".32"/>
-		<property name="SwingDegrees" value="90"/>
-		<property name="SwingAngle" value="90"/>
-		<property class="HitSounds">
-			<property name="Override0" value="organic" param1="metalhollowhitorganic"/>
-		</property>
-		<property class="GrazeSounds">
-			<property name="Override0" value="organic" param1="metalgrazeorganic"/>
-		</property>
-	</property>
-	<property class="Action1">
-		<property name="Class" value="DynamicMelee"/>
-		<property name="Damage_type" value="Slashing"/>
-		<property name="Sphere" value=".15"/>   <!-- limit to 0.15, else the sphere cast can overlap the target already -->
-		<property name="Sound_start" value="stunbaton_swingheavy"/>
-		<property name="UsePowerAttackAnimation" value="true"/>
-
-		<property name="UseGrazingHits" value="true"/>
-		<property name="GrazeStart" value=".2"/>
-		<property name="GrazeEnd" value=".32"/>
-		<property name="SwingDegrees" value="65"/>
-		<property name="SwingAngle" value="180"/>
-		<property class="HitSounds">
-			<property name="Override0" value="organic" param1="metalhollowhitorganic"/>
-		</property>
-		<property class="GrazeSounds">
-			<property name="Override0" value="organic" param1="metalgrazeorganic"/>
-		</property>
-	</property>
-	<effect_group name="meleeWpnBatonT2StunBaton">
-		<passive_effect name="EntityDamage" operation="base_set" value="10.8" tags="perkElectrocutioner"/> <!-- meleeWpnBatonT2StunBaton -->
-		<passive_effect name="BlockDamage" operation="base_set" value="6" tags="perkElectrocutioner"/>
-		<passive_effect name="AttacksPerMinute" operation="base_set" value="70" tags="perkElectrocutioner,perkFlurryOfBlows"/>
-		<passive_effect name="StaminaLoss" operation="base_set" value="15.5" tags="primary"/>
-		<passive_effect name="DegradationMax" operation="base_set" value="269,673" tier="1,6" tags="perkElectrocutioner"/>
-		<passive_effect name="DegradationPerUse" operation="base_set" value="1" tags="perkElectrocutioner"/>
-		<passive_effect name="MaxRange" operation="base_set" value="2.4" tags="perkElectrocutioner"/>
-		<passive_effect name="BlockRange" operation="base_set" value="3" tags="perkElectrocutioner"/>
-
-		<passive_effect name="ModSlots" operation="base_set" value="1,1,2,2,3,4" tier="1,2,3,4,5,6"/>
-		<passive_effect name="ModPowerBonus" operation="perc_add" value=".10" tags="EntityDamage,BlockDamage"/>
-		<passive_effect name="ModPowerBonus" operation="base_add" value="300" tags="EconomicValue"/>
-
-		<passive_effect name="EntityDamage" operation="perc_add" value="-.15,.15" tags="perkElectrocutioner"/> <!-- random EntityDmg -->
-		<passive_effect name="EntityDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkElectrocutioner"/> <!-- tier bonus -->
-		<passive_effect name="BlockDamage" operation="perc_add" value="-.15,.15" tags="perkElectrocutioner"/> <!-- random BlockDmg -->
-		<passive_effect name="BlockDamage" operation="perc_add" value=".1,.5" tier="2,6" tags="perkElectrocutioner"/> <!-- tier bonus -->
-
-		<passive_effect name="DamageModifier" operation="perc_add" value="-.9" tags="earth"/>
-		<passive_effect name="DamageModifier" operation="perc_add" value="-.9" tags="stone"/>
-		<passive_effect name="DamageModifier" operation="perc_add" value="-.9" tags="metal"/>
-		<passive_effect name="HarvestCount" operation="base_set" value="1" tags="butcherHarvest"/>
-
-		<passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="allHarvest"/>
-		<passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="allToolsHarvest"/>
-		<passive_effect name="HarvestCount" operation="base_add" value="-.75" tags="oreWoodHarvest"/>
-
-		<!--<triggered_effect trigger="onSelfEquipStop" action="RemovePart" part="Sparks"/> -->
-		<triggered_effect trigger="onSelfEquipStart" action="AddPart" part="Sparks" prefab="ParticleEffects/p_electric_shock_small" parentTransform="Handle" localPos="0,0,0" localRot="0,0,0">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/>
-		</triggered_effect>
-	</effect_group>
-
-	<effect_group name="Power Attack">
-		<passive_effect name="EntityDamage" operation="perc_add" value="1" tags="secondary"/>
-		<passive_effect name="BlockDamage" operation="perc_add" value="1" tags="secondary"/>
-		<passive_effect name="StaminaLoss" operation="base_set" value="26.4" tags="secondary"/>
-	</effect_group>
-
-	<effect_group name="apply damage buff, meleeWpnBatonT2StunBaton">
-		<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="40"/>
-			<triggered_effect trigger="onSelfEquipStart" action="AddPart" part="Sparks" prefab="ItemModEffects/baton_electricityPrefab" parentTransform="Handle" localPos="0,0,0" localRot="0,0,0"/>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="Ragdoll" target="other" duration="2.5" force="350">
-				<requirement name="HasBuff" buff="buffmodMeleeStunBatonRepulsor"/>
-				<requirement name="!HasBuff" buff="buffDrugNerdTats"/>
-				<requirement name="!EntityTagCompare" target="other" tags="trader"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="Ragdoll" target="other" duration="2.5" force="350">
-				<requirement name="HasBuff" buff="buffmodMeleeStunBatonRepulsor"/>
-				<requirement name="!HasBuff" buff="buffDrugNerdTats"/>
-				<requirement name="!EntityTagCompare" target="other" tags="trader"/>
-			</triggered_effect>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="Ragdoll" target="otherAOE" range="1.1" target_tags="zombie,animal" duration="2.5" force="350">
-				<requirement name="HasBuff" buff="buffmodMeleeStunBatonRepulsor"/>
-				<requirement name="HasBuff" buff="buffDrugNerdTats"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="Ragdoll" target="otherAOE" range="1.1" target_tags="zombie,animal" duration="2.5" force="350">
-				<requirement name="HasBuff" buff="buffmodMeleeStunBatonRepulsor"/>
-				<requirement name="HasBuff" buff="buffDrugNerdTats"/>
-			</triggered_effect>
-
-			<!-- Set duration -->
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="5">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="1"/></triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="6">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="2"/></triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="7">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="3"/></triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="8">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="4"/></triggered_effect>
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="9">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="5"/></triggered_effect>
-
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="5">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="1"/></triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="6">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="2"/></triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="7">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="3"/></triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="8">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="4"/></triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" target="other" cvar=".buffShockedDurationStart" operation="set" value="9">
-				<requirement name="ProgressionLevel" progression_name="perkElectrocutioner" operation="Equals" value="5"/></triggered_effect>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="AddBuff" target="other" buff="buffShocked"/>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="AddBuff" target="other" buff="buffShocked"/>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="AddBuff" target="otherAOE" range="1.1" target_tags="zombie,animal" buff="buffShocked">
-				<requirement name="HasBuff" buff="buffDrugNerdTats"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="AddBuff" target="otherAOE" range="1.3" target_tags="zombie,animal" buff="buffShocked">
-				<requirement name="HasBuff" buff="buffDrugNerdTats"/>
-			</triggered_effect>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="RemovePart" part="Sparks"/>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="RemovePart" part="Sparks"/>
-
-			<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="set" value="0"/>
-			<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="set" value="0"/>
-	</effect_group>
-
-<!--
-needed?
-			<requirement name="ItemHasTags" tags="perkElectrocutioner"/>
-
-			<requirement name="EntityTagCompare" target="other" tags="human,zombie,animal"/>
--->
-
-	<effect_group name="increase charges">
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="add" value="1">
-			<requirement name="IsAlive" target="other"/>
-		</triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="add" value="2">
-			<requirement name="IsAlive" target="other"/>
-		</triggered_effect>
-
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="add" value="4">
-			<requirement name="ProgressionLevel" progression_name="perkTechJunkie6BatonCharge" operation="Equals" value="1"/>
-			<requirement name="IsAlive" target="other"/>
-			<requirement name="RandomRoll" seed_type="Random" min_max="0,100" operation="LTE" value="25"/>
-		</triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="ModifyCVar" cvar=".stunBatonCharge" operation="add" value="4">
-			<requirement name="ProgressionLevel" progression_name="perkTechJunkie6BatonCharge" operation="Equals" value="1"/>
-			<requirement name="IsAlive" target="other"/>
-			<requirement name="RandomRoll" seed_type="Random" min_max="0,100" operation="LTE" value="50"/>
-		</triggered_effect>
-
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="AddPart" part="Sparks" prefab="ParticleEffects/p_electric_shock_small" parentTransform="Handle" localPos="0,0,0" localRot="0,0,0">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/>
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="LT" value="40"/>
-		</triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="AddPart" part="Sparks" prefab="ParticleEffects/p_electric_shock_small" parentTransform="Handle" localPos="0,0,0" localRot="0,0,0">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/>
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="LT" value="40"/>
-		</triggered_effect>
-
-		<!-- the attack that applies the last +1 charge can not immediately trigger the effect -->
-		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar=".stunBatonCharge" operation="set" value="40">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/>
-		</triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionEnd" action="ModifyCVar" cvar=".stunBatonCharge" operation="set" value="40">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/>
-		</triggered_effect>
-
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="PlaySound" sound="stunbaton_hit1">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="0"/></triggered_effect>
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="PlaySound" sound="stunbaton_hit2">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="1"/></triggered_effect>
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="PlaySound" sound="stunbaton_hit3">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="2"/></triggered_effect>
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="PlaySound" sound="stunbaton_hit4">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="3"/></triggered_effect>
-		<triggered_effect trigger="onSelfPrimaryActionRayHit" action="PlaySound" sound="stunbaton_hit5">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/></triggered_effect>
-
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="PlaySound" sound="stunbaton_hit1">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="0"/></triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="PlaySound" sound="stunbaton_hit2">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="1"/></triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="PlaySound" sound="stunbaton_hit3">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="2"/></triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="PlaySound" sound="stunbaton_hit4">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="3"/></triggered_effect>
-		<triggered_effect trigger="onSelfSecondaryActionRayHit" action="PlaySound" sound="stunbaton_hit5">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="GTE" value="4"/></triggered_effect>
-
-		<!--<triggered_effect trigger="onSelfAttackedOther" action="PlaySound" sound="stunbaton_hit5">
-			<requirement name="CVarCompare" cvar=".stunBatonCharge" operation="Equals" value="5"/>
-		</triggered_effect>-->
-	</effect_group>
-
-</item>
-	
-	
-	
+    
+    
 <!-- handitems for stronger enemies -->
 
-<item name="meleeHandHellShocker">
-	<property name="Extends" value="meleeHandMaster"/>
-	<property name="CreativeMode" value="None"/>
-	<property name="Degradation" value="99999" param1="true"/>
-	<property class="Action0">
-		<property name="Range" value="2.5"/>
-		<property name="DamageEntity" value="15"/>
-		<property name="DamageBlock" value="20"/>
-		<property name="Buff" value="buffInjuryStunned01"/>		
-	</property>
-	<property class="Action1"> <!-- UseAction -->
-		<property name="Class" value="Vomit"/>
-		<property name="Delay" value="0.2"/> <!-- obsolete if rounds per minute exists -->
-		<property name="Range" value="170"/>
-		<property name="Infinite_ammo" value="true"/>
-		<property name="Magazine_items" value="HellShockerProjectile"/>
-		<property name="Sound_warning" value="hulkvomitwarning"/>
-		<property name="Sound_start" value="ak47_fire"/>
-		<property name="Sound_end" value="ak47_fire_end"/>			
-		<property name="Buff" value="buffInjuryBleeding"/>
-	</property>
-	<effect_group name="meleeHandHellShocker" tiered="false">
-		<passive_effect name="ModSlots" operation="base_set" value="0"/>	
-		<passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
-		<passive_effect name="MaxRange" operation="base_set" value="100"/>
-		<passive_effect name="MagazineSize" operation="base_set" value="6"/>
-		<passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
-		<passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
-		<passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="2"/>
-		<passive_effect name="SpreadMultiplierIdle" operation="base_set" value="0"/>	
-	</effect_group>
-</item>	
+<item name="enAmmoDrone">
+    <property name="Meshfile" value="prefabs/electricshock"/>
+    <property name="Material" value="Morganic" />
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>            
+        <property name="DamageEntity" value="6"/>
+        <property name="DamageBlock" value="22"/>
+        <property name="Gravity" value="-2"/>        
+        <property name="Velocity" value="30"/>
+        <property name="FlyTime" value="0.5"/>
+        <property name="LifeTime" value="6"/>
+        <property name="DamageBonus.earth" value="0"/>
+        <property name="DamageBonus.wood" value="0"/>            
+        <property name="DamageBonus.stone" value="0"/>        
+        <property name="DamageBonus.metal" value="0"/>        
+        <property name="CollisionRadius" value="0.9"/>
+    </property>
+    <effect_group name="enAmmoDrone" tiered="false">
+        <passive_effect name="EntityDamage" operation="base_set" value="20"/>
+        <passive_effect name="BlockDamage" operation="base_set" value="30"/>
+        <passive_effect name="DamageModifier" operation="perc_set" value=".1" tags="wood"/>
+        <passive_effect name="DamageModifier" operation="perc_set" value="0" tags="earth,metal,cloth"/>
+        <passive_effect name="ProjectileVelocity" operation="base_set" value="180"/>
+        <triggered_effect trigger="onProjectileImpact" action="AddBuff" target="other" buff="buffShocked"/>
+        <passive_effect name="TargetArmor" operation="perc_add" value="-.75"/>
+        <passive_effect name="EntityPenetrationCount" operation="base_set" value="3"/>
+        <display_value name="dTargetPenetration" value="3"/>
+        <display_value name="dTargetArmor" value="-.75"/>        
+    </effect_group>    
+</item>
+<item name="enHand_drone">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="3.5"/>
+        <property name="DamageEntity" value="10"/>
+        <property name="DamageBlock" value="20"/>    
+        <property name="Buff" value="buffShocked"/>		
+    </property>
+    <property class="Action1"> 
+        <property name="Class" value="Vomit"/>
+        <property name="Delay" value="0.2"/> 
+        <property name="Range" value="170"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoDrone"/>
+        <property name="Sound_warning" value="stunbaton_hit1"/>
+        <property name="Sound_start" value="ak47_fire"/>
+        <property name="Sound_end" value="ak47_fire_end"/>            
+    </property>
+    <effect_group name="enHand_drone" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>    
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="100"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="6"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="2"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="0"/>    
+    </effect_group>
+</item>    
 
-<item name="HellShockerProjectile">
-	<property name="Meshfile" value="prefabs/electricshock"/>
-	<property name="Material" value="Morganic" />
-	<property name="CreativeMode" value="None"/>
-	<property class="Action1">
-		<property name="Class" value="Projectile"/>			
-		<property name="DamageEntity" value="6"/>
-		<property name="DamageBlock" value="22"/>
-		<property name="Gravity" value="-2"/>		
-		<property name="Velocity" value="45"/>
-		<property name="FlyTime" value="0.5"/>
-		<property name="LifeTime" value="6"/>
-		<property name="DamageBonus.earth" value="3"/>
-		<property name="DamageBonus.wood" value="2"/>			
-		<property name="DamageBonus.stone" value="0"/>		
-		<property name="DamageBonus.metal" value="1"/>		
-		<property name="CollisionRadius" value="0.5"/>
-	</property>
-	<effect_group name="HellShockerProjectile" tiered="false">
-		<passive_effect name="EntityDamage" operation="base_set" value="200"/>
-		<passive_effect name="BlockDamage" operation="base_set" value="30"/>
-		<passive_effect name="DamageModifier" operation="perc_set" value=".1" tags="wood"/>
-		<passive_effect name="DamageModifier" operation="perc_set" value="0" tags="earth,metal,cloth"/>
-		<passive_effect name="ProjectileVelocity" operation="base_set" value="180"/>
-		<triggered_effect trigger="onProjectileImpact" action="AddBuff" target="other" buff="buffShocked"/>
-		<passive_effect name="TargetArmor" operation="perc_add" value="-.75"/>
-		<passive_effect name="EntityPenetrationCount" operation="base_set" value="3"/>
-		<display_value name="dTargetPenetration" value="3"/>
-		<display_value name="dTargetArmor" value="-.75"/>		
-	</effect_group>	
+
+
+
+<item name="enAmmoWraith">
+    <property name="Meshfile" value="particleeffects/p_fire_small"/>
+    <property name="Material" value="Morganic"/>
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>
+        <property name="DamageEntity" value="20"/>
+        <property name="DamageBlock" value="150"/>
+        <property name="Explosion.ParticleIndex" value="12"/>
+        <property name="Explosion.RadiusEntities" value="4"/>
+        <property name="Velocity" value="15"/>
+        <property name="FlyTime" value="6"/>
+        <property name="LifeTime" value="8"/>
+        <property name="CollisionRadius" value=".8"/>
+    </property>
+</item>
+<item name="enHand_wraith">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property class="Action0">
+        <property name="Delay" value=".7"/>
+        <property name="DamageEntity" value="15"/>
+        <property name="DamageBlock" value="32"/>
+        <property name="Range" value="1.9"/>
+    </property>
+    <property class="Action1">
+        <property name="Class" value="Vomit"/>
+        <property name="Hitmask_override" value="Arrow"/>
+        <property name="Delay" value=".5"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoWraith"/>
+        <property name="Sound_warning" value=""/>
+        <property name="Sound_start" value=""/>
+        <property name="Sound_repeat" value=""/>
+        <property name="Sound_end" value=""/>
+        <property name="Sound_empty" value=""/>
+        <property name="Sound_reload" value=""/>
+    </property>
+    <effect_group name="enHand_wraith" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="1"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="6"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="6"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="15"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="50"/>
+    </effect_group>
+</item>
+        
+
+
+<item name="enAmmoFlamethrower">
+    <property name="Meshfile" value="particleeffects/p_fire_small"/>
+    <property name="Material" value="Morganic"/>
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>
+        <property name="DamageEntity" value="7"/>
+        <property name="DamageBlock" value="30"/>
+        <property name="Explosion.ParticleIndex" value="0"/>
+        <property name="Velocity" value="18"/>
+        <property name="FlyTime" value=".2"/>
+        <property name="LifeTime" value="2"/>
+        <property name="CollisionRadius" value=".5"/>
+        <property name="DamageBonus.earth" value="0"/>
+        <property name="Buff" value="buffBurningZombie"/>
+    </property>
+    <effect_group name="enAmmoFlamethrower" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+        <passive_effect name="DamageModifier" operation="perc_set" value="0" tags="earth"/>
+        <passive_effect name="DamageModifier" operation="perc_set" value="0" tags="stone"/>
+        <passive_effect name="DamageModifier" operation="perc_add" value="0" tags="metal"/>
+        <passive_effect name="BuffProcChance" operation="base_set" value="0" tags="buffBurningZombie"/>
+    </effect_group>
+</item>
+<item name="enHand_flamethrower">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="1.8"/>
+        <property name="DamageEntity" value="30"/>
+        <property name="DamageBlock" value="600"/>
+    </property>
+    <property class="Action1"> 
+        <property name="Class" value="Vomit"/>
+        <property name="Hitmask_override" value="Arrow"/>
+        <property name="Delay" value=".2"/>
+        <property name="Range" value="20"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoFlamethrower"/>
+        <property name="Sound_warning" value=""/>
+        <property name="Sound_start" value=""/>
+        <property name="Sound_repeat" value=""/>
+        <property name="Sound_end" value=""/>
+        <property name="Sound_empty" value=""/>
+        <property name="Sound_reload" value=""/>
+        <property name="Buff" value="buffBurningZombie"/>
+    </property>
+    <effect_group name="enHand_flamethrower" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="20"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="10"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="8"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="10"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
+        <triggered_effect trigger="onSelfDamagedOther" action="ModifyCVar" target="other" cvar="infectionZombieHit" operation="set" value="30"/>
+    </effect_group>
 </item>
 
-<item name="meleeHandScorcher">
-	<property name="Extends" value="meleeHandMaster"/>
-	<property name="CreativeMode" value="None"/>
-	<property name="Degradation" value="99999" param1="true"/>
-	<property class="Action0">
-		<property name="Range" value="1.75"/>
-		<property name="DamageEntity" value="25"/>
-		<property name="DamageBlock" value="50"/>
-		<property name="Buff" value="buffInjuryBleedingZombie,buffInfectionCatch,buffInjuryStunned01"/>
-	</property>
-	<property class="Action1"> <!-- UseAction -->
-		<property name="Class" value="Vomit"/>
-		<property name="Hitmask_override" value="Arrow"/>
-		<property name="Delay" value=".2"/> <!-- obsolete if rounds per minute exists -->
-		<property name="Range" value="20"/>
-		<property name="Infinite_ammo" value="true"/>
-		<property name="Magazine_items" value="ammoProjectileScorcher"/>
-		<property name="Sound_warning" value=""/>
-		<property name="Sound_start" value=""/>
-		<property name="Sound_repeat" value=""/>
-		<property name="Sound_end" value=""/>
-		<property name="Sound_empty" value=""/>
-		<property name="Sound_reload" value=""/>
-		<property name="Buff" value="buffBurningZombie"/>
-	</property>
-	<effect_group name="meleeHandScorcher" tiered="false">
-		<passive_effect name="ModSlots" operation="base_set" value="0"/>
-		<!--<passive_effect name="AttacksPerMinute" operation="base_set" value="75"/>  A16 .8 -->
-		<passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
-		<passive_effect name="MaxRange" operation="base_set" value="20"/>
-		<passive_effect name="MagazineSize" operation="base_set" value="10"/>
-		<passive_effect name="BurstRoundCount" operation="base_set" value="10"/>
-		<passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
-		<passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="10"/>
-		<passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".20" tags="buffInjuryBleedingZombie"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".20" tags="buffInfectionCatch"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".25" tags="buffInjuryStunned01"/>
-		<triggered_effect trigger="onSelfDamagedOther" action="ModifyCVar" target="other" cvar="infectionZombieHit" operation="set" value="30"/><!--InfectionRegular-->
-	</effect_group>
+
+<item name="enAmmoMachinegunner">
+    <property name="Meshfile" value="Entities/Electrical/steel_dartPrefab"/>
+    <property name="Material" value="Morganic" />
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>    
+        <property name="Gravity" value="-3"/>        
+        <property name="DamageEntity" value="5"/>
+        <property name="DamageBlock" value="2"/>            
+        <property name="Velocity" value="18"/>
+        <property name="FlyTime" value="3"/>
+        <property name="LifeTime" value="5"/>
+        <property name="DamageBonus.earth" value="5"/>
+        <property name="DamageBonus.wood" value="4"/>            
+        <property name="DamageBonus.stone" value="2"/>        
+        <property name="DamageBonus.metal" value="3"/>        
+        <property name="CollisionRadius" value="0.5"/>
+    </property>
+    <effect_group name="enAmmoMachinegunner" tiered="false">
+        <passive_effect name="DamageModifier" operation="perc_set" value="1" tags="earth"/>
+        <passive_effect name="DamageModifier" operation="perc_add" value="1" tags="metal"/>        
+    </effect_group>    
+</item>
+<item name="enHand_machinegunner">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="2"/>
+        <property name="DamageEntity" value="40"/>
+        <property name="DamageBlock" value="750"/>
+    </property>
+    <property class="Action1"> 
+        <property name="Class" value="Vomit"/>
+        <property name="Delay" value="0.2"/> 
+        <property name="Range" value="200"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoMachinegunner"/>
+        <property name="Sound_warning" value="ak47_reload_part_02"/>
+        <property name="Sound_start" value="ak47_fire"/>
+        <property name="Sound_end" value="ak47_fire_end"/>        
+    </property>
+    <effect_group name="enHand_machinegunner" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>    
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="100"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="20"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="4"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>    
+    </effect_group>
+</item>    
+
+    
+
+<item name="enAmmoRocketrooster">
+    <property name="Meshfile" value="#Other/Items?Weapons/Ranged/RocketLauncher/rocketPrefab"/>
+    <property name="Material" value="Morganic" />    
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>    
+        <property name="DamageEntity" value="80"/>
+        <property name="DamageBlock" value="500"/>
+        <property name="Velocity" value="15"/>
+        <property name="FlyTime" value="5"/>
+        <property name="LifeTime" value="10"/>    
+        <property name="Explosion.ParticleIndex" value="2"/>
+        <property name="Explosion.RadiusBlocks" value="6"/>
+        <property name="Explosion.BlockDamage" value="150"/>
+        <property name="Explosion.RadiusEntities" value="6"/>
+        <property name="Explosion.EntityDamage" value="65"/>
+        <property name="Explosion.DamageBonus.water" value="0"/>
+        <property name="DamageBonus.earth" value="1"/>
+        <property name="DamageBonus.stone" value="70"/>        
+        <property name="DamageBonus.metal" value="85"/>
+        <property name="DamageBonus.wood" value="110"/>                
+    </property>
+</item>
+<item name="enHand_rocketrooster">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="4.5"/>    
+        <property name="DamageEntity" value="40"/>
+        <property name="DamageBlock" value="300"/>
+        <property name="Delay" value="0"/> 
+    </property>
+    <property class="Action1"> 
+        <property name="Class" value="Vomit"/>
+        <property name="Hitmask_override" value="Arrow"/>        
+        <property name="Delay" value="0.5"/> 
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoRocketrooster" />
+        <property name="Sound_warning" value="m136_reload_part_01"/>
+        <property name="Sound_start" value="m136_fire"/>            
+    </property>
+    <effect_group name="enHand_rocketrooster" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>    
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="100"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="1"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="2"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="3"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
+    </effect_group>
+</item>    
+
+
+<item name="enAmmoRocketman">
+    <property name="Meshfile" value="#Other/Items?Weapons/Ranged/RocketLauncher/rocketPrefab.prefab"/>
+    <property name="Material" value="Mmetal"/>
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>
+        <property name="DamageEntity" value="80"/>
+        <property name="DamageBlock" value="1000"/>
+        <property name="Explosion.ParticleIndex" value="5"/>
+        <property name="Explosion.RadiusBlocks" value="5"/>
+        <property name="Explosion.RadiusEntities" value="5"/>
+        <property name="Explosion.DamageBonus.water" value="0"/>
+        <property name="Velocity" value="18"/>
+        <property name="FlyTime" value="2"/>
+        <property name="LifeTime" value="4"/>
+        <property name="CollisionRadius" value="0.8"/>
+    </property>
+    <effect_group name="enAmmoRocketman" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+    </effect_group>
+</item>
+<item name="enHand_rocketman">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="2.7"/>
+        <property name="DamageEntity" value="70"/>
+        <property name="DamageBlock" value="850"/>
+        <property name="Buff" value="buffInjuryBleedingZombie"/>
+        <property class="HitSounds">
+            <property name="Override0" value="organic" param1="metalsolidhitorganic"/></property>
+    </property>
+    <property class="Action1">
+        <property name="Class" value="Vomit"/>
+        <property name="Delay" value=".3"/>
+        <property name="Range" value="500"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoRocketman"/>
+        <property name="Sound_warning" value="demolitionzexplodewarning"/>
+        <property name="Sound_start" value="m136_fire"/>
+        <property name="Sound_repeat" value=""/>
+        <property name="Sound_end" value=""/>
+        <property name="Sound_empty" value=""/>
+        <property name="Sound_reload" value=""/>
+    </property>
+    <effect_group name="enHand_rocketman" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="100"/>
+        <passive_effect name="MaxRange" operation="base_set" value="100"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="3"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="3"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="1"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="6"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
+    </effect_group>
 </item>
 
-<item name="ammoProjectileScorcher">
-	<!--property name="Meshfile" value="particleeffects/p_onFire"/-->
-	<property name="Meshfile" value="particleeffects/p_fire_small"/>
-	<property name="Material" value="Morganic"/>
-	<property name="CreativeMode" value="None"/>
-	<property class="Action1">
-		<property name="Class" value="Projectile"/>
-		<property name="DamageEntity" value="5"/>
-		<property name="DamageBlock" value="30"/>
-		<property name="Explosion.ParticleIndex" value="0"/>
-		<property name="Velocity" value="18"/>
-		<property name="FlyTime" value=".2"/>
-		<property name="LifeTime" value="2"/>
-		<property name="CollisionRadius" value=".5"/>
-		<property name="DamageBonus.earth" value="0"/>
-		<property name="Buff" value="buffBurningZombie"/>
-	</property>
-	<effect_group name="ammoProjectileScorcher" tiered="false">
-		<passive_effect name="ModSlots" operation="base_set" value="0"/>
-		<passive_effect name="DamageModifier" operation="perc_set" value="0" tags="earth"/>
-		<passive_effect name="DamageModifier" operation="perc_set" value="0.5" tags="stone"/>
-		<passive_effect name="DamageModifier" operation="perc_add" value="1.2" tags="metal"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".8" tags="buffBurningZombie"/>
-	</effect_group>
-</item>
-	
-<item name="meleeHandZombieGunner">
-	<property name="Extends" value="meleeHandMaster"/>
-	<property name="CreativeMode" value="None"/>
-	<property name="Degradation" value="99999" param1="true"/>
-	<property class="Action0">
-		<property name="Range" value="2"/>
-		<property name="DamageEntity" value="38"/>
-		<property name="DamageBlock" value="120"/>
-		<property name="Buff" value="buffArmBroken,buffStayDownKO"/>		
-	</property>
-	<property class="Action1"> 
-		<property name="Class" value="Vomit"/>
-		<property name="Delay" value="0.2"/> 
-		<property name="Range" value="200"/>
-		<property name="Infinite_ammo" value="true"/>
-		<property name="Magazine_items" value="GunVomitProjectile"/>
-		<property name="Sound_warning" value="ak47_reload_part_02"/>
-		<property name="Sound_start" value="ak47_fire"/>
-		<property name="Sound_end" value="ak47_fire_end"/>			
-		<property name="Buff" value="buffInjuryBleedingOne,buffInjuryStunnedX"/>
-	</property>
-	<effect_group name="meleeHandZombieGunner" tiered="false">
-		<passive_effect name="ModSlots" operation="base_set" value="0"/>	
-		<passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
-		<passive_effect name="MaxRange" operation="base_set" value="100"/>
-		<passive_effect name="MagazineSize" operation="base_set" value="20"/>
-		<passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
-		<passive_effect name="SpreadDegreesVertical" operation="base_set" value="3"/>
-		<passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="5"/>
-		<passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".14" tags="buffArmBroken"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".16" tags="buffStayDownKO"/>	
-	</effect_group>
-</item>	
 
-<item name="GunVomitProjectile">
-	<property name="Meshfile" value="Entities/Electrical/steel_dartPrefab"/>
-	<property name="Material" value="Morganic" />
-	<property name="CreativeMode" value="None"/>
-	<property class="Action1">
-		<property name="Class" value="Projectile"/>	
-		<property name="Gravity" value="-3"/>		
-		<property name="DamageEntity" value="5"/>
-		<property name="DamageBlock" value="2"/>			
-		<property name="Velocity" value="15"/>
-		<property name="FlyTime" value="3"/>
-		<property name="LifeTime" value="5"/>
-		<property name="DamageBonus.earth" value="5"/>
-		<property name="DamageBonus.wood" value="4"/>			
-		<property name="DamageBonus.stone" value="2"/>		
-		<property name="DamageBonus.metal" value="3"/>		
-		<property name="CollisionRadius" value="0.5"/>
-		<property name="Buff" value="buffInjuryBleedingOne,buffInjuryStunnedX"/>
-	</property>
-	<effect_group name="GunVomitProjectile" tiered="false">
-		<passive_effect name="DamageModifier" operation="perc_set" value="1" tags="earth"/>
-		<passive_effect name="DamageModifier" operation="perc_add" value="1" tags="metal"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value="0.18" tags="buffInjuryBleedingOne"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value="0.19" tags="buffInjuryStunnedX"/>			
-	</effect_group>	
-</item>	
-	
-<item name="meleeHandAnimalKaboomPhoenix">
-	<property name="Extends" value="meleeHandMaster"/>
-	<property name="CreativeMode" value="None"/>
-	<property name="Degradation" value="99999" param1="true"/>
-	<property class="Action0">
-		<property name="Range" value="3.5"/>	
-		<property name="DamageEntity" value="24"/>
-		<property name="DamageBlock" value="150"/>
-		<property name="Buff" value="buffInjuryStunned01"/>		
-	</property>
-	<property class="Action1"> 
-		<property name="Class" value="Vomit"/>
-		<property name="Hitmask_override" value="Arrow"/>		
-		<property name="Delay" value="0.5"/> 
-		<property name="Infinite_ammo" value="true"/>
-		<property name="Magazine_items" value="ammoProjectileKaboomVomit" />
-		<property name="Sound_warning" value="m136_reload_part_01"/>
-		<property name="Sound_start" value="m136_fire"/>			
-		<property name="Buff" value="buffInjuryStunned01"/>
-	</property>
-	<effect_group name="meleeHandAnimalKaboomPhoenix" tiered="false">
-		<passive_effect name="ModSlots" operation="base_set" value="0"/>	
-		<passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
-		<passive_effect name="MaxRange" operation="base_set" value="100"/>
-		<passive_effect name="MagazineSize" operation="base_set" value="4"/>
-		<passive_effect name="BurstRoundCount" operation="base_set" value="1"/>
-		<passive_effect name="SpreadDegreesVertical" operation="base_set" value="3"/>
-		<passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="3"/>
-		<passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
-		<passive_effect name="BuffProcChance" operation="base_set" value=".15" tags="buffInjuryStunned01"/>	
-	</effect_group>
-</item>	
-
-<item name="ammoProjectileKaboomVomit">
-	<property name="Meshfile" value="#Other/Items?Weapons/Ranged/RocketLauncher/rocketPrefab"/>
-	<property name="Material" value="Morganic" />	
-	<property name="CreativeMode" value="None"/>
-	<property class="Action1">
-		<property name="Class" value="Projectile"/>	
-		<property name="DamageEntity" value="30"/>
-		<property name="DamageBlock" value="220"/>
-		<property name="Velocity" value="15"/>
-		<property name="FlyTime" value="5"/>
-		<property name="LifeTime" value="10"/>	
-		<property name="Explosion.ParticleIndex" value="2"/>
-		<property name="Explosion.RadiusBlocks" value="6"/>
-		<property name="Explosion.BlockDamage" value="150"/>
-		<property name="Explosion.RadiusEntities" value="6"/>
-		<property name="Explosion.EntityDamage" value="65"/>
-		<property name="Explosion.DamageBonus.water" value="0"/>
-		<property name="DamageBonus.earth" value="60"/>
-		<property name="DamageBonus.stone" value="70"/>		
-		<property name="DamageBonus.metal" value="85"/>
-		<property name="DamageBonus.wood" value="110"/>				
-	</property>
-		<effect_group name="ammoProjectileKaboomVomit" tiered="false">
-		<passive_effect name="BuffProcChance" operation="base_set" value="0.15" tags="buffInjuryStunned01"/>
-		<triggered_effect trigger="onSelfDamagedOther" action="ModifyCVar" target="other" cvar="infectionZombieHit" operation="set" value="70"/>
-	</effect_group>
+<item name="enAmmoBunkerbuster">
+    <property name="Meshfile" value="#Other/Items?Weapons/Ranged/Dynamite/dynamitePrefab.prefab"/>
+    <property name="Material" value="Mmetal"/>
+    <property name="CreativeMode" value="None"/>
+    <property class="Action1">
+        <property name="Class" value="Projectile"/>
+        <property name="DamageEntity" value="50"/>
+        <property name="DamageBlock" value="1000"/>
+        <property name="Explosion.ParticleIndex" value="6"/>
+        <property name="Explosion.RadiusBlocks" value="5"/>
+        <property name="Explosion.RadiusEntities" value="5"/>
+        <property name="Explosion.DamageBonus.stone" value="0"/>
+        <property name="Explosion.DamageBonus.metal" value="0"/>
+        <property name="Explosion.DamageBonus.earth" value="0"/>
+        <property name="Explosion.DamageBonus.wood" value="0"/>
+        <property name="Explosion.DamageBonus.water" value="0"/>
+        <property name="Gravity" value="-20.0"/>
+        <property name="Velocity" value="8.0"/>
+        <property name="FlyTime" value="0"/>
+        <property name="LifeTime" value="3"/>
+        <property name="CollisionRadius" value="1.0"/>
+    </property>
+    <effect_group name="enAmmoBunkerbuster" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+    </effect_group>
 </item>
-	
-	
-	
-	
-	
-	
+<item name="enHand_bunkerbuster">
+    <property name="Extends" value="meleeHandMaster"/>
+    <property name="CreativeMode" value="None"/>
+    <property name="Degradation" value="99999" param1="true"/>
+    <property class="Action0">
+        <property name="Range" value="3.6"/>
+        <property name="Delay" value="0.0"/>
+        <property name="DamageEntity" value="80"/>
+        <property name="DamageBlock" value="1000"/>
+        <property name="Buff" value="buffInjuryBleedingZombie"/>
+        <property class="HitSounds">
+            <property name="Override0" value="organic" param1="metalsolidhitorganic"/></property>
+    </property>
+    <property class="Action1">
+        <property name="Class" value="Vomit"/>
+        <property name="Hitmask_override" value="Arrow"/>
+        <property name="AnimType" value="1"/>
+        <property name="Delay" value=".1"/>
+        <property name="Range" value="10"/>
+        <property name="SpreadVerticalOffset" value="-50"/>
+        <property name="WarningDelay" value=".6"/>
+        <property name="WarningMax" value="1"/>
+        <property name="Infinite_ammo" value="true"/>
+        <property name="Magazine_items" value="enAmmoBunkerbuster"/>
+        <property name="Sound_warning" value="demolitionzexplodewarning"/>
+        <property name="Sound_start" value=""/>
+        <property name="Sound_repeat" value=""/>
+        <property name="Sound_end" value=""/>
+        <property name="Sound_empty" value=""/>
+        <property name="Sound_reload" value=""/>
+    </property>
+    <effect_group name="enHand_bunkerbuster" tiered="false">
+        <passive_effect name="ModSlots" operation="base_set" value="0"/>
+        <passive_effect name="DamageFalloffRange" operation="base_set" value="50"/>
+        <passive_effect name="MaxRange" operation="base_set" value="10"/>
+        <passive_effect name="MagazineSize" operation="base_set" value="1"/>
+        <passive_effect name="BurstRoundCount" operation="base_set" value="8"/>
+        <passive_effect name="SpreadDegreesHorizontal" operation="base_set" value="120"/>
+        <passive_effect name="SpreadDegreesVertical" operation="base_set" value="30"/>
+        <passive_effect name="SpreadMultiplierIdle" operation="base_set" value="1"/>
+    </effect_group>
+</item>
+
+
+        
 </append>
 
 </ErrorNull>

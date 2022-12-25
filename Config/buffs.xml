@@ -1,113 +1,994 @@
 <ErrorNull>
 
-
 <!-- remove Death XP Penalty Protection -->
 <remove xpath="/buffs/buff[@name='buffStatusCheck01']/effect_group/triggered_effect[@buff='buffNewbieCoat']" />
 
+<!-- remove toolbelt message popup certain basic events occur -->
+<remove xpath="/buffs/buff[@name='buffStatusCheck01']/effect_group/triggered_effect[@buff='buffJournalUnlocks']"/>
+<remove xpath="/buffs/buff/effect_group/triggered_effect[@action='AddJournalEntry']"/>
+
+<!-- remove particle effects from any attack buffs like flames, electricity, etc to reduce lag -->
+<remove xpath="/buffs/buff/effect_group/triggered_effect[@action='AttachParticleEffectToEntity']"/>
+
+<!-- and add hot, blur, and greyscale screen effects instead -->
+<append xpath="/buffs/buff[@name='buffIsOnFire']">
+    <effect_group>
+        <requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+        <triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1.0" fade="1.0" effect_name="Hot"/>
+        <triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="1.0" effect_name="Blur"/>
+        <triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.8" fade="1.0" effect_name="Greyscale"/>
+        <triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Hot"/>
+        <triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Blur"/>
+        <triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Greyscale"/>
+    </effect_group>
+</append>
+
+<!-- reduce damage from electrical shock to players -->
+<set xpath="/buffs/buff[@name='buffShocked']/effect_group/passive_effect[@name='HealthChangeOT']/@value">-2</set> <!-- default: -6 -->
+
+
+
 <append xpath="/buffs">	
-	
-	<buff name="enRadiationZone" hidden="true">
+
+
+	<!-- speed shot - increases player speed -->
+	<buff name="enBuffShotSpeed" icon="ui_game_symbol_run" icon_color="0,192,0" icon_blink="true">
 		<stack_type value="replace"/>
-		<duration value="0"/>
 		<update_rate value="1"/>
-		<effect_group>          
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enIrradiatePlayer" />
-			<requirement name="InBiome" biome="08"/>
-		</effect_group>  		
-	</buff>
-
-	<!-- slow player and show negative screen effects when stepping into wasteland boundary -->
-	<buff name="enIrradiatePlayer" hidden="true">
-		<stack_type value="replace"/>
-		<duration value="2"/>
-		<effect_group>
-			<passive_effect name="RunSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
-				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
-			<passive_effect name="WalkSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
-				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
-			<passive_effect name="CrouchSpeed" operation="perc_subtract" value="0.4,.1" duration="0,3">
-				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
-			<passive_effect name="JumpStrength" operation="perc_subtract" value="0.4,.1" duration="0,3">
-				<requirement name="EntityTagCompare" tags="player"/></passive_effect>
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1.2" fade="1" effect_name="Radiation"/>
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="1" effect_name="Blur"/>
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="1" effect_name="Drunk"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Blur"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Radiation"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Drunk"/>
-		</effect_group>
-	</buff>
-
-
-	<!-- ***** DEATH PENALTY ***** -->
-	<buff name="enBuffDeathPenalty"  hidden="true">
-		<stack_type value="ignore"/>
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="$enDeathPenalty" operation="add" value="0.1"/>	
-			<passive_effect name="HealthMax" operation="perc_subtract" value="@$enDeathPenalty"/>
-		</effect_group>
-	</buff>
-
-
-	<!-- make zombies invincible and dance for a certain duration -->
-	<buff name="enZombieDance"  icon="ui_game_symbol_noise" icon_color="150,0,255" icon_blink="true">
-		<stack_type value="replace"/>
-		<duration value="60"/>
-		<update_rate value="1"/>
-		<display_value value="enDanceTimer"/>
+		<duration value="35"/>
+		<display_value value="enCvarShotSpeedTimer"/>
 		<display_value_format value="time"/>
 		<effect_group>
-			<!-- reset timer if dancebomb is set off again before current dance timer is done -->
-			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enDanceTimer" operation="set" value="60"/>
-
-			<!-- disable zombie spawner for duration of the dancing -->
-			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enZombieSpawner" />
-
-			<!-- set dance duration timer -->
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enDanceTimer" operation="set" value="60"/>
-
-			<!-- start dancing animations for zombie(s) -->
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enCvarShotSpeedTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enCvarShotSpeedTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarShotSpeedTimer" operation="subtract" value="1"/>
+			<passive_effect name="RunSpeed" operation="perc_add" value="1.0"/>
+			<passive_effect name="WalkSpeed" operation="perc_add" value="1.0"/>
+			<passive_effect name="StaminaChangeOT" operation="perc_add" value="0.1"/>
+		</effect_group>
+	</buff>
+	
+	<!-- energy shot - increases player stamina -->
+	<buff name="enBuffShotEnergy" icon="ui_game_symbol_cardio" icon_color="0,0,192" icon_blink="true">
+		<stack_type value="replace"/>
+		<update_rate value="1"/>
+		<duration value="35"/>
+		<display_value value="enCvarShotStaminaTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enCvarShotStaminaTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enCvarShotStaminaTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarShotStaminaTimer" operation="subtract" value="1"/>
+			<passive_effect name="StaminaChangeOT" operation="perc_add" value="1.0"/>
+			<passive_effect name="StaminaLoss" operation="base_set" value="5" tags="primary,secondary,jumping"/>
+		</effect_group>
+	</buff>
+	
+	<!-- adrenaline shot - increases player melee damage and defense strength -->
+	<buff name="enBuffShotAdrenaline" icon="ui_game_symbol_muscle" icon_color="250,225,200" icon_blink="true">
+		<stack_type value="replace"/>
+		<update_rate value="1"/>
+		<duration value="35"/>
+		<display_value value="enCvarShotAdrenalineTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enCvarShotAdrenalineTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enCvarShotAdrenalineTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarShotAdrenalineTimer" operation="subtract" value="1"/>
+			<passive_effect name="GeneralDamageResist" operation="base_add" value="0.7"/>
+			<passive_effect name="EntityDamage" operation="perc_add" value=".7" tags="perkPummelPete,perkSkullCrusher,perkDeepCuts,perkBrawler"/>
+		</effect_group>
+	</buff>
+	
+	<!-- focus shot - increases player ranged damage -->
+	<buff name="enBuffShotFocus" icon="ui_game_symbol_marksmanship" icon_color="128,0,128" icon_blink="true">
+		<stack_type value="replace"/>
+		<update_rate value="1"/>
+		<duration value="35"/>
+		<display_value value="enCvarShotFocusTimer"/>
+		<display_value_format value="time"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enCvarShotFocusTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffStack" action="ModifyCVar" cvar="enCvarShotFocusTimer" operation="set" value="30"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarShotFocusTimer" operation="subtract" value="1"/>
+			<passive_effect name="EntityDamage" operation="perc_add" value=".6" tags="perkGunslinger,perkBoomstick,perkDeadEye,perkMachineGunner,perkBookAutoWeapons,admin"/>
+		</effect_group>
+	</buff>
+	
+	
+	
+	
+	<!-- make zombies invincible and dance for a certain duration -->
+	<buff name="enBuffZombieDance" hidden="true">
+		<stack_type value="replace"/>
+		<duration value="35"/>
+		<effect_group>
 			<triggered_effect trigger="onSelfBuffStart" action="SetDancing" enabled="true" />
-
-			<!-- zombies are invincible while dancing -->
-			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="cold,heat,electrical">
-				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
-			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200">
-				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
-			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200" tags="coredamageresist">
-				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
-			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="heat,electrical">
-				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
-			<passive_effect name="BuffResistance" operation="base_add" value="200" tags="buffInjuryKnockdown01,buffInjuryKnockdown02,buffBurningMolotov,buffBurningFlamingArrow,buffBurningElement,buffBurningEnvironmentHack">
-				<requirement name="EntityTagCompare" tags="zombie"/></passive_effect>
-
-			<!-- decrement dancing timer -->
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enDanceTimer" operation="subtract" value="1"/>
-
-			<!-- when dance duration is over, stop dancing animation and restart zombie spawner -->
 			<triggered_effect trigger="onSelfBuffRemove" action="SetDancing" enabled="false" />
-			<triggered_effect trigger="onSelfBuffRemove" action="AddBuff" buff="enZombieSpawner" />
 		</effect_group>
-		
-		<!-- play dancing music while zombies are dancing -->
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="twitch_dance_off" play_in_head="true" loop="true" toggle_dms="true" />
-			<triggered_effect trigger="onSelfBuffRemove" action="StopSound" sound="twitch_dance_off" play_in_head="true" loop="true" toggle_dms="true"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="PlaySound" sound="twitch_record_scratch" play_in_head="true" />
-			<triggered_effect trigger="onSelfLeaveGame" action="StopSound" sound="twitch_dance_off" play_in_head="true" loop="true"/>
-		</effect_group>
-	</buff>
-	
-	<buff name="enBuffTestSound" hidden="true">
-		<stack_type value="ignore"/>
-		<duration value="0.5"/>
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="player#powerattack"/>
-		</effect_group>
-	</buff>
-	
-	
 
+	</buff>
+	
+	<!-- show tooltip about being a dead spectator -->
+	<buff name="enBuffKoMessage" hidden="true">
+		<stack_type value="ignore"/><update_rate value="8"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ShowToolbeltMessage" message_key="enBuffKoMessageTooltip"/>
+		</effect_group>
+	</buff>
+	
+	<!-- play moans and groans when player is KO'd -->
+	<buff name="enBuffKoSounds" hidden="true">
+		<stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="PlaySound" sound="player#painsm" play_in_head="true"/>
+		</effect_group>
+	</buff>
+	
+	<!-- starting slow bleeding when KO'd -->
+	<buff name="enBuffKoBleeding" hidden="true">
+		<stack_type value="ignore"/><update_rate value="2"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="subtract" value="1"/>
+		</effect_group>
+	</buff>
+	
+	<!-- show tooltip about being a dead spectator -->
+	<buff name="enBuffSpectatorMessage" hidden="true">
+		<stack_type value="ignore"/><update_rate value="8"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ShowToolbeltMessage" message_key="enBuffSpectatorMessageTooltip"/>
+		</effect_group>
+	</buff>
+	
+	<!-- make player invisible from zombies for 3 seconds after getting up from KO -->
+	<buff name="enBuffKoRestore" hidden="true">
+		<stack_type value="ignore"/><duration value="3"/>
+		<effect_group>
+			<!-- make player invisible to zombies -->
+			<passive_effect name="LightMultiplier" operation="perc_add" value="-99.99"/>
+			<passive_effect name="NoiseMultiplier" operation="perc_add" value="-99.99"/>
+			<passive_effect name="EnemySearchDuration" operation="perc_add" value="-99.99"/>
+		</effect_group>
+	</buff>	
+
+	
+	<!-- blur screen for a brief time -->
+	<buff name="enBuffBlurScreen" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="2"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1.0" fade="0.5" effect_name="Blur"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="0.5" effect_name="Blur"/>
+		</effect_group>
+	</buff>
+	
+	<!-- player is KNOCKED OUT and unable to move and invisible to zombies -->
+	<buff name="enBuffKnockedOut" icon="ui_game_symbol_stunned" icon_color="255,255,255" icon_blink="true" tooltip_key="enBuffKnockedOutTooltip">
+		<stack_type value="ignore"/>
+		<duration value="0"/>
+		<effect_group>
+			
+			<!-- show toolbelt message that player cannot heal or attack -->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffKoMessage"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="RemoveBuff" buff="enBuffKoMessage"/>
+			
+			<!-- starting slow bleeding when KO'd -->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffKoBleeding"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="RemoveBuff" buff="enBuffKoBleeding"/>
+			
+			<!-- show screen effects -->
+			<triggered_effect trigger="onSelfBuffStart" action="Ragdoll"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="3" fade="10" effect_name="Dark"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="6" effect_name="Dark"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.5" fade="10" effect_name="Blur"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="6" effect_name="Blur"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1" fade="20" effect_name="Greyscale"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="6" effect_name="Greyscale"/>
+			
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffKoSounds"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="RemoveBuff" buff="enBuffKoSounds"/>
+			
+			<!-- nerf player movement and attack strength -->
+			<passive_effect name="Mobility" operation="perc_add" value="-2.0"/>
+			<passive_effect name="JumpStrength" operation="perc_subtract" value="2.00"/>
+			<passive_effect name="EntityDamage" operation="perc_subtract" value="3.0"/>
+			<passive_effect name="BlockDamage" operation="perc_subtract" value="3.0"/> 
+			
+			<!-- nerf player attack speed -->
+			<passive_effect name="WeaponHandling" operation="perc_add" value="-0.5"/>
+			<passive_effect name="ReloadSpeedMultiplier" operation="perc_add" value="-0.3"/>
+			<passive_effect name="AttacksPerMinute" operation="perc_add" value="-0.3"/>
+			<passive_effect name="RoundsPerMinute" operation="perc_add" value="-0.9"/>
+			
+			<passive_effect name="StaminaMax" operation="base_set" value="1"/>
+			<passive_effect name="StaminaLoss" operation="base_set" value="200" tags="primary"/>
+			<passive_effect name="StaminaLoss" operation="base_set" value="200" tags="secondary"/>
+			
+			<!-- make player invisible to zombies -->
+			<passive_effect name="LightMultiplier" operation="perc_add" value="-9.99"/>
+			<passive_effect name="NoiseMultiplier" operation="perc_add" value="-9.99"/>
+			<passive_effect name="EnemySearchDuration" operation="perc_add" value="-9.99"/>
+			
+			<!-- nerf attack damage from zombies -->
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="cold,heat,electrical"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200" tags="coredamageresist"/>
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="heat,electrical"/>
+			
+			<triggered_effect trigger="onSelfBuffRemove" action="AddBuff" buff="enBuffKoRestore"/>
+			
+		</effect_group>
+	</buff>	
+	
+	
+	<!-- player is dead and now a spectator -->
+	<buff name="enBuffSpectator" icon="ui_game_symbol_skull" icon_color="192,0,0" tooltip_key="enBuffSpectatorTooltip" remove_on_death="false">
+		<stack_type value="ignore"/>
+		<duration value="0"/>
+		<effect_group>
+		
+			<!-- show toolbelt message that player is in spectator mode -->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpectatorMessage"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="RemoveBuff" buff="enBuffSpectatorMessage"/>
+			
+			<!-- show screen effects -->
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.75" fade="1" effect_name="Greyscale"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Greyscale"/>
+			
+			<!-- increase movement and jump ability -->
+			<passive_effect name="RunSpeed" operation="perc_add" value="2.5"/>
+			<passive_effect name="WalkSpeed" operation="perc_add" value="2.0"/>
+			<passive_effect name="JumpStrength" operation="perc_add" value="1"/>
+			
+			<!-- nerf attack strength -->
+			<passive_effect name="EntityDamage" operation="perc_subtract" value="3.0"/>
+			<passive_effect name="BlockDamage" operation="perc_subtract" value="3.0"/> 
+			
+			<!-- nerf player attack speed -->
+			<passive_effect name="WeaponHandling" operation="perc_add" value="-0.5"/>
+			<passive_effect name="ReloadSpeedMultiplier" operation="perc_add" value="-0.3"/>
+			<passive_effect name="AttacksPerMinute" operation="perc_add" value="-0.3"/>
+			<passive_effect name="RoundsPerMinute" operation="perc_add" value="-0.9"/>
+			
+			<!-- boost and nax out health and stamina -->
+			<passive_effect name="StaminaMax" operation="base_set" value="999"/>
+			<passive_effect name="HealthMax" operation="base_set" value="999"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Health" operation="set" value="9999"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyStats" stat="Stamina" operation="set" value="9999"/>
+			<passive_effect name="StaminaLoss" operation="base_set" value="1" tags="primary"/>
+			<passive_effect name="StaminaLoss" operation="base_set" value="1" tags="secondary"/>
+			
+			<!-- make player invisible to zombies -->
+			<passive_effect name="LightMultiplier" operation="perc_add" value="-99.99"/>
+			<passive_effect name="NoiseMultiplier" operation="perc_add" value="-99.99"/>
+			<passive_effect name="EnemySearchDuration" operation="perc_add" value="-99.99"/>
+			
+			<!-- nerf attack damage from zombies -->
+			<passive_effect name="GeneralDamageResist" operation="base_add" value="1"/>
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="cold,heat,electrical"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_add" value="200" tags="coredamageresist"/>
+			<passive_effect name="ElementalDamageResist" operation="base_add" value="200" tags="heat,electrical"/>
+			
+			<!-- immune to bleeding, burning, or electrical shocked -->
+			<passive_effect name="BuffResistance" operation="base_add" value="1" tags="buffInjuryBleeding,buffInjuryBleedingOne,buffInjuryBleedingTwo,buffInjuryBleedingBarbedWire,buffShocked,buffBurningElement,buffBurningEnvironment,buffBurningFlamingArrow,buffBurningMolotov,buffBurning"/>
+			
+		</effect_group>
+	</buff>	
+	
+	
+	<!-- regularly check player's HP to determine if should be knocked out or not -->
+	<buff name="enBuffKoCheck" hidden="true">
+		<stack_type value="ignore"/>
+		<update_rate value="1"/>
+		<effect_group>
+			<!-- player HP drops 100... knocked out -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffKnockedOut">
+				<requirement name="StatCompareCurrent" stat="Health" operation="LTE" value="50"/>
+				<requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+			</triggered_effect>
+			<!-- player HP is above 100... ensure no knock-out effect -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="RemoveBuff" buff="enBuffKnockedOut">
+				<requirement name="StatCompareCurrent" stat="Health" operation="GT" value="50"/>
+				<requirement name="HasBuff" buff="enBuffKnockedOut"/>
+			</triggered_effect>
+		</effect_group>
+	</buff>
+	
+	<!-- pause game time until players trigger session start -->
+	<buff name="enBuffTimeHold" hidden="true">
+		<stack_type value="ignore"/>
+		<update_rate value="1"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="enAction_timeBackward1">
+				<requirement name="TimeOfDay" operation="GT" value="659"/>
+			</triggered_effect>
+		</effect_group>
+	</buff>
+	
+	<!-- zombie spawners for all stages -->
+	<buff name="enBuffSpawnerStage01" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_01"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage02" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_02"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage03" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_03"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage04" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_04"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage05" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_05"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage06" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_06"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage07" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_07"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage08" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_08"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage09" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_09"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage10" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_10"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage11" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_11"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage12" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_12"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage13" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_13"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage14" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_14"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage15" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_15"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage16" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_16"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage17" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_17"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage18" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_18"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage19" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_19"/></effect_group>
+	</buff>
+	<buff name="enBuffSpawnerStage20" hidden="true" remove_on_death="false"><stack_type value="ignore"/><update_rate value="5"/>
+		<effect_group><triggered_effect trigger="onSelfBuffUpdate" action="CallGameEvent" event="zombie_group_20"/></effect_group>
+	</buff>
+	
+	<!-- show alert for stage ENDING, and stop zombie spawning -->
+	<buff name="enBuffStageEnd" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="10"/>
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStageEnd"/>
+			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="quest_subtask_complete" play_in_head="true"/>
+			
+			<!-- remove any active zombie spawners -->
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage01"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage02"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage03"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage04"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage05"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage06"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage07"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage08"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage09"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage10"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage11"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage12"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage13"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage14"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage15"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage16"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage17"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage18"/>
+			<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="enBuffSpawnerStage19"/>
+			
+			<!-- play reward crate sound and display tooltip message -->
+			<triggered_effect trigger="onSelfBuffRemove" action="PlaySound" sound="twitch_celebrate" play_in_head="true"/>
+			<triggered_effect trigger="onSelfBuffRemove" action="ShowToolbeltMessage" message_key="enBuffAlertRewardCrate"/>
+            
+            <!-- spawn the actual reward crate based on horde stage -->
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_01">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="1"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_02">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="2"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_03">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="3"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_04">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="4"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_05">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="5"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_06">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="6"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_07">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="7"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_08">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="8"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_09">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="9"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_10">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="10"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_11">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="11"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_12">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="12"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_13">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="13"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_14">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="14"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_15">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="15"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_16">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="16"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_17">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="17"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_18">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="18"/>
+            </triggered_effect>
+            <triggered_effect trigger="onSelfBuffRemove" action="CallGameEvent" event="enAction_SpawnRewardCrate_19">
+                <requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="19"/>
+            </triggered_effect>
+		</effect_group>
+	</buff>
+	
+	<!-- show alert that next stage is approaching -->
+	<buff name="enBuffStageWarning" hidden="true">
+		<stack_type value="ignore"/>
+		<duration value="10"/>
+		<effect_group>
+			<!--<requirement name="CVarCompare" cvar="enCvarStage" operation="GT" value="1"/>-->
+			<requirement name="!HasBuff" buff="enBuffTimeHold"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStageWarning"/>
+			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="twitch_cooldown_started" play_in_head="true"/>
+		</effect_group>
+	</buff>
+	
+	<!-- start the stage! -->
+	<buff name="enBuffStageBegin" hidden="true">
+		<stack_type value="ignore"/><duration value="7"/>
+		<effect_group>
+			
+			<!-- play alert sound effect -->
+			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="horde_spawn" play_in_head="true"/>
+			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="horde_spawn_warning" play_in_head="true"/>
+			
+			<!-- show scren effects -->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffBlurScreen"/>
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.7" fade="0.5" effect_name="Greyscale">
+				<requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+				<requirement name="!HasBuff" buff="enBuffSpectator"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="2" effect_name="Greyscale">
+				<requirement name="!HasBuff" buff="enBuffKnockedOut"/>
+				<requirement name="!HasBuff" buff="enBuffSpectator"/>
+			</triggered_effect>
+			
+			<!-- ensure everyone has full/max HP -->
+			<triggered_effect trigger="onSelfBuffStart" action="ModifyStats" stat="Health" operation="add" value="999">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="1"/>
+			</triggered_effect>
+			
+			<!-- show alert text -->
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage01Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="1"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage02Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="2"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage03Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="3"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage04Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="4"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage05Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="5"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage06Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="6"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage07Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="7"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage08Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="8"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage09Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="9"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage10Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="10"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage11Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="11"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage12Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="12"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage13Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="13"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage14Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="14"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage15Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="15"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage16Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="16"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage17Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="17"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage18Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="18"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage19Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="19"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="ShowToolbeltMessage" message_key="enBuffAlertStage20Start">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="20"/></triggered_effect>
+				
+			<!-- start zombie spawner -->
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage01">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="1"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage02">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="2"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage03">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="3"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage04">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="4"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage05">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="5"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage06">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="6"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage07">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="7"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage08">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="8"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage09">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="9"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage10">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="10"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage11">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="11"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage12">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="12"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage13">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="13"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage14">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="14"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage15">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="15"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage16">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="16"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage17">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="17"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage18">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="18"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage19">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="19"/></triggered_effect>
+			<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="enBuffSpawnerStage20">
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="20"/></triggered_effect>
+				
+				
+		</effect_group>
+	</buff>
+	
+	
+	<!-- monitor current time and run actions based on specific time slots -->
+	<buff name="enBuffTimeTracker" hidden="true" remove_on_death="false">
+		<stack_type value="ignore"/>
+		<update_rate value="1"/>
+		<effect_group>
+			
+			<!-- [DAY 1] horde stage 1 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0700"/>
+				<requirement name="TimeOfDay" operation="LT" value="0701"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0930"/>
+				<requirement name="TimeOfDay" operation="LT" value="0931"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0954"/>
+				<requirement name="TimeOfDay" operation="LT" value="0955"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="2">
+				<requirement name="TimeOfDay" operation="GTE" value="0959"/>
+				<requirement name="TimeOfDay" operation="LT" value="1000"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="1"/>
+			</triggered_effect>
+			
+			<!-- [DAY 1] horde stage 2 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1000"/>
+				<requirement name="TimeOfDay" operation="LT" value="1001"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1230"/>
+				<requirement name="TimeOfDay" operation="LT" value="1231"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1254"/>
+				<requirement name="TimeOfDay" operation="LT" value="1254"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="3">
+				<requirement name="TimeOfDay" operation="GTE" value="1259"/>
+				<requirement name="TimeOfDay" operation="LT" value="1300"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="2"/>
+			</triggered_effect>
+			
+			<!-- [DAY 1] horde stage 3 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1300"/>
+				<requirement name="TimeOfDay" operation="LT" value="1301"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1530"/>
+				<requirement name="TimeOfDay" operation="LT" value="1531"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1554"/>
+				<requirement name="TimeOfDay" operation="LT" value="1555"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="4">
+				<requirement name="TimeOfDay" operation="GTE" value="1559"/>
+				<requirement name="TimeOfDay" operation="LT" value="1600"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="3"/>
+			</triggered_effect>
+			
+			<!-- [DAY 1] horde stage 4 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1600"/>
+				<requirement name="TimeOfDay" operation="LT" value="1601"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1830"/>
+				<requirement name="TimeOfDay" operation="LT" value="1831"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1854"/>
+				<requirement name="TimeOfDay" operation="LT" value="1855"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="5">
+				<requirement name="TimeOfDay" operation="GTE" value="1859"/>
+				<requirement name="TimeOfDay" operation="LT" value="1900"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="4"/>
+			</triggered_effect>
+			
+			<!-- [DAY 1] horde stage 5 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1900"/>
+				<requirement name="TimeOfDay" operation="LT" value="1901"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="2130"/>
+				<requirement name="TimeOfDay" operation="LT" value="2131"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="2154"/>
+				<requirement name="TimeOfDay" operation="LT" value="2155"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="6">
+				<requirement name="TimeOfDay" operation="GTE" value="2159"/>
+				<requirement name="TimeOfDay" operation="LT" value="2200"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="5"/>
+			</triggered_effect>
+			
+			<!-- [DAY 1] horde stage 6 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="2200"/>
+				<requirement name="TimeOfDay" operation="LT" value="2201"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0030"/>
+				<requirement name="TimeOfDay" operation="LT" value="0031"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0054"/>
+				<requirement name="TimeOfDay" operation="LT" value="0055"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="7">
+				<requirement name="TimeOfDay" operation="GTE" value="0059"/>
+				<requirement name="TimeOfDay" operation="LT" value="0100"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="6"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 7 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0100"/>
+				<requirement name="TimeOfDay" operation="LT" value="0101"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0330"/>
+				<requirement name="TimeOfDay" operation="LT" value="0331"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0354"/>
+				<requirement name="TimeOfDay" operation="LT" value="0355"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="8">
+				<requirement name="TimeOfDay" operation="GTE" value="0359"/>
+				<requirement name="TimeOfDay" operation="LT" value="0400"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="7"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 8 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0400"/>
+				<requirement name="TimeOfDay" operation="LT" value="0401"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0630"/>
+				<requirement name="TimeOfDay" operation="LT" value="0631"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0654"/>
+				<requirement name="TimeOfDay" operation="LT" value="0655"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="9">
+				<requirement name="TimeOfDay" operation="GTE" value="0659"/>
+				<requirement name="TimeOfDay" operation="LT" value="0700"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="8"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 9 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0700"/>
+				<requirement name="TimeOfDay" operation="LT" value="0701"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0930"/>
+				<requirement name="TimeOfDay" operation="LT" value="0931"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0954"/>
+				<requirement name="TimeOfDay" operation="LT" value="0955"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="10">
+				<requirement name="TimeOfDay" operation="GTE" value="0959"/>
+				<requirement name="TimeOfDay" operation="LT" value="1000"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="9"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 10 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1000"/>
+				<requirement name="TimeOfDay" operation="LT" value="1001"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1230"/>
+				<requirement name="TimeOfDay" operation="LT" value="1231"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1254"/>
+				<requirement name="TimeOfDay" operation="LT" value="1255"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="11">
+				<requirement name="TimeOfDay" operation="GTE" value="1259"/>
+				<requirement name="TimeOfDay" operation="LT" value="1300"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="10"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 11 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1300"/>
+				<requirement name="TimeOfDay" operation="LT" value="1301"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1530"/>
+				<requirement name="TimeOfDay" operation="LT" value="1531"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1554"/>
+				<requirement name="TimeOfDay" operation="LT" value="1555"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="12">
+				<requirement name="TimeOfDay" operation="GTE" value="1559"/>
+				<requirement name="TimeOfDay" operation="LT" value="1600"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="11"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 12 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1600"/>
+				<requirement name="TimeOfDay" operation="LT" value="1601"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1830"/>
+				<requirement name="TimeOfDay" operation="LT" value="1831"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1854"/>
+				<requirement name="TimeOfDay" operation="LT" value="1855"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="13">
+				<requirement name="TimeOfDay" operation="GTE" value="1859"/>
+				<requirement name="TimeOfDay" operation="LT" value="1900"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="12"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 13 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1900"/>
+				<requirement name="TimeOfDay" operation="LT" value="1901"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="2130"/>
+				<requirement name="TimeOfDay" operation="LT" value="2131"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="2154"/>
+				<requirement name="TimeOfDay" operation="LT" value="2155"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="14">
+				<requirement name="TimeOfDay" operation="GTE" value="2159"/>
+				<requirement name="TimeOfDay" operation="LT" value="2200"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="13"/>
+			</triggered_effect>
+			
+			<!-- [DAY 2] horde stage 14 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="2200"/>
+				<requirement name="TimeOfDay" operation="LT" value="2201"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0030"/>
+				<requirement name="TimeOfDay" operation="LT" value="0031"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0054"/>
+				<requirement name="TimeOfDay" operation="LT" value="0055"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="15">
+				<requirement name="TimeOfDay" operation="GTE" value="0059"/>
+				<requirement name="TimeOfDay" operation="LT" value="0100"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="14"/>
+			</triggered_effect>
+			
+			<!-- [DAY 3] horde stage 15 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0100"/>
+				<requirement name="TimeOfDay" operation="LT" value="0101"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0330"/>
+				<requirement name="TimeOfDay" operation="LT" value="0331"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0354"/>
+				<requirement name="TimeOfDay" operation="LT" value="0355"/>
+			</triggered_effect>	
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="16">
+				<requirement name="TimeOfDay" operation="GTE" value="0359"/>
+				<requirement name="TimeOfDay" operation="LT" value="0400"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="15"/>
+			</triggered_effect>
+			
+			<!-- [DAY 3] horde stage 16 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0400"/>
+				<requirement name="TimeOfDay" operation="LT" value="0401"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0630"/>
+				<requirement name="TimeOfDay" operation="LT" value="0631"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0654"/>
+				<requirement name="TimeOfDay" operation="LT" value="0655"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="17">
+				<requirement name="TimeOfDay" operation="GTE" value="0659"/>
+				<requirement name="TimeOfDay" operation="LT" value="0700"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="16"/>
+			</triggered_effect>
+			
+			
+			<!-- [DAY ????] horde stage 17 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="0700"/>
+				<requirement name="TimeOfDay" operation="LT" value="0701"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="0930"/>
+				<requirement name="TimeOfDay" operation="LT" value="0931"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="0954"/>
+				<requirement name="TimeOfDay" operation="LT" value="0955"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="18">
+				<requirement name="TimeOfDay" operation="GTE" value="0959"/>
+				<requirement name="TimeOfDay" operation="LT" value="1000"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="17"/>
+			</triggered_effect>
+			
+			
+			<!-- [DAY ????] horde stage 18 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1000"/>
+				<requirement name="TimeOfDay" operation="LT" value="1001"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1230"/>
+				<requirement name="TimeOfDay" operation="LT" value="1231"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1254"/>
+				<requirement name="TimeOfDay" operation="LT" value="1255"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="19">
+				<requirement name="TimeOfDay" operation="GTE" value="1259"/>
+				<requirement name="TimeOfDay" operation="LT" value="1300"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="18"/>
+			</triggered_effect>
+			
+			
+			<!-- [DAY ????] horde stage 19 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1300"/>
+				<requirement name="TimeOfDay" operation="LT" value="1301"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1530"/>
+				<requirement name="TimeOfDay" operation="LT" value="1531"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1554"/>
+				<requirement name="TimeOfDay" operation="LT" value="1555"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="20">
+				<requirement name="TimeOfDay" operation="GTE" value="1559"/>
+				<requirement name="TimeOfDay" operation="LT" value="1600"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="19"/>
+			</triggered_effect>
+			
+			
+			<!-- [DAY ????] horde stage 20 -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageBegin">
+				<requirement name="TimeOfDay" operation="GTE" value="1600"/>
+				<requirement name="TimeOfDay" operation="LT" value="1601"/>
+			</triggered_effect>
+			<!--
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageEnd">
+				<requirement name="TimeOfDay" operation="GTE" value="1830"/>
+				<requirement name="TimeOfDay" operation="LT" value="1831"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="enBuffStageWarning">
+				<requirement name="TimeOfDay" operation="GTE" value="1854"/>
+				<requirement name="TimeOfDay" operation="LT" value="1855"/>
+			</triggered_effect>
+			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarStage" operation="set" value="21">
+				<requirement name="TimeOfDay" operation="GTE" value="1859"/>
+				<requirement name="TimeOfDay" operation="LT" value="1900"/>
+				<requirement name="CVarCompare" cvar="enCvarStage" operation="Equals" value="20"/>
+			</triggered_effect>
+			-->
+			
+
+		</effect_group>
+	</buff>
+	
+	
+	
+	
+	
 	<!-- This is activated by taking the Red Pill... -->
 	<buff name="enBuffStartSession" hidden="true">
 		<stack_type value="ignore"/>
@@ -122,73 +1003,31 @@
 	<!-- ***** HUD DISPLAY BUFFS ***** -->
 	<!-- ***************************** -->
 	
-	<buff name="enBuffShowZombieKillCounter" icon="ui_game_symbol_skull" icon_color="64,192,64" remove_on_death="false">
+    <!-- show on-screen icon for current stage -->
+	<buff name="enBuffShowStageNumber" icon="ui_game_symbol_map_waypoint_set" icon_color="200,200,255" name_key="enBuffShowStageNumberName" description_key="enBuffShowStageNumberDesc" remove_on_death="false">
+		<stack_type value="ignore"/><update_rate value="1"/>
+		<display_value value="enCvarStage"/>
+	</buff>
+    
+    <!-- show on-screen icon for number of zombies killed by player -->
+	<buff name="enBuffShowZombieKillCounter" icon="ui_game_symbol_skull" icon_color="100,200,100" name_key="enBuffShowZombieKillCounterName" description_key="enBuffShowZombieKillCounterDesc" remove_on_death="false">
 		<stack_type value="replace"/>
 		<update_rate value="1"/>
 		<display_value value="enCvarZombieKillCounter"/>
 	</buff>
 	
-	<buff name="enBuffShowTotalScore" icon="ui_game_symbol_trophy" icon_color="250,225,200" remove_on_death="false">
+    <!-- show on-screen icon for the player's total score -->
+	<buff name="enBuffShowTotalScore" icon="ui_game_symbol_trophy" icon_color="250,225,200" name_key="enBuffShowTotalScoreName" description_key="enBuffShowTotalScoreDesc" remove_on_death="false">
 		<stack_type value="replace"/>
 		<update_rate value="1"/>
 		<display_value value="enCvarTotalScore"/>
 	</buff>
 	
-	<buff name="enBuffShowZombieSpawnTimer" icon="ui_game_symbol_clock" icon_color="128,255,128" remove_on_death="false">
-		<stack_type value="replace"/>
-		<update_rate value="1"/>
-		<display_value value="enCvarZombieSpawnTimer"/>
-	</buff>
-	
-	<buff name="enBuffShowEndGameTimer" icon="ui_game_symbol_clock" icon_color="255,128,128" remove_on_death="false">
-		<stack_type value="replace"/>
-		<update_rate value="1"/>
-		<display_value_format value="time"/>
-		<display_value value="enCvarEndGameTimer"/>
-	</buff>
 	
 	
-	<!-- ************************ -->
-	<!-- ***** UPDATE BUFFS ***** -->
-	<!-- ************************ -->
-	
-	<buff name="enBuffUpdateZombieKillCounter" hidden="true">
-		<stack_type value="ignore"/>
-		<duration value="0.5"/>
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="enCvarZombieKillCounter" operation="add" value="1"/>
-		</effect_group>  		
-	</buff>
-	
-	<!-- zombie spawn timer -->
-	<buff name="enBuffUpdateZombieSpawnTimer" hidden="true" remove_on_death="false">
-		<stack_type value="replace"/>
-		<update_rate value="1"/>
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarZombieSpawnTimer" operation="subtract" value="1"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarZombieSpawnTimer" operation="set" value="10">
-				<requirement name="CVarCompare" cvar="enCvarZombieSpawnTimer" operation="LTE" value="0"/>
-			</triggered_effect>
-		</effect_group>  		
-	</buff>
-	
-	<!-- end game timer -->
-	<buff name="enBuffUpdateEndGameTimer" hidden="true" remove_on_death="false">
-		<stack_type value="replace"/>
-		<update_rate value="1"/>
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarEndGameTimer" operation="subtract" value="1"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="enCvarEndGameTimer" operation="set" value="3600">
-				<requirement name="CVarCompare" cvar="enCvarEndGameTimer" operation="LTE" value="0"/>
-			</triggered_effect>
-		</effect_group>  		
-	</buff>
-	
-	
-	
-	<!-- ************************* -->
-	<!-- ***** SPAWNER BUFFS ***** -->
-	<!-- ************************* -->
+	<!-- ******************************** -->
+	<!-- ***** ZOMBIE SPAWNER BUFFS ***** -->
+	<!-- ******************************** -->
 	
 	<!-- spawns zombies whenever the target value is reached -->
 	<buff name="enBuffZombieSpawner" hidden="true" remove_on_death="false">
@@ -322,20 +1161,22 @@
 
 
 
-	<!-- buff decos for stronger enemies -->
-	<buff name="HellShockerDeco" hidden="true">		
+	<!-- *************************************** -->
+	<!-- ***** BUFF DECOS FOR BOSS ZOMBIES ***** -->
+	<!-- *************************************** -->
+	
+	<buff name="enBuffDecoDrone" hidden="true">		
 		<effect_group>
 			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="Vehicles/Gyrocopter/gyrocopter_start"/>	
 			<triggered_effect trigger="onSelfBuffUpdate" action="PlaySound" sound="Vehicles/Gyrocopter/gyrocopter_med_lp"/>			
-			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="#Other/Items?Mods/Sides/side_attachment_flashlightPrefab.prefab" local_offset="0,0.25,-0.5" local_rotation="33,0,0" parent_transform="Head"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/Junk Drone/junkDrone_Prefab.prefab" local_offset="0,0.25,-0.5" local_rotation="33,0,0" parent_transform="Head"/>
-			<triggered_effect trigger="onSelfDied" action="AttachParticleEffectToEntity" particle="p_fire_small" local_offset="0,0,0" local_rotation="0,0,0" parent_transform="Head"/>		
-			<triggered_effect trigger="onSelfDied" action="AttachPrefabToEntity" prefab="prefabs/prefabexplosion15" local_offset="0,0,0" local_rotation="0,0,0" parent_transform="Head"/>
-			<triggered_effect trigger="onSelfDied" action="AttachPrefabToEntity" prefab="prefabs/prefabexplosion6" local_offset="0,0,0" local_rotation="0,0,0" parent_transform="Head"/>	
+			<triggered_effect trigger="onSelfBuffUpdate" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/Junk Drone/junkDrone_Prefab.prefab" local_offset="0.0,-0.06,-0.36" local_rotation="33,0,0" parent_transform="Head"/>
+			<triggered_effect trigger="onSelfDied" action="AttachParticleEffectToEntity" particle="p_fire_small" local_offset="0,-0.05,-0.25" local_rotation="0,0,0" parent_transform="Head"/>		
+			<triggered_effect trigger="onSelfDied" action="AttachPrefabToEntity" prefab="prefabs/prefabexplosion6" local_offset="0,-0.05,-0.25" local_rotation="0,0,0" parent_transform="Head"/>	
 		</effect_group>
 	</buff>	
 	
-	<buff name="ScorcherDeco" hidden="true">
+	
+	<buff name="enBuffDecoFlamethrower" hidden="true">
 		<effect_group>
 			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/JunkTurret/junkTurret_Prefab.prefab" parent_transform="LeftShoulder" local_offset=".15,-.15,0" local_rotation="0,0,0"/>
 			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/JunkTurret/junkTurret_Prefab.prefab" parent_transform="RightShoulder" local_offset="-.15,.15,0" local_rotation="180,0,0"/>
@@ -353,50 +1194,57 @@
 		</effect_group>
 	</buff>
 	
-	<buff name="GunnerPrefab" hidden="true">
+
+	<buff name="enBuffDecoMachinegunner" hidden="true"><effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/m60/m60Prefab.prefab" 
+			local_offset=".17,.05,-.2" local_rotation="0,180,-101" parent_transform="RightHand"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/AK47/AK47/ak47.fbx" 
+			local_offset="-0.16,-0.05,0.00" local_rotation="0,0,-60" parent_transform="LeftHand"/>
+	</effect_group></buff>
+	
+	<buff name="enBuffDecoRocketman" hidden="true">
 		<effect_group>
-			<triggered_effect trigger="onSelfBuffUpdate" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/m60/m60Prefab.prefab" local_offset=".17,.05,-.2" local_rotation="0,180,-101" parent_transform="RightHand"/>
+			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/RocketLauncher/rocketlauncherPrefab.prefab" 
+			local_offset="-0.2,0.13,0" local_rotation="180,0,0" parent_transform="LeftShoulder"/>
+			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="#Other/Items?Weapons/Ranged/RocketLauncher/rocketlauncherPrefab.prefab" 
+			local_offset="-0.15,-0.12,0" local_rotation="180,0,0" parent_transform="RightShoulder"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" target="self" buff="buffInjuryKnockdown01Cooldown"/>
+		</effect_group>
+	</buff>
+	
+	<buff name="enBuffDecoBunkerbuster" hidden="true">
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" 
+				prefab="#Other/Items?Weapons/Melee/SledgeHammer/steelSledgehammerPrefab.prefab" 
+				local_offset="-0.10,0.22,-0.03" 
+				local_rotation="0,60,0" 
+				parent_transform="RightHand"/>
+			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" 
+				prefab="#Other/Items?Weapons/Melee/SledgeHammer/steelSledgehammerPrefab.prefab" 
+				local_offset="-0.16,-0.15,0.05" 
+				local_rotation="180,45,40" 
+				parent_transform="LeftHand"/>	
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" target="self" buff="buffInjuryKnockdown01Cooldown"/>
 		</effect_group>
 	</buff>
 	
 
-	<!-- buff effects for stronger enemies -->
-	
-	<buff name="buffInjuryStunnedX" name_key="buffInjuryStunned01Name" description_key="buffInjuryStunned01Desc" icon="ui_game_symbol_stunned" icon_color="255,128,0">
-		<damage_type value="stun"/>
-		<stack_type value="replace"/>
-		<duration value="4"/>
-		<display_value value=".stunDisplay"/><display_value_key value="{0}"/>
-
+	<buff name="enBuffWraithScream" hidden="true">
+		<update_rate value="15"/>
 		<effect_group>
-			<passive_effect name="RunSpeed" operation="perc_subtract" value="0.8,.2" duration="0,4"/>
-			<passive_effect name="WalkSpeed" operation="perc_subtract" value="0.8,.2" duration="0,4"/>
-			<passive_effect name="CrouchSpeed" operation="perc_subtract" value="0.8,.2" duration="0,4"/>
-			<passive_effect name="JumpStrength" operation="perc_subtract" value="0.8,.2" duration="0,4"/>
-			<passive_effect name="AttacksPerMinute" operation="perc_add" value="-.5,0" duration="0,4">
-			</passive_effect>
-
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="0.5" fade="1" effect_name="Blur"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="1" effect_name="Blur"/>
-
-			<triggered_effect trigger="onSelfBuffStart" action="PlaySound" sound="buff_stunned" play_in_head="true"/>
-			<triggered_effect trigger="onSelfEnteredGame" action="PlaySound" sound="buff_stunned" play_in_head="true"/>
-
-			<triggered_effect trigger="onSelfBuffRemove" action="FadeOutSound" sound="buff_stunned" play_in_head="true"/>
-			<triggered_effect trigger="onSelfLeaveGame" action="StopSound" sound="buff_stunned" play_in_head="true"/>
-
-			<triggered_effect trigger="onSelfBuffFinish" action="AddBuff" buff="buffInjuryStunned01Cooldown">
-				<requirement name="CVarCompare" cvar=".shotgunSuppressCooldown" operation="LT" value="1"/>
-			</triggered_effect>
-			<triggered_effect trigger="onSelfBuffFinish" action="ModifyCVar" cvar=".shotgunSuppressCooldown" operation="set" value="0"/>
-
-			<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar=".stunDisplay" operation="set" value="4"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar=".stunDisplay" operation="add" value="-1"/>
-			<triggered_effect trigger="onSelfBuffRemove" action="ModifyCVar" cvar=".stunDisplay" operation="set" value="0"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="PlaySound" sound="horde_spawn"/>
+		</effect_group>
+	</buff>
+	<buff name="enBuffDecoWraith" hidden="true">
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffStart" action="AttachPrefabToEntity" prefab="Entities/Animals/Vulture/animalVultureStandard" 
+			local_offset="0.0,-0.1,0.06" local_rotation="-39,0,0" parent_transform="Spine3"/>
+			<triggered_effect trigger="onSelfBuffStart" action="SetTransformActive" active="false"  parent_transform="Spine" transform_path="body_mesh"/>
 		</effect_group>
 	</buff>
 
-	
+	    
+    
 </append>
 
 

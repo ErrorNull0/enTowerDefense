@@ -3,101 +3,68 @@
 <append xpath="/traders/trader_item_groups">
 <trader_item_group name="enVendingItems">
 
-	<item name="woodMaster" 				prob="2.0" count="500"/>
 	<item name="cobblestoneMaster" 			prob="2.0" count="500"/>
 	<item name="concreteMaster" 			prob="2.0" count="500"/>
 	<item name="steelMaster" 				prob="2.0" count="500"/>
 	<item name="resourceRepairKit" 			prob="1.0" count="25"/>
 	
-	<item name="ammo9mmBulletBall" 			prob="3.0" count="300"/>
-	<item name="ammo762mmBulletBall" 		prob="3.0" count="300"/>
-	<item name="ammoShotgunShell" 			prob="3.0" count="150"/>
+	<item name="ammo9mmBulletBall" 			prob="3.0" count="350"/>
+	<item name="ammo762mmBulletBall" 		prob="3.0" count="350"/>
+	<item name="ammoShotgunShell" 			prob="3.0" count="350"/>
+	<item name="ammoShotgunSlug" 			prob="3.0" count="350"/>
 	
 	<item name="thrownAmmoPipeBomb" 		prob="2.0" count="20"/>
-	<item name="thrownGrenade" 				prob="2.0" count="25"/>
 	<item name="thrownGrenadeContact" 		prob="2.0" count="25"/>
 	
-	<!--
-	<item name="thrownAmmoMolotovCocktail" 	prob="1.0" count="20"/>
-	-->
+	<item name="medicalFirstAidBandage" 	prob="1.0" count="20"/>
+	<item name="medicalFirstAidKit" 		prob="1.0" count="20"/>
+	<item name="drinkJarPureMineralWater" 	prob="0.5" count="10"/>
+	<item name="enShotResurrection" 		prob="0.25" count="5"/>
+	<item name="cntStorageGeneric" 			prob="0.25"/>
 	
-	<item name="medicalFirstAidBandage" 	prob="1.0" count="5"/>
-	<item name="medicalFirstAidKit" 		prob="1.0" count="5"/>
-	<item name="resourceSewingKit" 			prob="1.0" count="20"/>
-	<item name="medicalPlasterCast" 		prob="1.0" count="5"/>	
-	<item name="enStemCells" 				prob="1.0" count="10"/>
-	<item name="drugAntibiotics" 			prob="1.0" count="10"/>
-	<item name="drugPainkillers" 			prob="1.0" count="10"/>
-	<item name="drugVitamins" 				prob="1.0" count="10"/>
-	
-	<item name="foodCanBeef" 				prob="0.5" count="10"/>	
-	<item name="drinkJarBoiledWater" 		prob="0.5" count="10"/>
-	<item name="drinkYuccaJuiceSmoothie" 	prob="0.5" count="10"/>
-	<item name="drinkCanMegaCrush" 			prob="0.5" count="10"/>
-	
-	<item name="modMeleeClubBurningShaft"		prob="1.0"/>
 	<item name="modMeleeClubMetalSpikes"		prob="1.0"/>
 	<item name="modMeleeClubMetalChain"			prob="1.0"/>
 	<item name="modMeleeErgonomicGrip"			prob="1.0"/>
 	<item name="modMeleeFortifyingGrip"			prob="1.0"/>
-	<item name="modMeleeSerratedBlade"			prob="1.0"/>
 	<item name="modArmorBandolier"				prob="1.0"/>
-	<item name="modArmorPlatingBasic"			prob="3.0"/>
 	<item name="modArmorPlatingReinforced"		prob="3.0"/>
-	<item name="modArmorStoragePocket"			prob="2.0"/>
-	<item name="modArmorDoubleStoragePocket"	prob="2.0"/>
-	<item name="modArmorTripleStoragePocket"	prob="2.0"/>
 	<item name="modGunDrumMagazineExtender"		prob="1.0"/>
 	<item name="modGunMagazineExtender"			prob="1.0"/>
 	<item name="modGunChoke"					prob="1.0"/>
 	<item name="modGunMeleeRadRemover"			prob="1.0"/>
 	<item name="modArmorHelmetLight"			prob="1.0"/>
+	<item name="modGunScopeSmall"				prob="1.0"/>
+	<item name="modGunScopeMedium"				prob="1.0"/>
+	<item name="modGunForegrip"					prob="1.0"/>
 	
-	<item name="gunHandgunT0PipePistol" quality="1,6"/>
 	<item name="gunHandgunT1Pistol" quality="1,6"/>
-	<item name="gunHandgunT3SMG5" quality="1,6"/>
+	<item name="gunHandgunT3SMG5" quality="4,6"/>
 	
-	<item name="gunShotgunT0PipeShotgun" quality="1,6"/>
 	<item name="gunShotgunT1DoubleBarrel" quality="1,6"/>
-	<item name="gunShotgunT3AutoShotgun" quality="1,6"/>
+	<item name="gunShotgunT3AutoShotgun" quality="4,6"/>
 	
-	<item name="gunMGT0PipeMachineGun" quality="1,6"/>
 	<item name="gunMGT1AK47" quality="1,6"/>
-	<item name="gunMGT3M60" quality="1,6"/>
+	<item name="gunMGT3M60" quality="4,6"/>
 	
-	<item name="meleeWpnClubT1BaseballBat" quality="1,6"/>
-	<item name="meleeWpnClubT3SteelClub" quality="1,6"/>
-	
-	<item name="meleeWpnSpearT1IronSpear" quality="1,6"/>
-	<item name="meleeWpnSpearT3SteelSpear" quality="1,6"/>
-	
+	<item name="meleeWpnClubT0WoodenClub" quality="1,6"/>
+	<item name="meleeWpnClubT1BaseballBat" quality="3,6"/>
+	<item name="meleeWpnClubT3SteelClub" quality="4,6"/>
+	<item name="enBoneBasher" quality="6"/>
+    
 	<item name="meleeWpnBladeT1HuntingKnife" quality="1,6"/>
-	<item name="meleeWpnBladeT3Machete" quality="1,6"/>
+	<item name="meleeWpnBladeT3Machete" quality="4,6"/>
+    <item name="enMeatCleaver" quality="6"/>
+    
+    <item name="enStealthHood" quality="1,6"/>
+	<item name="enStealthChest" quality="1,6"/>
+	<item name="enStealthGloves" quality="1,6"/>
+	<item name="enStealthLegs" quality="1,6"/>
+	<item name="enStealthBoots" quality="1,6"/>
 	
-	<item name="armorClothHat" quality="1,6"/>
-	<item name="armorClothGloves" quality="1,6"/>
-	<item name="armorClothJacket" quality="1,6"/>
-	<item name="armorClothPants" quality="1,6"/>
-	<item name="armorClothBoots" quality="1,6"/>
-	
-	<item name="armorLeatherHood" quality="1,6"/>
-	<item name="armorLeatherGloves" quality="1,6"/>
-	<item name="armorLeatherChest" quality="1,6"/>
-	<item name="armorLeatherPants" quality="1,6"/>
-	<item name="armorLeatherBoots" quality="1,6"/>
-	
-	<item name="armorScrapHelmet" quality="1,6"/>
-	<item name="armorScrapGloves" quality="1,6"/>
-	<item name="armorScrapChest" quality="1,6"/>
-	<item name="armorScrapLegs" quality="1,6"/>
-	<item name="armorScrapBoots" quality="1,6"/>
-	
-	<item name="armorIronHelmet" quality="1,6"/>
-	<item name="armorIronGloves" quality="1,6"/>
-	<item name="armorIronChest" quality="1,6"/>
-	<item name="armorIronLegs" quality="1,6"/>
-	<item name="armorIronBoots" quality="1,6"/>
-	
+    <item name="enStealthShirt" mods="dye" mod_chance="0"/>
+    <item name="enStealthPants" mods="dye" mod_chance="0"/>
+    <item name="enStealthMask" mods="dye" mod_chance="0"/>
+    
 	<item name="armorMilitaryHelmet" quality="1,6"/>
 	<item name="armorMilitaryGloves" quality="1,6"/>
 	<item name="armorMilitaryVest" quality="1,6"/>
@@ -109,14 +76,14 @@
 	<item name="armorSteelChest" quality="1,6"/>
 	<item name="armorSteelLegs" quality="1,6"/>
 	<item name="armorSteelBoots" quality="1,6"/>
-	
+    	
 </trader_item_group>
 </append>
 
 
 <append xpath="/traders">
-	<trader_info id="77" full_reset="true" reset_interval="1" override_buy_markup="1.0" allow_sell="false" min_inventory="250" max_inventory="250" min_items_swapped="250" max_items_swapped="250">		
-		<trader_items  count="250">
+	<trader_info id="77" full_reset="true" reset_interval="1" override_buy_markup="1.0" allow_sell="false" min_inventory="1000" max_inventory="1000" min_items_swapped="1000" max_items_swapped="1000">		
+		<trader_items  count="1000">
 			<item group="enVendingItems"/>
 		</trader_items>
 	</trader_info>

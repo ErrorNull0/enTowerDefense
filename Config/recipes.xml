@@ -1,0 +1,14 @@
+<ErrorNull>
+<append xpath="/recipes">
+
+
+	<recipe name="enConcrete:VariantHelper" count="100" craft_time="1">
+		<ingredient name="resourceRockSmall" count="2"/>
+	</recipe>
+
+	
+</append>
+
+
+
+</ErrorNull>

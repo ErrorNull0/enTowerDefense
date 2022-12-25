@@ -1,5 +1,7 @@
 <ErrorNull>
 
+<!-- turn off default vanilla spawning behavior in wilderness -->
+<!-- game events already handle all the spawning for tower defense session -->
 <set xpath="/spawning/biome/spawn/@maxcount">0</set>
 	
 </ErrorNull>

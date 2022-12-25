@@ -1,0 +1,135 @@
+<ErrorNull>
+<append xpath="/archetypes">
+	
+<archetype name="enArch_rocketman" male="true" skin_color="64,48,45" type="Player">
+	<base_mesh_parts>
+		<part slot="head" layer="base" mesh="male_base_face">
+			<texture name="male_head_zombie" color="skin"/>
+		</part>
+		<part slot="head" layer="outer" mesh="male_armor_heavy_bandit_gasmask">
+			<texture name="unisex_bandit_armor" color="255,120,120"/>
+			<texture name="male_torso_wound" color="80,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="80,0,0"/>
+		</part>
+		<part slot="legs" layer="inner" mesh="clothes_army_pants">
+			<texture name="clothes_army_pants" color="60,60,60"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="chest" layer="inner" mesh="clothes_army_shirt">
+			<texture name="clothes_army_shirt" color="60,60,60"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="chest" layer="outer" mesh="male_armor_heavy_bandit_chest">
+			<texture name="unisex_bandit_armor" color="255,120,120"/>
+			<texture name="male_torso_wound" color="80,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="80,0,0"/>
+			<texture name="female_torso_wound" color="120,0,0"/>
+		</part>
+		<part slot="legs" layer="outer" mesh="armor_iron_pants">
+			<texture name="armor_iron_pants" color="255,120,120"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="feet" layer="outer" mesh="armor_iron_boots">
+			<texture name="armor_iron_boots" color="255,120,120"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+		</part>
+		<part slot="hands" layer="inner" mesh="armor_iron_gloves">
+			<texture name="armor_iron_gloves" color="255,120,120"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+	</base_mesh_parts>
+	<dna>
+		<gene name="height" value="8"/>
+		<gene name="handsSize" value="1.5"/>
+		<gene name="feetSize" value="1.5"/>
+		<gene name="muscle" value="1"/>
+		<gene name="weight" value="1"/>
+		<gene name="gluteusSize" value="0"/>
+	</dna>
+</archetype>
+
+
+<archetype name="enArch_bunkerbuster" male="true" skin_color="64,48,45" type="Player">
+	<base_mesh_parts>
+		<part slot="head" layer="base" mesh="male_base_face">
+			<texture name="male_head_zombie" color="skin"/>
+		</part>
+		<part slot="head" layer="outer" mesh="unisex_armor_iron_helmet">
+			<texture name="unisex_armor_iron_helmet" color="120,120,255"/>
+			<texture name="male_torso_wound" color="80,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="80,0,0"/>
+		</part>
+		<part slot="legs" layer="inner" mesh="clothes_army_pants">
+			<texture name="clothes_army_pants" color="60,60,60"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="chest" layer="inner" mesh="clothes_army_shirt">
+			<texture name="clothes_army_shirt" color="60,60,60"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="chest" layer="outer" mesh="male_armor_iron_chest">
+			<texture name="male_armor_iron_chest" color="120,120,255"/>
+			<texture name="male_torso_wound" color="80,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="80,0,0"/>
+			<texture name="female_torso_wound" color="120,0,0"/>
+		</part>
+		<part slot="legs" layer="outer" mesh="armor_iron_pants">
+			<texture name="armor_iron_pants" color="120,120,255"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+		<part slot="feet" layer="outer" mesh="armor_iron_boots">
+			<texture name="armor_iron_boots" color="120,120,255"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+		</part>
+		<part slot="hands" layer="inner" mesh="armor_iron_gloves">
+			<texture name="armor_iron_gloves" color="120,120,255"/>
+			<texture name="male_torso_wound" color="60,0,0"/>
+			<texture name="female_legs_wound" color="80,0,0"/>
+			<texture name="male_head_wound" color="120,0,0"/>
+			<texture name="female_torso_wound" color="80,0,0"/>
+		</part>
+	</base_mesh_parts>
+	<dna>
+		<gene name="height" value="6"/>
+		<gene name="headSize" value="2"/>
+		<gene name="headWidth" value="2"/>
+		<gene name="handsSize" value="1"/>
+		<gene name="feetSize" value="3.0"/>
+		<gene name="muscle" value="1"/>
+		<gene name="weight" value="3"/>
+		<gene name="gluteusSize" value="3"/>
+	</dna>
+</archetype>
+
+		
+</append>
+</ErrorNull>

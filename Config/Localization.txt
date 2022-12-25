@@ -1,15 +1,29 @@
 Key,File,Type,UsedInMainMenu,NoTranslate,english,Context / Alternate
 
-enTowerDefenseMessage_title,Journal Tip,,,,ErrorNulls Tower Defense,,
-enTowerDefenseMessage,Journal Tip,,,,"Welcome!\n\nYou have 60 seconds before zombies spawn. Use this time to place your bedroll and equip your gear. Try to create a defensive structure before nightfall while staying clear of the wasteland. Can you survive through the night?\n\nGOOD LUCK!",,
-
 enStemCells,items,Medical,,,Stem Cells,,
 enDanceBomb,items,Gun,,,Dance Bomb,,
+enDanceBombDesc,items,Gun,,,"Make zombies overcome with dancing fever! Take this time to flee or catch your breath!\n\nNot effective on animals.",,
 
-enDanceBombDesc,items,Gun,,,"Make zombies overcome with dancing fever with a smooth soundtrack! Their obscene movements make them invincible to attacks. Take this time to flee or catch your breath!\n\nNot effective on animals.",,
+enShotSpeed,items,Medical,,,Speed Shot,,
+enShotSpeedDesc,items,Medical,,,"Juice up those legs!\n\nThis shot doubles your movement speed for a short time.",,
+
+enShotEnergy,items,Medical,,,Energy Shot,,
+enShotEnergyDesc,items,Medical,,,"Stronger than caffeine!\n\nYour energy and stamina is through the roof for a short time.",,
+
+enShotAdrenaline,items,Medical,,,Adrenaline Shot,,
+enShotAdrenalineDesc,items,Medical,,,"This shot will dampen your pain receptors while giving you super strong grippers!\n\nInflict more melee damage on zombies while receiving less from them for a short time.",,
+
+enShotFocus,items,Medical,,,Focus Shot,,
+enShotFocusDesc,items,Medical,,,"Boost mental focus with this shot - improving your trigger timing and aim with any firearm!\n\nRanged damage is increased for a short time.",,
+
+enStimPak,items,Medical,,,StimPak,,
+enStimPakDesc,items,Medical,,,"Revive a player that's been knocked out.",,
 
 enRedPill,items,Medical,,,The Red Pill,,
 enRedPillDesc,items,Medical,,,"IMPORTANT! Party up all members first - then take this red pill to begin!\n\nGOOD LUCK!",,
+
+enShotResurrection,items,Medical,,,Resurrection Shot,,
+enShotResurrectionDesc,items,Medical,,,"Resurrect a dead player!\n\nGOOD LUCK!",,
 
 enTeleporter,vehicles,item,,,Teleporter,,
 enTeleporterDesc,vehicles,item,,,"Teleports you to a random location 10-15 meters away. Do not use this near radiation zones!",,
@@ -17,5 +31,81 @@ enTeleporterDesc,vehicles,item,,,"Teleports you to a random location 10-15 meter
 item_BlackPill,items,Medical,,,The Black Pill,,
 item_BlackPillDesc,items,Medical,,,"Spawns zombies for testing.",,
 
-enTowerDefenseStarter,twitch,Actions,,,Starter Crate,,
-enTowerDefenseStarterDesc,twitch,Actions,,,Starter Crate,,
+enBuffKnockedOutTooltip,buffs,Buff,,,"You are KNOCKED OUT",,
+enBuffSpectatorTooltip,buffs,Buff,,,"You are dead and now a SPECTATOR",,
+
+enBuffKoMessageTooltip,buffs,Buff,,,"- attacking and self healing ineffective -",,
+enBuffSpectatorMessageTooltip,buffs,Buff,,,"- you are in spectator mode -",,
+enBuffTimeCheckAlert,buffs,Buff,,,"- time alert! -",,
+
+enBuffAlertStage01Start,buffs,Buff,,,"spawning horde 1",,
+enBuffAlertStage02Start,buffs,Buff,,,"spawning horde 2",,
+enBuffAlertStage03Start,buffs,Buff,,,"spawning horde 3",,
+enBuffAlertStage04Start,buffs,Buff,,,"spawning horde 4",,
+enBuffAlertStage05Start,buffs,Buff,,,"spawning horde 5",,
+enBuffAlertStage06Start,buffs,Buff,,,"spawning horde 6",,
+enBuffAlertStage07Start,buffs,Buff,,,"spawning horde 7",,
+enBuffAlertStage08Start,buffs,Buff,,,"spawning horde 8",,
+enBuffAlertStage09Start,buffs,Buff,,,"spawning horde 9",,
+enBuffAlertStage10Start,buffs,Buff,,,"spawning horde 10",,
+enBuffAlertStage11Start,buffs,Buff,,,"spawning horde 11",,
+enBuffAlertStage12Start,buffs,Buff,,,"spawning horde 12",,
+enBuffAlertStage13Start,buffs,Buff,,,"spawning horde 13",,
+enBuffAlertStage14Start,buffs,Buff,,,"spawning horde 14",,
+enBuffAlertStage15Start,buffs,Buff,,,"spawning horde 15",,
+enBuffAlertStage16Start,buffs,Buff,,,"spawning horde 16",,
+enBuffAlertStage17Start,buffs,Buff,,,"spawning horde 17",,
+enBuffAlertStage17Start,buffs,Buff,,,"spawning horde 18",,
+enBuffAlertStage17Start,buffs,Buff,,,"spawning horde 19",,
+enBuffAlertStage17Start,buffs,Buff,,,"spawning horde 20",,
+
+enBuffAlertStageEnd,buffs,Buff,,,"horde spawning ended",,
+enBuffAlertStageWarning,buffs,Buff,,,"next horde in 15 seconds!",,
+enBuffAlertRewardCrate,buffs,Buff,,,"reward crate spawned! good job.",,
+
+enTowerDefenseStarter,twitch,Actions,,,Starter Equipment,,
+enTowerDefenseClothing,twitch,Actions,,,Starter Clothing,,
+enTowerDefenseStarterDesc,twitch,Actions,,,Starter Equipment,,
+
+enStarterCrateItems,items,Crate,,,Starter Equipment,,
+enStarterClothesItems,items,Crate,,,Starter Clothing,,
+enTowerDefenseRewardCrate,items,Crate,,,Reward Loot Bag,,
+
+enBuffShowZombieKillCounterName,buffs,Buff,,,Zombies Killed,,
+enBuffShowZombieKillCounterDesc,buffs,Buff,,,"This tracks the total number of zombies you have killed and does not include other players.",,
+
+enBuffShowTotalScoreName,buffs,Buff,,,Score,,
+enBuffShowTotalScoreDesc,buffs,Buff,,,"This tracks your total score. You get 1 point for killing basic zombies and more points for stronger zombies.",,
+
+enBuffShowStageNumberName,buffs,Buff,,,Current Stage,,
+enBuffShowStageNumberDesc,buffs,Buff,,,"This displays the current horde stage. Each horde stage lasts 3 hrs, where zombies continuously spawn for 2.5 hrs and ending with a 30 min no-spawn cool down.\n\nThere are currently 20 horde stages total. Stage 20 never ends. Can you make it?",,
+
+enBuffPlayerBurningName,buffs,Buff,,,Burning,,
+enBuffPlayerBurningDesc,buffs,Buff,,,"You are on fire! Use a jar of water to douse the flames!",,
+enBuffPlayerBurningTooltip,buffs,Buff,,,"You are on fire!",,
+
+
+enDrone,entityclasses,Entity,,,Drone,,
+enWraith,entityclasses,Entity,,,Wraith,,
+enFlamethrower,entityclasses,Entity,,,Flamethrower,,
+enMachinegunner,entityclasses,Entity,,,Machinegunner,,
+enRocketRooster,entityclasses,Entity,,,Rocket Rooster,,
+enRocketman,entityclasses,Entity,,,Rocket Ronaldo,,
+enBunkerbuster,entityclasses,Entity,,,Bunker Buster,,
+
+enStealthArmorDesc,items,Armor,,,"Stealth armor cannot be modded and provides less protection than cloth armor. But, you get increased stamina and mobility benifits and lower visitiblity to zombies.\n\nRepair with repair kits, and scrap to cloth.",,
+enStealthHood,items,Clothes,,,Stealth Hood,,
+enStealthChest,items,Clothes,,,Stealth Chest Armor,,
+enStealthLegs,items,Clothes,,,Stealth Leg Armor,,
+enStealthGloves,items,Clothes,,,Stealth Gloves,,
+enStealthBoots,items,Clothes,,,Stealth Running Boots,,
+
+enStealthClothingDesc,items,Clothing,,,"Stealth clothing helps prevent detection from some zombies by lowering your noise and visibility level.\n\nRepair with repair kits, and scrap to cloth.",,
+enStealthShirt,items,Clothes,,,Stealth Shirt,,
+enStealthPants,items,Clothes,,,Stealth Pants,,
+enStealthMask,items,Clothes,,,Stealth Mask,,
+
+enMeatCleaver,items,Weapons,,,Meat Cleaver,,
+enBoneBasher,items,Weapons,,,Bone Basher,,
+
+

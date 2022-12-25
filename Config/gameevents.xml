@@ -7,37 +7,60 @@
 
 <!-- start up custom tower defense sequence -->
 <append xpath="/gameevents/action_sequence[@name='game_first_spawn']">
+	<!--
 	<action class="AddBuff">
 		<property name="phase" value="0" />
 		<property name="buff_name" value="enRadiationZone"/>
 	</action>
+	-->
+
+	<action class="Teleport">
+		<property name="target_position" value="0, 0, 5" />
+		<property name="offset_type" value="Relative" />
+	</action>
+	
 	<action class="Delay">
-		<property name="time" value="4.5" />
+		<property name="time" value="5" />
 	</action>
 	<action class="BeltTooltip">
-		<property name="text" value="Spawning starter crate..." />
+		<property name="text" value="Spawning starter items..." />
 		<property name="phase" value="1" />
 	</action>
 	<action class="Delay">
-		<property name="time" value="5" />
+		<property name="time" value="4" />
 		<property name="phase" value="2" />
 	</action>
 	<action class="SpawnContainer">
 		<property name="entity_names" value="enTowerDefenseStarter" param1="cratename" />
 		<property name="spawn_count" value="1" param1="spawncount" />
-		<property name="min_distance" value="4" />
-		<property name="max_distance" value="8" />
+		<property name="min_distance" value="3" />
+		<property name="max_distance" value="4" />
 		<property name="safe_spawn" value="true" />
+		<property name="air_spawn" value="true" />
 		<property name="phase" value="3" />
 	</action>
 	<action class="PlaySound">
-		<property name="sound" value="open_supply_crate" />
+		<property name="sound" value="open_backpack" />
 		<property name="phase" value="3" />
 	</action>
-	<action class="Delay">
-		<property name="time" value="10" />
+    <action class="Delay">
+		<property name="time" value="2" />
 		<property name="phase" value="4" />
 	</action>
+    <action class="SpawnContainer">
+		<property name="entity_names" value="enTowerDefenseClothing" param1="cratename" />
+		<property name="spawn_count" value="1" param1="spawncount" />
+		<property name="min_distance" value="3" />
+		<property name="max_distance" value="4" />
+		<property name="safe_spawn" value="true" />
+		<property name="air_spawn" value="true" />
+		<property name="phase" value="5" />
+	</action>
+	<action class="PlaySound">
+		<property name="sound" value="open_supply_crate" />
+		<property name="phase" value="5" />
+	</action>
+
 </append>
 
 
@@ -48,11 +71,6 @@
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 
-		<action class="BeltTooltip">
-			<property name="phase" value="1" />
-			<property name="text" value="Spawning zombies in 10 seconds..." />
-		</action>
-		
 		<!-- initialize HUD variables -->
 		<action class="SetCVar">
 			<property name="phase" value="2" />
@@ -64,26 +82,7 @@
 			<property name="cvar" value="enCvarTotalScore" />
 			<property name="value" value="0" />
 		</action>
-		<!--
-		<action class="SetCVar">
-			<property name="phase" value="4" />
-			<property name="cvar" value="enCvarEndGameTimer" />
-			<property name="value" value="3600" />
-		</action>
-		-->
-		<action class="SetCVar">
-			<property name="phase" value="5" />
-			<property name="cvar" value="enCvarZombieSpawnTimer" />
-			<property name="value" value="10" />
-		</action>
-		
-		<!-- show on-screen huds icons -->
-		<!--
-		<action class="AddBuff">
-			<property name="phase" value="6" />
-			<property name="buff_name" value="enBuffShowEndGameTimer"/>
-		</action>
-		-->
+
 		<action class="AddBuff">
 			<property name="phase" value="7" />
 			<property name="buff_name" value="enBuffShowZombieKillCounter"/>
@@ -92,54 +91,298 @@
 			<property name="phase" value="8" />
 			<property name="buff_name" value="enBuffShowTotalScore"/>
 		</action>
-		<!--
-		<action class="AddBuff">
-			<property name="phase" value="9" />
-			<property name="buff_name" value="enBuffShowZombieSpawnTimer"/>
-		</action>
-		-->
-		
-		<!-- activate time loops -->
-		<!--
-		<action class="AddBuff">
-			<property name="phase" value="9" />
-			<property name="buff_name" value="enBuffUpdateEndGameTimer"/>
-		</action>
-		-->
-		<action class="AddBuff">
-			<property name="phase" value="10" />
-			<property name="buff_name" value="enBuffUpdateZombieSpawnTimer"/>
-		</action>
 
-		<!-- activate spawn listeners -->
-		<action class="AddBuff">
-			<property name="phase" value="11" />
-			<property name="buff_name" value="enBuffZombieSpawner"/>
-		</action>
-		<!--
-		<action class="AddBuff">
-			<property name="phase" value="12" />
-			<property name="buff_name" value="enBuffEndGameSpawner"/>
-		</action>
-		-->
 	</action_sequence>
 	
-	<!-- spawns end game bosses -->
-	<!--
-	<action_sequence name="enAction_endGameSpawner">
+	
+	<!-- spawn reward crate at end of each horde stage -->
+	<action_sequence name="enAction_SpawnRewardCrate_01">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
-		<action class="SpawnEntity">
-			<property name="phase" value="1" />
-			<property name="entity_names" value="zombieDemolition,zombieWightRadiated,animalZombieVultureRadiated,animalZombieBear" />
-			<property name="spawn_count" value="2" />
-			<property name="min_distance" value="15" />
-			<property name="max_distance" value="25" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate01" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
 			<property name="air_spawn" value="true" />
-			<property name="attack_target" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
 		</action>
 	</action_sequence>
-	-->
+    <action_sequence name="enAction_SpawnRewardCrate_02">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate02" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_03">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate03" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_04">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate04" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_05">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate05" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_06">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate06" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_07">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate07" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_08">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate08" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_09">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate09" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_10">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate10" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_11">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate11" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_12">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate12" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_13">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate13" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_14">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate14" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_15">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate15" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_16">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate16" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_17">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate17" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_18">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate18" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    <action_sequence name="enAction_SpawnRewardCrate_19">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnContainer">
+			<property name="entity_names" value="enTowerDefenseRewardCrate19" param1="cratename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="3" />
+			<property name="max_distance" value="4" />
+			<property name="safe_spawn" value="true" />
+			<property name="air_spawn" value="true" />
+		</action>
+		<action class="PlaySound">
+			<property name="sound" value="open_backpack" />
+		</action>
+	</action_sequence>
+    
+
 
 	<!-- updates counter for zombie and animal kills -->
 	<action_sequence name="enAction_UpdateKillCount">
@@ -158,32 +401,44 @@
 		<action class="AddItems">
 			<property name="phase" value="1" />
 			<property name="added_items" value="casinoCoin" />
-			<property name="added_item_counts" value="20-30" />
-			<!-- suggestion: 60-90 for single player, and 20-30 for multi player -->
+			<property name="added_item_counts" value="40" />
+			<!-- 
+            added_item_counts = gives $40 per zombie skill for single player. 
+			For multi-play, divide $40 by the number of players in the session
+			and use that as the coin value above. Example: 2 players = $20, 
+			4 players = $10. This is because this twitch event multiplies the 
+			reward for each number of players in the game.
+            -->
 		</action>
 	</action_sequence>
-	<action_sequence name="enAction_GiveCoins_boss">
-		<property name="allow_user_trigger" value="false" />
-		<property name="category" value="twitch_actions" />
-		<action class="AddItems">
-			<property name="phase" value="1" />
-			<property name="added_items" value="casinoCoin" />
-			<property name="added_item_counts" value="100-150" />
-			<!-- suggestion: 300-450 for single player, and 100-150 for multi player -->
+    
+	<action_sequence name="enAction_timeForward1">
+		<action class="TimeChange">
+			<property name="min_time" value="1" />
+			<property name="max_time" value="1" />
 		</action>
 	</action_sequence>
-	
-	
-	
-	<action_sequence name="enAction_teleportPlayer">
-		<action class="RandomTeleport">
-			<property name="min_distance" value="14" />
-			<property name="max_distance" value="16" />
-		</action>
-	</action_sequence>
-	
 
+	<action_sequence name="enAction_timeForward10">
+		<action class="TimeChange">
+			<property name="min_time" value="10" />
+			<property name="max_time" value="10" />
+		</action>
+	</action_sequence>
 
+	<action_sequence name="enAction_timeBackward1">
+		<action class="TimeChange">
+			<property name="min_time" value="-1" />
+			<property name="max_time" value="-1" />
+		</action>
+	</action_sequence>
+
+	<action_sequence name="enAction_timeBackward10">
+		<action class="TimeChange">
+			<property name="min_time" value="-10" />
+			<property name="max_time" value="-10" />
+		</action>
+	</action_sequence>
 
 	<!-- easy zombies -->
 	<action_sequence name="zombie_group_01">
@@ -227,12 +482,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- adding fatcop, wights, radiated vultures, demolitioin, and zombie bears -->
+	<!-- adding feral moe, fatcop, wights, radiated vultures, demolitioin, and zombie bears -->
 	<action_sequence name="zombie_group_04">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition" param1="zombiename" />
+			<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieSpider,zombieMoeFeral,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -241,12 +496,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- adding radiated versions of easy zombies -->
+	<!-- adding feral bikers and radiated versions of easy zombies -->
 	<action_sequence name="zombie_group_05">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="zombieArlene,zombieMarlene,zombieDarlene,zombiePartyGirl,zombieNurse,zombieJoe,zombieBoe,zombieYo,zombieSteve,zombieTomClark,zombieBusinessMan,zombieBurnt,zombieJanitor,zombieLab,zombieUtilityWorker,zombieMaleHazmat,zombieSkateboarder,zombieSpider,zombieMoeFeral,zombieBiker,zombieBikerFeral,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -260,7 +515,7 @@
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="zombieSpider,zombieMoe,zombieBiker,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="zombieWightRadiated,zombieSpider,zombieMoeFeral,zombieBikerFeral,zombieLumberjack,zombieFemaleFat,zombieFatHawaiian,zombieSoldier,zombieMutated,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -269,12 +524,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- removing normal variant of fatter zombies -->
+	<!-- replacing mutated zombie, spider zombies, soldiers, fat hawaiian and fat mamas for feral version -->
 	<action_sequence name="zombie_group_07">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="zombieWightRadiated,zombieSpiderFeral,zombieMoeFeral,zombieBikerFeral,zombieLumberjack,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieMutatedFeral,animalZombieVulture,animalZombieDog,zombieArleneFeral,zombieMarleneFeral,zombieDarleneFeral,zombiePartyGirlFeral,zombieNurseFeral,zombieJoeFeral,zombieBoeFeral,zombieYoFeral,zombieSteveFeral,zombieTomClarkFeral,zombieBusinessManFeral,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -283,12 +538,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- removing half of all ferals -->
+	<!-- adding feral lumberjacks, and removing half of all other ferals -->
 	<action_sequence name="zombie_group_08">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="zombieWightRadiated,zombieSpiderFeral,zombieMoeFeral,zombieBikerFeral,zombieLumberjackFeral,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieMutatedFeral,animalZombieVulture,animalZombieDog,zombieBurntFeral,zombieJanitorFeral,zombieLabFeral,zombieUtilityWorkerFeral,zombieMaleHazmatFeral,zombieSkateboarderFeral,zombieFatCop,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -297,12 +552,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- removing all ferals -->
+	<!-- adding feral fat cops, radiated bikers and removing all other ferals -->
 	<action_sequence name="zombie_group_09">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="animalZombieVulture,animalZombieDog,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="zombieWightRadiated,zombieSpiderFeral,zombieMoeFeral,zombieLumberjackFeral,zombieBikerRadiated,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieMutatedFeral,animalZombieVulture,animalZombieDog,zombieFatCopFeral,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -311,12 +566,12 @@
 		</action>
 	</action_sequence>
 
-	<!-- adding hellshocker and gunner -->
+	<!-- adding drone and radiated spider and moe -->
 	<action_sequence name="zombie_group_10">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="HellShocker,zombieGunner,animalZombieDog,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="entity_names" value="enDrone,zombieBikerRadiated,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieMutatedFeral,animalZombieVulture,animalZombieDog,zombieWightRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieLumberjackFeral,zombieFatCopFeral,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -324,13 +579,13 @@
 			<property name="attack_target" value="true" />
 		</action>
 	</action_sequence>
-
-	<!-- removing 50% of existing radiated zombies -->
+	
+	<!-- adding flamethrower -->
 	<action_sequence name="zombie_group_11">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="HellShocker,zombieGunner,animalZombieDog,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieJanitorRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated" param1="zombiename" />
+			<property name="entity_names" value="enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieMutatedFeral,animalZombieVulture,animalZombieDog,zombieWightRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieLumberjackFeral,zombieFatCopFeral,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -338,13 +593,13 @@
 			<property name="attack_target" value="true" />
 		</action>
 	</action_sequence>
-
-	<!-- adding animalKaboomPhoenix and zombieScorcher -->
+	
+	<!-- adding wraith and radiated soldiers and radiated mutant zombie -->
 	<action_sequence name="zombie_group_12">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="zombieScorcher,animalKaboomPhoenix,HellShocker,zombieGunner,animalZombieDog,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieJanitorRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated" param1="zombiename" />
+			<property name="entity_names" value="enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianFeral,zombieFemaleFatFeral,zombieSoldierFeral,zombieSoldierRadiated,zombieMutatedRadiated,animalZombieDog,zombieWightRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieLumberjackFeral,zombieFatCopFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -353,12 +608,12 @@
 		</action>
 	</action_sequence>
 	
-	<!-- remove remaining radiated zombies and add bears -->
+	<!-- adding machinegunner and replacing feral fat hawaiian and fat mamas for radiated version -->
 	<action_sequence name="zombie_group_13">
 		<property name="allow_user_trigger" value="false" />
 		<property name="category" value="twitch_actions" />
 		<action class="SpawnEntity">
-			<property name="entity_names" value="animalZombieBear,zombieScorcher,animalKaboomPhoenix,HellShocker,zombieGunner,animalZombieDog,zombieWightFeral,animalZombieVultureRadiated,zombieDemolition" param1="zombiename" />
+			<property name="entity_names" value="enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,animalZombieVulture,zombieSoldierRadiated,zombieMutatedRadiated,animalZombieDog,zombieWightRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieLumberjackFeral,zombieFatCopFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
 			<property name="spawn_count" value="1" param1="spawncount" />
 			<property name="min_distance" value="30" />
 			<property name="max_distance" value="40" />
@@ -367,6 +622,104 @@
 		</action>
 	</action_sequence>
 	
+	<!-- adding enRocketRooster and replace feral lumberjacks with radiated -->
+	<action_sequence name="zombie_group_14">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,animalZombieVulture,zombieSoldierRadiated,zombieMutatedRadiated,animalZombieDog,zombieWightRadiated,zombieLumberjackRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieFatCopFeral,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	<!-- add enRocketman and replacing feral fat cop for radiated -->
+	<action_sequence name="zombie_group_15">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,animalZombieVulture,zombieSoldierRadiated,zombieMutatedRadiated,animalZombieDog,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,zombieSpiderRadiated,zombieMoeRadiated,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	<!-- add enBunkerbuster -->
+	<action_sequence name="zombie_group_16">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enBunkerbuster,enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,animalZombieVulture,zombieSoldierRadiated,zombieMutatedRadiated,animalZombieDog,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,zombieSpiderRadiated,zombieMoeRadiated,animalZombieVultureRadiated,zombieDemolition,zombieArleneRadiated,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	<!-- remove animalZombieVulture, animalZombieDog, zombieArleneRadiated -->
+	<action_sequence name="zombie_group_17">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enBunkerbuster,enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,zombieSoldierRadiated,zombieMutatedRadiated,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,animalZombieVultureRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieDemolition,zombieMarleneRadiated,zombieDarleneRadiated,zombiePartyGirlRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieSteveRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieBurntRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	<!-- remove zombieBurntRadiated, zombieSteveRadiated, zombiePartyGirlRadiated -->
+	<action_sequence name="zombie_group_18">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enBunkerbuster,enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,zombieSoldierRadiated,zombieMutatedRadiated,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,animalZombieVultureRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieDemolition,zombieMarleneRadiated,zombieDarleneRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieTomClarkRadiated,zombieBusinessManRadiated,zombieJanitorRadiated,zombieLabRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	
+	<!-- remove zombieLabRadiated, zombieMarleneRadiated, zombieBusinessManRadiated -->
+	<action_sequence name="zombie_group_19">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enBunkerbuster,enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,zombieSoldierRadiated,zombieMutatedRadiated,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,animalZombieVultureRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieDemolition,zombieDarleneRadiated,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieTomClarkRadiated,zombieJanitorRadiated,zombieUtilityWorkerRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
+	
+	<!-- remove zombieDarleneRadiated, zombieTomClarkRadiated, zombieUtilityWorkerRadiated -->
+	<action_sequence name="zombie_group_20">
+		<property name="allow_user_trigger" value="false" />
+		<property name="category" value="twitch_actions" />
+		<action class="SpawnEntity">
+			<property name="entity_names" value="enBunkerbuster,enRocketman,enRocketRooster,enMachinegunner,enWraith,enDrone,enFlamethrower,zombieBikerRadiated,zombieFatHawaiianRadiated,zombieFemaleFatRadiated,zombieSoldierRadiated,zombieMutatedRadiated,zombieWightRadiated,zombieLumberjackRadiated,zombieFatCopRadiated,animalZombieVultureRadiated,zombieSpiderRadiated,zombieMoeRadiated,zombieDemolition,zombieNurseRadiated,zombieJoeRadiated,zombieBoeRadiated,zombieYoRadiated,zombieJanitorRadiated,zombieMaleHazmatRadiated,zombieSkateboarderRadiated" param1="zombiename" />
+			<property name="spawn_count" value="1" param1="spawncount" />
+			<property name="min_distance" value="30" />
+			<property name="max_distance" value="40" />
+			<property name="air_spawn" value="true" />
+			<property name="attack_target" value="true" />
+		</action>
+	</action_sequence>
 	
 </append>
 </ErrorNull>

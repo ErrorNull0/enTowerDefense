@@ -1,75 +1,404 @@
 <ErrorNull>
 	
-<!-- give starting item -->
-<set xpath="/entity_classes/entity_class[@name='playerMale']/property[contains(@name,'ItemsOnEnterGame')]/@value">apparelArmyShirt,apparelArmyPants,apparelWornBoots</set>
-	
-<!-- tags onSelfRespawn property for easier modification -->
-<setattribute xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@trigger='onSelfRespawn']" name="id">respawn</setattribute>
+<remove xpath="/entity_classes/entity_class[@name='playerMale']/property[contains(@name,'ItemsOnEnterGame')]"/>
 
-<!-- ** drain food and water down to 20 units after each death ** -->
-<insertAfter xpath="/entity_classes/entity_class/effect_group/triggered_effect[@id='respawn']">
-	<triggered_effect trigger="onSelfRespawn" action="ModifyStats" stat="Food" operation="set" value="50"/>
-	<triggered_effect trigger="onSelfRespawn" action="ModifyStats" stat="Water" operation="set" value="50"/>
-</insertAfter>
+<!-- increase unencumbered carrying capacity from 27 to 45 -->
+<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/passive_effect[@name='CarryCapacity']/@value">45</set>
 
-<!-- ** reduce max health after each death, via enBuffDeathPenalty buff ** -->
-<insertAfter xpath="/entity_classes/entity_class/effect_group/triggered_effect[@id='respawn']">
-	<triggered_effect trigger="onSelfRespawn" action="AddBuff" target="self" buff="enBuffDeathPenalty">
-		<requirement name="CVarCompare" cvar="$enDeathPenalty" operation="LT" value="1.0"/>
-	</triggered_effect>
-</insertAfter>
+<!-- set player max hp to 150 -->
+<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/passive_effect[@name='HealthMax']/@value">150</set>
 
 <!-- remove XP deficit from death -->
 <set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/passive_effect[@name='ExpDeficitPerDeathPercentage'][@value='.25']/@value">0</set>
 
-<!-- remove vanilla buffs to prevent stats restore after death respawn. also re-run necessary tower defense buffs after respawn. -->
-<!--<set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@id='respawn']/@buff">buffStatusCheck01,buffStatusCheck02,enTowerDefenseRespawn</set>-->
+<!-- player backpack on death despawns immediately to prevent spectator item use -->
+<set xpath="/entity_classes/entity_class[@name='Backpack']/property[@name='TimeStayAfterDeath']/@value">0</set>
+
+<!-- tags onSelfRespawn property for easier modification -->
+<setattribute xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@trigger='onSelfRespawn']" name="id">respawn</setattribute>
+
+<!-- remove vanilla buffs to prevent stats restore after death respawn -->
 <set xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@id='respawn']/@buff">buffStatusCheck01,buffStatusCheck02</set>
+
+
+<insertAfter xpath="/entity_classes/entity_class[@name='playerMale']/effect_group/triggered_effect[@trigger='onSelfRespawn']">
+	
+	<!-- set game time to soem minutes prior to 7:00am, then stop time progression -->
+	<triggered_effect trigger="onSelfEnteredGame" action="CallGameEvent" event="enAction_timeBackward10"/>
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffTimeHold"/>
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffShowZombieKillCounter"/>
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffShowTotalScore"/>
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffShowStageNumber"/>
+	
+	<triggered_effect trigger="onSelfEnteredGame" action="ModifyScreenEffect" intensity="1" fade="0.5" effect_name="Greyscale"/>
+	
+	<!-- set cvar that tracks current stage number to 1 -->
+	<triggered_effect trigger="onSelfEnteredGame" action="ModifyCVar" cvar="enCvarStage" operation="set" value="1"/>
+	
+	<!-- execute certain actions based on current time -->
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffTimeTracker"/>
+	
+	<!-- check if player is knocked out -->
+	<triggered_effect trigger="onSelfEnteredGame" action="AddBuff" buff="enBuffKoCheck"/>
+	
+	<!-- remove all injury buffs except for burning and bleeding -->
+	
+    <passive_effect name="BuffResistance" operation="base_set" value="999" tags="buffFatiguedTrigger,buffArmSprainedCHTrigger,buffLegSprainedCHTrigger,buffLaceration,buffInfectionCatch,buffAbrasionCatch,buffInjuryStunned01CHTrigger,buffArmBroken,buffLegBroken,buffLegSprained,buffArmSprained,buffInjuryStunned00,buffInjuryStunned01,buffInjuryStunned02,buffInjuryStunned03"/>
+	
+	<!-- remove effects of thirst and hunger -->
+	<passive_effect name="WaterChangeOT" operation="base_add" value="10"/>
+	<passive_effect name="FoodChangeOT" operation="base_add" value="10"/>
+
+	<!-- player becomes spectator upon death and respawn -->
+	<triggered_effect trigger="onSelfRespawn" action="AddBuff" target="self" buff="enBuffSpectator"/>
+
+</insertAfter>
+
+
+<!-- Prevent any random loot drops from any zombies -->
+<set xpath="/entity_classes/entity_class/property[@name='LootDropProb']/@value">0.0</set>
+
+<!-- how many seconds before zombie and animal corpse despawns -->
+<set xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/property[@name='TimeStayAfterDeath']/@value">3</set>
+<set xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/property[@name='TimeStayAfterDeath']/@value">3</set>
+
+<!-- make zombies immune to bleeding, to counteract the engine unable to provide coin rewards for bleeding death -->
+<append xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/effect_group[@name='Base Effects']/passive_effect[@name='BuffResistance']/@tags">,buffInjuryBleeding</append>
+
+
+<append xpath="/entity_classes">
+	
+	<!-- Starter supply crate that spawns at the begining of the session -->
+	<entity_class name="enTowerDefenseStarter" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?weapon_bags_largePrefab.prefab"/>		
+		<property name="LootListOnDeath" value="enStarterCrateItems"/>
+		<property name="TimeStayAfterDeath" value="300"/>
+	</entity_class>
+	
+    <!-- Starter clothing crate that spawns at the begining of the session -->
+	<entity_class name="enTowerDefenseClothing" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?crate_store_SavagePrefab.prefab"/>  
+		<property name="LootListOnDeath" value="enStarterClothesItems"/>
+		<property name="TimeStayAfterDeath" value="300"/>
+	</entity_class>
+    
+	<!-- Reward loot bags that spawns at end of each stage -->
+	<entity_class name="enTowerDefenseRewardCrate01" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems01"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate02" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems02"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate03" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems03"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate04" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems04"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate05" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems05"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate06" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems06"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate07" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems07"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate08" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems08"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate09" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems09"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate10" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems10"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+	<entity_class name="enTowerDefenseRewardCrate11" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems11"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate12" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems12"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate13" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems13"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate14" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems14"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate15" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems15"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate16" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems16"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate17" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems17"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate18" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems18"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+    <entity_class name="enTowerDefenseRewardCrate19" extends="twitch_crate_template">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="Mesh" value="#Entities/LootContainers?zpackPrefab.prefab"/>
+		<property name="LootListOnDeath" value="enRewardCrateItems19"/>
+		<property name="TimeStayAfterDeath" value="450"/>
+	</entity_class>
+</append>
+
+
+
+
 
 
 <!-- higher level enemies -->
 <append xpath="/entity_classes">
 
-	<entity_class name="HellShocker" extends="animalZombieVultureRadiated">
+	<entity_class name="enBoss_Template" extends="zombieTemplateMale">
+		<property name="HideInSpawnMenu" value="true"/>
+		<property name="EntityType" value="Zombie" />
+		<property name="Mesh" value=""/>
+		<property name="Prefab" value="Z"/>
+		<property name="Class" value="EntityZombie" />
+		<property name="Parent" value="Enemies" />
+		<property name="IsEnemyEntity" value="true" />
+		<property name="AttackTimeoutDay" value="1.5" />
+		<property name="AttackTimeoutNight" value="1.1" />
+		<property name="ModelType" value="ZombieUMA" />
+		<property name="RootMotion" value="true" />
+		<property name="HasRagdoll" value="true" />
+		<property name="PhysicsBody" value="zombieUMA" />
+		<property name="HasDeathAnim" value="false" />
+		<property name="WalkType" value="2"/>
+		<property name="AITask-1" value="RangedAttackTarget" data="itemType=1;cooldown=3;duration=4;minRange=3;maxRange=300"/>
+		<property name="AITask-2" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
+		<property name="AITask-3" value="BreakBlock"/>
+		<property name="AITask-4" value="ApproachSpot"/>
+		<property name="AITask-5" value="Look"/>
+		<property name="AITask-6" value="Wander"/>
+		<property name="AITask-7" value=""/>
+		<property name="SurfaceCategory" value="metal"/>
+		<property name="DismemberMultiplierHead" value="0"/>
+		<property name="DismemberMultiplierArms" value="0"/>
+		<property name="DismemberMultiplierLegs" value="0"/>
+		<property name="LegCrippleScale" value="0"/>
+		<property name="LegCrawlerThreshold" value="0"/>
+		<property name="KnockdownProneDamageThreshold" value="1"/>
+		<property name="KnockdownProneStunDuration" value="0"/>
+		<property name="KnockdownProneRefillRate" value="1"/>
+		<property name="KnockdownKneelDamageThreshold" value="1"/>
+		<property name="KnockdownKneelStunDuration" value="0"/>
+		<property name="KnockdownKneelRefillRate" value="1"/>
+		<property name="LegsExplosionDamageMultiplier" value="0"/>
+		<property name="ArmsExplosionDamageMultiplier" value="0"/>
+		<property name="HeadExplosionDamageMultiplier" value="0"/>
+		<property name="ChestExplosionDamageMultiplier" value="0"/>
+		<property name="TimeStayAfterDeath" value="5"/>
+		<property name="PainResistPerHit" value="2"/>
+		<effect_group name="Base Effects">
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="60"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
+			<triggered_effect trigger="onOtherDamagedSelf" action="ModifyCVar" target="self" cvar="RadiatedRegenAmount" operation="set" value="5"/>
+			<triggered_effect trigger="onOtherDamagedSelf" action="AddBuff" target="self" buff="buffRadiatedRegen"/>
+		</effect_group>
+	</entity_class>	
+	
+	<entity_class name="enDrone" extends="animalZombieVultureRadiated">
 		<property name="Tags" value="entity,animal,zombie,hostile,radiated"/>
 		<property name="Radiated" value=""/>
-		<property name="SizeScale" value="2.5"/>	
+		<property name="SizeScale" value="1.75"/>	
 		<property name="SightRange" value="180"/>
 		<property name="SurfaceCategory" value="metal"/>	
 		<property name="Mesh" value="Animals/Vulture/animalVultureStandardRagdoll"/>
+		<property name="ReplaceMaterial0" value="particleeffects/materials/waterfallslope"/>
 		<property name="SoundRandom" value=""/>
-		<property name="SoundAlert" value="drone_enemy_sense"/>
+		<property name="SoundAlert" value=""/>
 		<property name="SoundHurt" value=""/>
 		<property name="SoundDeath" value="drone_shutdown"/>
 		<property name="SoundAttack" value=""/>
-		<property name="SoundSense" value="drone_enemy_sense"/>
+		<property name="SoundSense" value=""/>
 		<property name="SoundGiveUp" value=""/>	
-		<property name="ReplaceMaterial0" value="particleeffects/materials/waterfallslope"/> 	
-		<property name="TimeStayAfterDeath" value="11"/>	
+		<property name="TimeStayAfterDeath" value="5"/>
 		<property name="MoveSpeed" value=".8"/>
 		<property name="MoveSpeedAggro" value="1.7, 1.9"/>
 		<property name="MaxTurnSpeed" value="150"/>
-		<property name="HandItem" value="meleeHandHellShocker"/>
-		<property name="ExperienceGain" value="1000"/> <!-- XP grunt radiated -->
-		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<property name="HandItem" value="enHand_drone"/>
+		<property name="ExperienceGain" value="1000"/>
 		<property name="DeadBodyHitPoints" value="750"/>
 		<effect_group name="Base Effects">
-		<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="HellShockerDeco"/>	
-			<passive_effect name="HealthMax" operation="base_set" value="700"/>
-			<passive_effect name="HealthMax" operation="perc_set" value="1"/> <!-- Zombie HP scale -->
-			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/> <!-- Feral damage -->
+		<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoDrone"/>	
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="30"/>
+			<passive_effect name="HealthMax" operation="base_set" value="600"/>
+			<passive_effect name="HealthMax" operation="perc_set" value="1"/>
+			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/>
+		</effect_group>
+	</entity_class>	
+	
+	<entity_class name="enWraith" extends="zombieSteveCrawler">
+		<property name="Tags" value="entity,zombie,feral,radiated,vulture"/>
+		<property name="Class" value="EntityVulture"/>
+		<property name="SizeScale" value="2.0"/>
+		<property name="HasRagdoll" value="false"/>
+		<property name="ReplaceMaterial0" value="entities/resources/materials/orecoalboulder"/>
+		<property name="ReplaceMaterial1" value="#Entities/Zombies?Zombies/Materials/rad_eye.mat"/>
+		<property name="RightHandJointName" value="Jaw"/>
+		<property name="Radiated" value=""/>
+		<property name="WalkType" value="1"/>
+		<property name="Mass" value="50"/>
+		<property name="MoveSpeed" value=".7"/>
+		<property name="MoveSpeedAggro" value="2, 2"/>
+		<property name="MaxTurnSpeed" value="150"/>
+		<property name="SightRange" value="300"/>
+		<property name="HandItem" value="enHand_wraith"/>
+		<property name="AITask-1" value="ApproachAndAttackTarget" data="class=EntityPlayer,200"/>
+		<property name="AITask-2" value="BreakBlock"/>
+		<property name="AITask-3" value="RunawayWhenHurt" data="runChance=0.5;healthPer=0.3;healthPerMax=0.6"/>
+		<property name="AITask-4" value="ApproachSpot"/>
+		<property name="AITask-5" value="Wander"/>
+		<property name="AITask-6" value=""/>
+		<property name="AITarget-1" value="SetNearestEntityAsTarget" data="class=EntityPlayer,200,200"/>
+		<property name="AITarget-2" value="BlockingTargetTask"/>
+		<property name="DismemberMultiplierHead" value="0"/>
+		<property name="DismemberMultiplierArms" value="0"/>
+		<property name="DismemberMultiplierLegs" value="0"/>
+		<property name="PainResistPerHit" value="1"/>
+		<property name="LegCrawlerThreshold" value="0"/>
+		<property name="LegCrippleThreshold" value="0"/>
+		<property name="KnockdownProneDamageThreshold" value="0"/>
+		<property name="KnockdownProneStunDuration" value="0"/>
+		<property name="KnockdownProneRefillRate" value="0"/>
+		<property name="KnockdownKneelDamageThreshold" value="0"/>
+		<property name="KnockdownKneelStunDuration" value="0"/>
+		<property name="KnockdownKneelRefillRate" value="0"/>
+		<property name="LegsExplosionDamageMultiplier" value=".85"/>
+		<property name="ArmsExplosionDamageMultiplier" value=".85"/>
+		<property name="HeadExplosionDamageMultiplier" value=".85"/>
+		<property name="ChestExplosionDamageMultiplier" value=".85"/>
+		<property name="ExperienceGain" value="1500"/>
+		<effect_group name="Base Effects">
+			<passive_effect name="HealthMax" operation="base_set" value="1000"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="30"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffWraithScream"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoWraith"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
+			<triggered_effect trigger="onOtherDamagedSelf" action="ModifyCVar" target="self" cvar="RadiatedRegenAmount" operation="set" value="5"/>
+			<triggered_effect trigger="onOtherDamagedSelf" action="AddBuff" target="self" buff="buffRadiatedRegen"/>
+		</effect_group>
+	</entity_class>	
+	
+	<entity_class name="enFlamethrower" extends="zombieTemplateMale">
+		<property name="SizeScale" value="1.1"/>
+		<property name="Tags" value="entity,zombie,walker,boss"/>
+		<property name="Mesh" value="#Entities/Zombies?Prefabs/ZDemolition.prefab"/>
+		<property name="ReplaceMaterial0" value="entities/animals/wolf/materials/bandit_armor"/>
+		<property name="Class" value="EntityZombieCop"/>
+		<property name="Mass" value="300"/>
+		<property name="WalkType" value="2"/>
+		<property name="RightHandJointName" value="Jaw"/>
+		<property name="AITask-1" value="BreakBlock"/>
+		<property name="AITask-2" value="RangedAttackTarget" data="itemType=1;cooldown=4;duration=5"/>
+		<property name="AITask-3" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
+		<property name="AITask-4" value="ApproachSpot"/>
+		<property name="AITask-5" value="Look"/>
+		<property name="AITask-6" value="Wander"/>
+		<property name="AITask-7" value=""/>
+		<property name="DismemberMultiplierHead" value="0"/>
+		<property name="DismemberMultiplierArms" value=".7"/>
+		<property name="DismemberMultiplierLegs" value=".7"/>
+		<property name="LegCrawlerThreshold" value="0"/>
+		<property name="LegCrippleThreshold" value="0"/>
+		<property name="KnockdownProneDamageThreshold" value="0"/>
+		<property name="KnockdownKneelDamageThreshold" value="0"/>
+		<property name="SoundRandom" value="demolitionzroam"/>
+		<property name="SoundAlert" value="demolitionzalert"/>
+		<property name="SoundAttack" value="demolitionzattack"/>
+		<property name="SoundHurt" value="demolitionzpain"/>
+		<property name="SoundDeath" value="demolitionzdeath"/>
+		<property name="SoundSense" value="demolitionzsense"/>
+		<property name="SoundFootstepModifier" value="bear_footstep"/>
+		<property name="HandItem" value="enHand_flamethrower"/>
+		<property name="JumpMaxDistance" value="1, 2"/>
+		<property name="PainResistPerHit" value="1"/>
+		<property name="StompsSpikes" value="true"/>
+		<property name="ExplodeHealthThreshold" value="0"/>
+		<property name="ExperienceGain" value="1000"/>
+		<effect_group name="Base Effects">
+			<passive_effect name="HealthMax" operation="base_set" value="1200"/>
+			<passive_effect name="DamageModifier" operation="perc_set" value="1" tags="head"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="40"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoFlamethrower"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
 		</effect_group>
 	</entity_class>
 	
-	<entity_class name="zombieGunner" extends="zombieTemplateMale">
+	<entity_class name="enMachinegunner" extends="zombieTemplateMale">
 		<property name="Tags" value="entity,zombie,walker,boss"/>
 		<property name="Mesh" value="#Entities/Zombies?Prefabs/ZDemolition.prefab"/>
-		<property name="ReplaceMaterial0" value="entities/electrical/materials/flamethrowertrap"/>	
+		<property name="ReplaceMaterial0" value="particleeffects/models/car_explode"/>	
 		<property name="ReplaceMaterial1" value="particleeffects/materials/p_spark_electricity"/>
-		<property name="WalkType" value="7"/>
-		<property name="RightHandJointName" value="RightHand"/>	
+		<property name="WalkType" value="2"/>
+		<property name="SizeScale" value="1.1"/>
+		<property name="RightHandJointName" value="Jaw"/>	
 		<property name="Mass" value="380"/>	
 		<property name="Weight" value="220"/>	
+		<property name="DismemberMultiplierHead" value="0"/>
+		<property name="DismemberMultiplierArms" value="0"/>
+		<property name="DismemberMultiplierLegs" value="0"/>
 		<property name="AITask-1" value="BreakBlock"/>
 		<property name="AITask-2" value="RangedAttackTarget" data="itemType=1;cooldown=4;duration=25"/>
 		<property name="AITask-3" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
@@ -85,7 +414,7 @@
 		<property name="SoundDeath" value="demolitionzdeath"/>
 		<property name="SoundSense" value="demolitionzsense"/>
 		<property name="SoundFootstepModifier" value="bear_footstep"/>	
-		<property name="PainResistPerHit" value="1"/>
+		<property name="PainResistPerHit" value="2"/>
 		<property name="LegCrawlerThreshold" value="0"/>
 		<property name="LegCrippleThreshold" value="0"/>
 		<property name="KnockdownProneDamageThreshold" value="0"/>
@@ -94,182 +423,289 @@
 		<property name="KnockdownKneelDamageThreshold" value="0"/>
 		<property name="KnockdownKneelStunDuration" value="0"/>
 		<property name="KnockdownKneelRefillRate" value="0"/>			
-		<property name="HandItem" value="meleeHandZombieGunner"/>
-		<property name="ExperienceGain" value="12700"/> 	
-		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<property name="HandItem" value="enHand_machinegunner"/>
+		<property name="ExperienceGain" value="2000"/> 	
 		<effect_group name="Base Effects">	
-			<passive_effect name="HealthMax" operation="base_set" value="1699"/>
+			<passive_effect name="HealthMax" operation="base_set" value="1800"/>
 			<passive_effect name="HealthMax" operation="perc_set" value="1"/> 
-			<passive_effect name="PhysicalDamageResist" operation="base_set" value="54"/>
-			<passive_effect name="HealthChangeOT" operation="base_set" value="1.4"/> <!-- Boss regen, 1% -->
-			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="GunnerPrefab"/>		
-			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>		
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="60"/>
+			<passive_effect name="HealthChangeOT" operation="base_set" value="1.4"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoMachinegunner"/>	
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>	
 		</effect_group>
 	</entity_class>
 
-	<entity_class name="animalKaboomPhoenix" extends="animalZombieVultureRadiated">
+	<entity_class name="enRocketRooster" extends="animalZombieVultureRadiated">
 		<property name="Tags" value="entity,animal,zombie,hostile,radiated,boss"/>
 		<property name="Radiated" value=""/>
-		<property name="RightHandJointName" value="Mouth"/>		
 		<property name="SizeScale" value="3"/>
 		<property name="SightRange" value="180"/>	
-		<property name="ReplaceMaterial0" value="entities/resources/materials/oreleadboulder"/>			
+		<property name="ReplaceMaterial0" value="entities/electrical/materials/flamethrowertrap"/>		
+		<property name="PainResistPerHit" value="2"/>		
 		<property name="MoveSpeed" value="1"/>
 		<property name="MoveSpeedAggro" value="1.6, 2.1"/>
 		<property name="MaxTurnSpeed" value="150"/>
-		<property name="HandItem" value="meleeHandAnimalKaboomPhoenix"/>	
-		<property name="ExperienceGain" value="15000"/> 
-		<property name="DeadBodyHitPoints" value="350"/>
+		<property name="TimeStayAfterDeath" value="5"/>
+		<property name="HandItem" value="enHand_rocketrooster"/>	
+		<property name="ExperienceGain" value="3000"/> 
 		<effect_group name="Base Effects">								
-			<passive_effect name="HealthMax" operation="base_set" value="2100"/>
-			<passive_effect name="HealthMax" operation="perc_set" value="1"/> 
-			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/> <!-- Feral damage -->
+			<passive_effect name="HealthMax" operation="base_set" value="1800"/>
+			<passive_effect name="PhysicalDamageResist" operation="base_set" value="60"/>
+			<passive_effect name="EntityDamage" operation="perc_add" value=".4"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
 		</effect_group>
 	</entity_class>
 
-	<entity_class name="zombieScorcher" extends="zombieSoldier">
-		<property name="SizeScale" value="1.2"/>
-		<property name="Tags" value="entity,zombie,walker,boss,scorcher"/>
-		<property name="Mesh" value="#Entities/Zombies?Prefabs/ZDemolition.prefab"/>
-		<property name="Class" value="EntityZombieCop"/>
-		<property name="Mass" value="300"/>
-		<property name="RightHandJointName" value="RightShoulder"/>
-		<property name="AITask-1" value="BreakBlock"/>
-		<property name="AITask-2" value="RangedAttackTarget" data="itemType=1;cooldown=4;duration=5"/>
-		<property name="AITask-3" value="ApproachAndAttackTarget" data="class=EntityEnemyAnimal,0,EntityPlayer"/>
-		<property name="AITask-4" value="ApproachSpot"/>
-		<property name="AITask-5" value="Look"/>
-		<property name="AITask-6" value="Wander"/>
-		<property name="AITask-7" value=""/><!-- Marks end, so we don't inheirit -->
-		<property name="DismemberMultiplierHead" value="0"/><property name="DismemberMultiplierArms" value=".7"/><property name="DismemberMultiplierLegs" value=".7"/><!-- Feral -->
-		<property name="LegCrawlerThreshold" value="0"/>
-		<property name="LegCrippleThreshold" value="0"/>
-		<property name="KnockdownProneDamageThreshold" value="0"/>
-		<property name="KnockdownKneelDamageThreshold" value="0"/>
+	<entity_class name="enRocketman" extends="enBoss_Template">
+		<property name="Tags" value="entity,zombie,walker,boss"/>
+		<property name="Archetype" value="enArch_rocketman" />
+		<property name="SizeScale" value="0.99"/>
+		<property name="HandItem" value="enHand_rocketman"/>
+		<property name="RightHandJointName" value="Jaw"/>
 		<property name="SoundRandom" value="demolitionzroam"/>
 		<property name="SoundAlert" value="demolitionzalert"/>
 		<property name="SoundAttack" value="demolitionzattack"/>
 		<property name="SoundHurt" value="demolitionzpain"/>
 		<property name="SoundDeath" value="demolitionzdeath"/>
 		<property name="SoundSense" value="demolitionzsense"/>
-		<property name="SoundFootstepModifier" value="bear_footstep"/>
-		<property name="HandItem" value="meleeHandScorcher"/>
-		<property name="JumpMaxDistance" value="1, 2"/>
-		<property name="PainResistPerHit" value="1"/>
-		<property name="StompsSpikes" value="true"/>
-		<property name="ExplodeHealthThreshold" value="0"/> <!-- Disable Health explosion -->
-		<property name="ExperienceGain" value="1750"/>
-		<property name="LootDropEntityClass" value="EntityLootContainerBoss"/>
+		<property name="MoveSpeed" value="0.2"/>
+		<property name="MoveSpeedAggro" value="0.2, 0.8"/>
+		<property name="ExperienceGain" value="6000"/>		
 		<effect_group name="Base Effects">
-			<passive_effect name="HealthMax" operation="base_set" value="2200"/>
-			<passive_effect name="HealthMax" operation="perc_set" value="1"/>
-			<passive_effect name="DamageModifier" operation="perc_set" value="1" tags="head"/>
-			<passive_effect name="PhysicalDamageResist" operation="base_set" value="60"/>
-			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="ScorcherDeco"/>
-			<triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
+			<passive_effect name="HealthMax" operation="base_set" value="3500"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoRocketman"/>
 		</effect_group>
 	</entity_class>
 
+	<entity_class name="enBunkerbuster" extends="enBoss_Template">
+		<property name="Tags" value="entity,zombie,walker,boss"/>
+		<property name="Archetype" value="enArch_bunkerbuster" />
+		<property name="SizeScale" value="0.99"/>
+		<property name="HandItem" value="enHand_bunkerbuster"/>
+		<property name="RightHandJointName" value="Jaw"/>
+		<property name="SoundRandom" value="demolitionzroam"/>
+		<property name="SoundAlert" value="demolitionzalert"/>
+		<property name="SoundAttack" value="demolitionzattack"/>
+		<property name="SoundHurt" value="demolitionzpain"/>
+		<property name="SoundDeath" value="demolitionzdeath"/>
+		<property name="SoundSense" value="demolitionzsense"/>
+		<property name="WalkType" value="1"/>
+		<property name="MoveSpeed" value="0.2"/>
+		<property name="MoveSpeedAggro" value="0.2, 0.6"/>
+		<property name="ExperienceGain" value="10000"/>		
+		<effect_group name="Base Effects">
+			<passive_effect name="HealthMax" operation="base_set" value="5000"/>
+			<triggered_effect trigger="onSelfFirstSpawn" action="AddBuff" target="self" buff="enBuffDecoBunkerbuster"/>
+		</effect_group>
+	</entity_class>
+	
+	
+
 </append>
 
 
-<!-- how many seconds before zombie and animal corpse despawns -->
-<set xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/property[@name='TimeStayAfterDeath']/@value">3</set>
-<set xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/property[@name='TimeStayAfterDeath']/@value">3</set>
+
+
 
 <!-- give points and coins when zombies are killed -->
 <append xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/effect_group" >
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_UpdateKillCount"/>	
+	<!--<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_UpdateKillCount"/>	-->
+	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarZombieKillCounter" operation="add" value="1"/>
 		
-	<!-- reward for ALL zombie types -->
+	<!-- reward 1 point for ALL zombie types -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1"/>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins"/>
 	
-	<!-- additional reward for FatCops -->
+	<!-- additional point for FatCops -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
 		<requirement name="EntityTagCompare" tags="zombieCop"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
-		<requirement name="EntityTagCompare" tags="zombieCop"/></triggered_effect>
 	
-	<!-- additional reward for FERAL types -->
+	<!-- additional point for FERAL types -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
 		<requirement name="EntityTagCompare" tags="feral"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
-		<requirement name="EntityTagCompare" tags="feral"/></triggered_effect>
 	
-	<!-- additional reward for RADITATED types -->
+	<!-- additional point for RADITATED types -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
 		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
-		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
 	
-	<!-- additional reward for DEMOLITIONs -->
+	<!-- additional point for DEMOLITIONs -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="4">
 		<requirement name="EntityTagCompare" tags="boss"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins_boss">
-		<requirement name="EntityTagCompare" tags="boss"/></triggered_effect>
-
 </append>
 
-<!-- give points and coins when animals are killed -->
+<!-- give points when animals are killed -->
 <append xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/effect_group" >
 	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_UpdateKillCount"/>
 	
 	<!-- reward for ALL animal types -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1"/>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins"/>
 	
 	<!-- additional reward for zombie dogs -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
-		<requirement name="EntityTagCompare" tags="dog"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
 		<requirement name="EntityTagCompare" tags="dog"/></triggered_effect>
 		
 	<!-- additional reward for RADITATED types -->
 	<triggered_effect trigger="onSelfDied" target="other" action="ModifyCVar" cvar="enCvarTotalScore" operation="add" value="1">
 		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
-	<triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
-		<requirement name="EntityTagCompare" tags="radiated"/></triggered_effect>
 </append>
 
 
-<!-- loot drop probability for all zombies -->
-<set xpath="/entity_classes/entity_class/property[@name='LootDropProb']/@value">0.0</set>
+<!-- give each zombie specific tag to contol coin reward -->
+<append xpath="/entity_classes/entity_class[@name='animalZombieDog']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='animalZombieVulture']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='animalZombieVultureRadiated']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='enBunkerbuster']/property[@name='Tags']/@value">,coins14x</append>
+<append xpath="/entity_classes/entity_class[@name='enDrone']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='enFlamethrower']/property[@name='Tags']/@value">,coins8x</append>
+<append xpath="/entity_classes/entity_class[@name='enMachinegunner']/property[@name='Tags']/@value">,coins10x</append>
+<append xpath="/entity_classes/entity_class[@name='enRocketman']/property[@name='Tags']/@value">,coins12x</append>
+<append xpath="/entity_classes/entity_class[@name='enRocketRooster']/property[@name='Tags']/@value">,coins8x</append>
+<append xpath="/entity_classes/entity_class[@name='enWraith']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieArlene']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieArleneFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieArleneRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBiker']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBikerFeral']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBikerRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBoe']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBoeFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBoeRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBurnt']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBurntFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBurntRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBusinessMan']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBusinessManFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieBusinessManRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieDarlene']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieDarleneFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieDarleneRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieDemolition']/property[@name='Tags']/@value">,coins8x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatCop']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatCopFeral']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatCopRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatHawaiian']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatHawaiianFeral']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFatHawaiianRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFemaleFat']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFemaleFatFeral']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieFemaleFatRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJanitor']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJanitorFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJanitorRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJoe']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJoeFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieJoeRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLab']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLabFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLabRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLumberjack']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLumberjackFeral']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieLumberjackRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMaleHazmat']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMaleHazmatFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMaleHazmatRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMarlene']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMarleneFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMarleneRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMoe']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMoeFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMoeRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMutated']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMutatedFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieMutatedRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieNurse']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieNurseFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieNurseRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombiePartyGirl']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombiePartyGirlFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombiePartyGirlRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSkateboarder']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSkateboarderFeral']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSkateboarderRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSoldier']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSoldierFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSoldierRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSpider']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSpiderFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSpiderRadiated']/property[@name='Tags']/@value">,coins6x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSteve']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSteveFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieSteveRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieTomClark']/property[@name='Tags']/@value">,coins1x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieTomClarkFeral']/property[@name='Tags']/@value">,coins3x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieTomClarkRadiated']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieUtilityWorker']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieUtilityWorkerFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieUtilityWorkerRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieWightFeral']/property[@name='Tags']/@value">,coins5x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieWightRadiated']/property[@name='Tags']/@value">,coins7x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieYo']/property[@name='Tags']/@value">,coins2x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieYoFeral']/property[@name='Tags']/@value">,coins4x</append>
+<append xpath="/entity_classes/entity_class[@name='zombieYoRadiated']/property[@name='Tags']/@value">,coins6x</append>
 
-<!-- define custom loot drop bag -->
-<!--
-<set xpath="/entity_classes/entity_class/property[@name='LootDropEntityClass']/@value">enLootClass</set>
--->
 
-<append xpath="/entity_classes">
-	<!-- loot bags from zombies -->
-	<!--
-	<entity_class name="enLootClass">	
-		<property name="HideInSpawnMenu" value="true"/>
-		<property name="Mesh" value="#Other/Items?Misc/sack_droppedprefab.prefab"/>
-		<property name="ModelType" value="Custom"/>
-		<property name="Prefab" value="Backpack"/>
-		<property name="Class" value="EntityLootContainer"/>
-		<property name="Parent" value="Backpack"/>
-		<property name="IsEnemyEntity" value="false"/>
-		<property name="TimeStayAfterDeath" value="1200"/>
-		<property name="LootListOnDeath" value="enLootBag"/>
-		<property name="Faction" value="none"/>
-	</entity_class>
-	-->
-	
-	<!-- Starter supply crate that spawns at the begining of the session -->
-	<entity_class name="enTowerDefenseStarter" extends="twitch_crate_template">
-		<property name="HideInSpawnMenu" value="true"/>
-		<property name="Mesh" value="#Entities/LootContainers?crate_store_ShotgunPrefab.prefab"/>
-		<property name="LootListOnDeath" value="enStarterCrateItems"/>
-	</entity_class>
+<!-- give player coins for each humanoid zombie killed -->
+<append xpath="/entity_classes/entity_class[@name='zombieTemplateMale']/effect_group" >       
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins1x,coins2x,coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins2x,coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins14x"/></triggered_effect>
 </append>
 
-
-
-
-
+<!-- give player coins for each animal zombie killed -->
+<append xpath="/entity_classes/entity_class[@name='animalTemplateHostile']/effect_group" >       
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins1x,coins2x,coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins2x,coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins3x,coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins4x,coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins5x,coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins6x,coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins7x,coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins8x,coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins9x,coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins10x,coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins11x,coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins12x,coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins13x,coins14x"/></triggered_effect>
+    <triggered_effect trigger="onSelfDied" target="other" action="CallGameEvent" event="enAction_GiveCoins">
+		<requirement name="EntityTagCompare" tags="coins14x"/></triggered_effect>
+</append>
 
 
 </ErrorNull>

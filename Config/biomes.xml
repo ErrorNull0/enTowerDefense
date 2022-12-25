@@ -5,21 +5,25 @@
 <set xpath="/worldgeneration/biomes/biome/weather[@name='rain']/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome/weather[@name='storm']/@prob">0</set>
 
-<!-- removing all subbiomes for WASTELAND -->
-<remove xpath="/worldgeneration/biomes/biome[@name='wasteland']/subbiome"/>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[contains(@blockname,'rock')]/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[contains(@blockname,'planted')]/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[contains(@blockname,'cnt')]/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[contains(@blockname,'tree')]/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[contains(@name,'rock')]/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[@blockname='treeDeadPineLeaf']/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[@blockname='treeTallGrassDiagonal']/@prob">0.1</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[@blockname='treeShortGrass']/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[@blockname='treeStump']/@prob">0</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome/decorations/decoration[@name='deco_iron_vein']/@prob">0</set>
 
-<!-- removing all subbiomes for FOREST -->
-<remove xpath="/worldgeneration/biomes/biome[@name='pine_forest']/subbiome"/>
-
-<!-- reducing amount of decor for FOREST -->
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'rock')]/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'planted')]/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'cnt')]/@prob">0</set>
-<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'tree')]/@prob">0.0001</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@blockname,'tree')]/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[contains(@name,'rock')]/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeDeadPineLeaf']/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeTallGrassDiagonal']/@prob">0.1</set>
-<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeShortGrass']/@prob">0.3</set>
+<set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeShortGrass']/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@blockname='treeStump']/@prob">0</set>
 <set xpath="/worldgeneration/biomes/biome[@name='pine_forest']/decorations/decoration[@name='deco_iron_vein']/@prob">0</set>
 </ErrorNull>
