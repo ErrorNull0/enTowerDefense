@@ -32,7 +32,7 @@ HOW TO PLAY:
 
 - A weapons bag and loot crate will spawn close by that contains necessary items, which include a red pill, a stack of wood blocks, and a stack vending machines.
 
-- Build a defensive area with your wood blocks on or around the tower frame, and place the vending machines in strategic areas for easy access. Note: the tower frame and vending machines are indestructable.
+- Build a defensive area with your wood blocks on or around the tower frame, and place the vending machines in strategic areas for easy access. Note: the tower frame and vending machines are indestructible.
 
 - For multiplayer, all players must be spawned into the map during this pre-battle period. Each player will receive their own weapons bag and loot crate. 
 
