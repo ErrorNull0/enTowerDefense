@@ -7,7 +7,7 @@ HOW TO SETUP:
 
 - Copy the enTowerDefense mod into your Mods folder.
 
-- Do not use any other mods with enTowerDefense. Mods that only tweak the on-screen HUD (like zombie health bars) should be fine. Using any mods that modify items, zombies, player behavior, or anything else can cause unexpected behavior or errors.
+- Do not use any other mods with enTowerDefense. Mods that only tweak the on-screen HUD should be fine. Using any mods that modify items, zombies, player behavior, or anything else can cause unexpected behavior or errors.
 
 - A custom map called "enTowerDefenseArena" is required. Copy this map into your "GeneratedWorlds" or "Worlds" folder. For single player, this is usually your "GeneratedWorlds" folder. On a dedicated server, the folder is typcially located in the Data > Worlds folder. Downloaded this map from github https://github.com/ErrorNull0/7D2D-Maps
 
