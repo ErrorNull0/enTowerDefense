@@ -53,34 +53,31 @@ HOW TO PLAY:
 
 
 version 1.3
-
-zombies now spawn in waves (horde stages), with a total of 20 stages.
-created enclosed battle arena. stepping outside walls is instant death.
-added reward loot bag at the end of each horde stage.
-reward loot bags give progressively more loot as higher horde stages are reached.
-removed death penalty mechanic and removed stem cells from vending.
-added player "knock out" and "spectator" system
-disabled health and hunger mechanic nd removed food items from vending.
-added on-screen toolbelt meessages during certain events during gameplay.
-simplified weapon and armor selection in vending machines.
-increased bundle sizes of items to keep focus on action.
-added top tier machete "meat cleaver" 
-added top tier steel club "bone basher"
-removed snufkin zombies bosses and replaced with custom bosses.
-coin rewards scale better and much higher for tougher zombies.
+- zombies now spawn in waves (horde stages), with a total of 20 stages.
+- created enclosed battle arena. stepping outside walls is instant death.
+- added reward loot bag at the end of each horde stage.
+- reward loot bags give progressively more loot as higher horde stages are reached.
+- removed death penalty mechanic and removed stem cells from vending.
+- added player "knock out" and "spectator" system
+- disabled health and hunger mechanic nd removed food items from vending.
+- added on-screen toolbelt meessages during certain events during gameplay.
+- simplified weapon and armor selection in vending machines.
+- increased bundle sizes of items to keep focus on action.
+- added top tier machete "meat cleaver" 
+- added top tier steel club "bone basher"
+- removed snufkin zombies bosses and replaced with custom bosses.
+- coin rewards scale better and much higher for tougher zombies.
 
 version 1.2
-
-zombies no longer drop loot
-zombies now automatically provide coins up kills
-player spawns with vending machines for use to buy the needed equipment
-added a few Snufkin boss zombies for end game spawning
+- zombies no longer drop loot
+- zombies now automatically provide coins up kills
+- player spawns with vending machines for use to buy the needed equipment
+- added a few Snufkin boss zombies for end game spawning
 
 version 1.1
-
-added on-screen welcome at begining of session
-added 60s countdown at begining of session
-removed unnecessary weapons and ammo to reduce inventory clutter
-added weapon and armor mods and candy to loot
-added DanceBomb explosive that will cause all zombies to dance and be invincible for 60 seconds
+- added on-screen welcome at begining of session
+- added 60s countdown at begining of session
+- removed unnecessary weapons and ammo to reduce inventory clutter
+- added weapon and armor mods and candy to loot
+- added DanceBomb explosive that will cause all zombies to dance and be invincible for 60 seconds
 
