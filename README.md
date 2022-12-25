@@ -1,6 +1,6 @@
 # enTowerDefense
 
-Battle an endless horde of zombies within an enclosed arena. Gameplay is focused on fast-paced action. There is no crafting or repairing, and builing only consists of the basic cube blocks wood, cobble, concrete, and steel. Zombie kills give you coins, and all items are obtained from vending machines. If your health drops too low, you are knocked out, cannot move or attack, and a teammate must heal you, or you will bleed out and die. Once dead, you become a spectator and are free to roam the arena. But, you inflict no damage, while zombies mostly ignore you and cannot cause damage to you either. When all players die, the session is over, and a new game must be created to play again.
+Battle an endless horde of zombies within an enclosed arena. Gameplay is focused on fast-paced action. There is no crafting or repairing, and building only consists of the basic cube blocks wood, cobble, concrete, and steel. Zombie kills give you coins, and all items are obtained from vending machines. If your health drops too low, you are knocked out, cannot move or attack, and a teammate must heal you, or you will bleed out and die. Once dead, you become a spectator and are free to roam the arena. But, you inflict no damage, while zombies mostly ignore you and cannot cause damage to you either. When all players die, the session is over, and a new game must be created to play again.
 
 
 HOW TO SETUP:
