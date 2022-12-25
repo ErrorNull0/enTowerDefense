@@ -34,7 +34,9 @@ HOW TO PLAY:
 
 - Build a defensive area with your wood blocks on or around the tower frame, and place the vending machines in strategic areas for easy access. Note: the tower frame and vending machines are indestructable.
 
-- For multiplayer, all players must be spawned into the map during this pre-battle period. Each player will receive their own weapons bag and loot crate.
+- For multiplayer, all players must be spawned into the map during this pre-battle period. Each player will receive their own weapons bag and loot crate. 
+
+- Important: Party up! Invite everyone to the same party and ensure everyone joins. This can impact coin rewards.
 
 - When ready for battle, eat the red pill and the screen will restore to full color. For multiplayer, the battle will begin only after all players have consumed their red pills. Once this happens, an alarm will sound indicating the start of the first wave of zombies!
 
